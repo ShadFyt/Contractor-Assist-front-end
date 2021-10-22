@@ -9,7 +9,7 @@ import {
   Drawer,
   DrawerContent,
   Text,
-  VStack,
+  Stack,
   useDisclosure,
 } from "@chakra-ui/react";
 
@@ -19,6 +19,7 @@ import {
   AiOutlineContacts,
   AiFillSetting,
   AiOutlineLogout,
+  AiOutlineMenuUnfold,
 } from "react-icons/ai";
 
 const LinkItemsTop = [
@@ -33,15 +34,16 @@ const LinkItemsBottom = [
   { name: "Logout", icon: AiOutlineLogout },
 ];
 
-const Content = ({ onClose, items, ...rest }) => {
+const Content = ({ onClose, items_top, items_bottom, ...rest }) => {
   return (
     <Box
       bg={"gray.200"}
       borderRight="2px"
       borderRightColor={"gray.900"}
-      h="full"
       w={{ base: "full", md: 60 }}
       pos="fixed"
+      h="full"
+      {...rest}
     >
       <Flex h="20" alignItems="center" mx="6" justifyContent="space-between">
         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
@@ -49,12 +51,26 @@ const Content = ({ onClose, items, ...rest }) => {
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
-      {items.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
+      <Stack h="90%" justify="space-between">
+        <Box>
           {" "}
-          {link.name}{" "}
-        </NavItem>
-      ))}
+          {items_top.map((link) => (
+            <NavItem key={link.name} icon={link.icon}>
+              {" "}
+              {link.name}{" "}
+            </NavItem>
+          ))}
+        </Box>
+        <Box>
+          {" "}
+          {items_bottom.map((link) => (
+            <NavItem key={link.name} icon={link.icon}>
+              {" "}
+              {link.name}{" "}
+            </NavItem>
+          ))}
+        </Box>
+      </Stack>
     </Box>
   );
 };
@@ -70,12 +86,12 @@ const NavItem = ({ icon, children, ...rest }) => {
         role="group"
         cursor="pointer"
         _hover={{
-          bg: "cyan.400",
+          bg: "cyan.600",
           color: "white",
         }}
         {...rest}
       >
-        {icon && <Icon mr="3" fontSize="14" as={icon} />}
+        {icon && <Icon mr="3" fontSize="20" as={icon} />}
         {children}
       </Flex>
     </Link>
@@ -85,11 +101,12 @@ const NavItem = ({ icon, children, ...rest }) => {
 function Sidebar({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box minH="100vh" bg="gray.300">
+    <Box minH="100vh" bg={"gray.100"}>
       <Content
+        items_top={LinkItemsTop}
+        items_bottom={LinkItemsBottom}
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
-        items={LinkItemsTop}
       />
       <Drawer
         autoFocus={false}
@@ -101,11 +118,48 @@ function Sidebar({ children }) {
         size="full"
       >
         <DrawerContent>
-          <Content onClose={onClose} />
+          <Content
+            items_top={LinkItemsTop}
+            items_bottom={LinkItemsBottom}
+            onClose={onClose}
+          />
         </DrawerContent>
       </Drawer>
+      <MobileNav display={{ base: "flex", md: "none" }} onOpen={onOpen} />
+      <Box ml={{ base: 0, md: 60 }} p="4">
+        {children}
+      </Box>
     </Box>
   );
 }
+
+// add mobile version
+
+const MobileNav = ({ onOpen, ...rest }) => {
+  return (
+    <Flex
+      ml={{ base: 0, md: 60 }}
+      px={{ base: 4, md: 24 }}
+      height="20"
+      alignItems="center"
+      bg={"white"}
+      borderBottomWidth="1px"
+      borderBottomColor={"gray.200"}
+      justifyContent="flex-start"
+      {...rest}
+    >
+      <IconButton
+        variant="outline"
+        onClick={onOpen}
+        aria-label="open menu"
+        icon={<AiOutlineMenuUnfold />}
+      />
+
+      <Text fontSize="2xl" ml="8" fontFamily="monospace" fontWeight="bold">
+        Logo
+      </Text>
+    </Flex>
+  );
+};
 
 export default Sidebar;
