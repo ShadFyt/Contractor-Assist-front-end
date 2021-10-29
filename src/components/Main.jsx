@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Flex, Stack } from "@chakra-ui/react";
 import Sidebar from "./layout/Sidebar";
+import ListJobs from "./jobs";
 
 function MainComponent() {
   return (
@@ -13,8 +14,8 @@ function MainComponent() {
         >
           <Sidebar />
         </Box>
-        <Box flex="1" bg={"blue"}>
-          a
+        <Box flex="1">
+          <ListJobs />
         </Box>
       </Stack>
     </Box>
