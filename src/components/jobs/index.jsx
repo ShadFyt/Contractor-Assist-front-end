@@ -1,12 +1,10 @@
 import React from "react";
+import { useSelector } from 'react-redux';
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import Job from "./JobComponent";
-import jobs from "./job_board.json";
-
-console.log(jobs[1].jobName);
-// Fake job
 
 function ListJobs(props) {
+  const jobs = useSelector(state => state.job.listOfJobs)
   return (
     <>
       <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={10} m={3}>
