@@ -1,4 +1,6 @@
 import React from "react";
+// import { Link } from "react-router-dom";
+
 import {
   IconButton,
   Box,
@@ -55,7 +57,7 @@ const Content = ({ onClose, items_top, items_bottom, ...rest }) => {
         <Box>
           {" "}
           {items_top.map((link) => (
-            <NavItem key={link.name} icon={link.icon}>
+            <NavItem key={link.name} icon={link.icon} navLink={link.name.toLowerCase()}>
               {" "}
               {link.name}{" "}
             </NavItem>
@@ -64,7 +66,7 @@ const Content = ({ onClose, items_top, items_bottom, ...rest }) => {
         <Box>
           {" "}
           {items_bottom.map((link) => (
-            <NavItem key={link.name} icon={link.icon}>
+            <NavItem key={link.name} icon={link.icon} navLink="#">
               {" "}
               {link.name}{" "}
             </NavItem>
@@ -75,9 +77,9 @@ const Content = ({ onClose, items_top, items_bottom, ...rest }) => {
   );
 };
 
-const NavItem = ({ icon, children, ...rest }) => {
+const NavItem = ({ icon, children, navLink, ...rest }) => {
   return (
-    <Link href="#" style={{ textDecoration: "none" }}>
+    <Link href={navLink} style={{ textDecoration: "none" }}>
       <Flex
         align="center"
         p="4"

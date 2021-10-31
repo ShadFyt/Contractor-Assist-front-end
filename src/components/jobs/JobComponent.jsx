@@ -4,6 +4,7 @@ import {
   Stack,
   HStack,
   VStack,
+  SimpleGrid,
   Heading,
   Text,
   Divider,
@@ -15,6 +16,7 @@ import {
   Tab,
   TabPanel,
   Link,
+  Badge,
 } from "@chakra-ui/react";
 
 const Address = ({ address }) => {
@@ -29,6 +31,7 @@ const Address = ({ address }) => {
         _hover={{ boxShadow: "lg" }}
         colorScheme="gray"
         color="gray.900"
+        size="xs"
       >
         {hasCopied ? "Copied" : "Copy"}
       </Button>
@@ -70,26 +73,39 @@ const InfoTabs = ({ job }) => {
       <Tabs
         isFitted
         variant="soft-rounded"
-        colorScheme="blue"
+        colorScheme="green"
+        color="white"
         align="center"
         mt={4}
       >
         <TabList>
-          <Tab>CONTACT</Tab>
-          <Tab>DETAILS</Tab>
-          <Tab>TASKS</Tab>
+          <Tab color="green.100">CONTACT</Tab>
+          <Tab color="green.100">DETAILS</Tab>
+          <Tab color="green.100">TASKS</Tab>
         </TabList>
         <TabPanels p={2} alignItems="center">
           <TabPanel>
             <ContactInfo jobContact={job.contact} />
           </TabPanel>
-          <TabPanel>some content2</TabPanel>
+          <TabPanel><DetailTab jobDetail={job.detail}/></TabPanel>
           <TabPanel>some content3</TabPanel>
         </TabPanels>
       </Tabs>
     </Box>
   );
 };
+
+const DetailTab = ({jobDetail}) => {
+  return (
+    <SimpleGrid columns={2} spacing={4}>
+      <VStack>
+        <Heading as="h4" size="md">Summary</Heading>
+        <Text>{ jobDetail.summary }</Text>
+      </VStack>
+      <Box></Box>
+    </SimpleGrid>
+  )
+}
 
 function Job({ job }) {
   const [value, setValue] = React.useState("10 bloor st");
@@ -98,12 +114,13 @@ function Job({ job }) {
       <Stack p={2}>
         <HStack justify="space-between">
           <Box>
-            <Heading size={"lg"} marginLeft={6} color="blue.100">
-              Bloor House
+            <Heading size={"lg"} marginLeft={6} color="white">
+              {job.jobName}
             </Heading>
             <Text align="end" fontSize="2xl" fontWeight="hairline">
               {job.contact.owner}
             </Text>
+            <Badge variant="subtle" colorScheme="green" mt={8} ml={2}>New</Badge>
           </Box>
           <VStack p={2} boxShadow="base" _hover={{ boxShadow: "dark-lg" }}>
             <Link isExternal>

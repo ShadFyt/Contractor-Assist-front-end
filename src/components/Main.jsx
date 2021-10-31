@@ -1,7 +1,16 @@
 import React from "react";
+import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { Box, Flex, Stack } from "@chakra-ui/react";
 import Sidebar from "./layout/Sidebar";
 import ListJobs from "./jobs";
+
+const HomePage = () => {
+  return <div>Home page</div>
+}
+
+const EmployeesPage = () => {
+  return <div>Employees page</div>
+}
 
 function MainComponent() {
   return (
@@ -15,7 +24,19 @@ function MainComponent() {
           <Sidebar />
         </Box>
         <Box flex="1">
-          <ListJobs />
+          <Switch>
+            <Route path="/home" component={HomePage} />
+            <Route
+                exact
+                path="/jobs"
+                component={ListJobs}
+              />
+            <Route
+                exact
+                path="/employees"
+                component={EmployeesPage}
+              />
+          </Switch>
         </Box>
       </Stack>
     </Box>
@@ -23,9 +44,4 @@ function MainComponent() {
 }
 
 export default MainComponent;
-<Flex columns={2}>
-  <Box minH="100vh" w="250px">
-    <Sidebar />
-  </Box>
-  <Box flex="1" bg={"antiquewhite"}></Box>
-</Flex>;
+
