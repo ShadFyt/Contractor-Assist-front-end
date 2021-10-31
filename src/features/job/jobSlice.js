@@ -9,10 +9,13 @@ export const jobSlice = createSlice({
     },
 
     reducers: {
-
+        jobAdded(state, action) {
+            state.listOfJobs.push(action.payload)
+        }
     }
 })
 
+export const { jobAdded } = jobSlice.actions
 export const selectJobs = state => state.job.listOfJobs
 export default jobSlice.reducer;
 
