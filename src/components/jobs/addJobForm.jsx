@@ -24,6 +24,9 @@ import {
   ModalCloseButton,
   Divider,
   Text,
+  Textarea,
+  Select,
+  Stack,
   useDisclosure,
 } from "@chakra-ui/react";
 
@@ -70,11 +73,33 @@ const ContactInfo = () => {
 
 const JobInfo = () => {
   return (
-    <>
+    <Stack spacing={4} w="full">
       <Center>
         <Text fontSize="large">Job Details</Text>
       </Center>
-    </>
+      <FormControl id="jobType">
+        <FormLabel>Job Type</FormLabel>
+        <Select placeholder="Select a job type">
+          <option>Sanding</option>
+          <option>Installation</option>
+          <option>Both</option>
+        </Select>
+      </FormControl>
+      <HStack width="full">
+        <FormControl id="startDate">
+          <FormLabel>Start Date</FormLabel>
+          <Input type="date" textAlign="center" />
+        </FormControl>
+        <FormControl id="endDate">
+          <FormLabel>End Date</FormLabel>
+          <Input type="date" textAlign="center" />
+        </FormControl>
+      </HStack>
+      <FormControl id="summary">
+        <FormLabel>Summary</FormLabel>
+        <Textarea type="text" placeholder="details of job goes here" />
+      </FormControl>
+    </Stack>
   );
 };
 
@@ -86,7 +111,7 @@ const JobFormModal = () => {
       <Button onClick={onOpen}>Add</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent bg="gray.500">
           <ModalHeader>
             <Center>Add New Job</Center>
           </ModalHeader>
