@@ -1,10 +1,172 @@
-[{"id":1,"jobName":"Fixflex","isComplete":true,"contact":{"owner":"Mahala","address":"63484 Blackbird Court","number":"451-498-5742","email":"mmacgebenay0@oakley.com"},"detail":{"summary":"consequat metus sapien ut nunc vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere","startDate":"12/28/2020","endDate":"7/9/2021","jobType":"porta"}},
-{"id":2,"jobName":"Zoolab","isComplete":false,"contact":{"owner":"Clerkclaude","address":"2 Miller Drive","number":"439-117-3432","email":"cswanston1@forbes.com"},"detail":{"summary":"iaculis congue vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget nunc donec","startDate":"7/20/2021","endDate":"2/2/2021","jobType":"penatibus et"}},
-{"id":3,"jobName":"Bamity","isComplete":true,"contact":{"owner":"Alden","address":"879 Prairieview Way","number":"719-129-7136","email":"athwaites2@homestead.com"},"detail":{"summary":"justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit","startDate":"3/13/2021","endDate":"12/2/2020","jobType":"donec"}},
-{"id":4,"jobName":"Toughjoyfax","isComplete":true,"contact":{"owner":"Stillmann","address":"96 Vidon Crossing","number":"826-347-4561","email":"sdallander3@msu.edu"},"detail":{"summary":"convallis nulla neque libero convallis eget eleifend luctus ultricies eu nibh quisque id justo sit","startDate":"9/27/2021","endDate":"7/7/2021","jobType":"lectus"}},
-{"id":5,"jobName":"It","isComplete":true,"contact":{"owner":"Jone","address":"3 Cardinal Way","number":"275-240-7825","email":"jmeasen4@addtoany.com"},"detail":{"summary":"maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida nisi at","startDate":"10/18/2021","endDate":"1/15/2021","jobType":"vestibulum ante"}},
-{"id":6,"jobName":"Domainer","isComplete":false,"contact":{"owner":"Fionnula","address":"58 Lakeland Way","number":"751-170-7580","email":"fkaminski5@pcworld.com"},"detail":{"summary":"morbi vestibulum velit id pretium iaculis diam erat fermentum justo nec condimentum neque sapien placerat ante nulla justo aliquam","startDate":"8/6/2021","endDate":"8/10/2021","jobType":"dictumst"}},
-{"id":7,"jobName":"Zamit","isComplete":false,"contact":{"owner":"Ursula","address":"084 Melody Road","number":"430-876-0886","email":"upiperley6@admin.ch"},"detail":{"summary":"diam erat fermentum justo nec condimentum neque sapien placerat ante nulla justo","startDate":"6/1/2021","endDate":"10/11/2021","jobType":"ipsum aliquam"}},
-{"id":8,"jobName":"Treeflex","isComplete":true,"contact":{"owner":"Aline","address":"6502 Farragut Court","number":"218-262-5648","email":"aedgworth7@youtube.com"},"detail":{"summary":"neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi","startDate":"9/17/2021","endDate":"6/7/2021","jobType":"pellentesque volutpat"}},
-{"id":9,"jobName":"Stronghold","isComplete":true,"contact":{"owner":"Latashia","address":"3 Bultman Hill","number":"588-881-1375","email":"lgheraldi8@vimeo.com"},"detail":{"summary":"at dolor quis odio consequat varius integer ac leo pellentesque ultrices mattis odio donec vitae nisi nam ultrices libero non","startDate":"4/29/2021","endDate":"3/5/2021","jobType":"id consequat"}},
-{"id":10,"jobName":"Asoka","isComplete":true,"contact":{"owner":"Emory","address":"58 Kingsford Parkway","number":"881-117-4844","email":"ereading9@de.vu"},"detail":{"summary":"ipsum integer a nibh in quis justo maecenas rhoncus aliquam lacus","startDate":"7/5/2021","endDate":"7/22/2021","jobType":"quam pede"}}]
+[
+  {
+    "id": 1,
+    "jobName": "Fixflex",
+    "isComplete": true,
+    "contact": {
+      "owner": "Mahala",
+      "address": "63484 Blackbird Court",
+      "number": "451-498-5742",
+      "email": "mmacgebenay0@oakley.com"
+    },
+    "detail": {
+      "summary": "consequat metus sapien ut nunc vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere",
+      "startDate": "12/28/2020",
+      "endDate": "7/9/2021",
+      "jobType": "Both"
+    }
+  },
+  {
+    "id": 2,
+    "jobName": "Zoolab",
+    "isComplete": false,
+    "contact": {
+      "owner": "Clerkclaude",
+      "address": "2 Miller Drive",
+      "number": "439-117-3432",
+      "email": "cswanston1@forbes.com"
+    },
+    "detail": {
+      "summary": "iaculis congue vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget nunc donec",
+      "startDate": "7/20/2021",
+      "endDate": "2/2/2021",
+      "jobType": "Installation"
+    }
+  },
+  {
+    "id": 3,
+    "jobName": "Bamity",
+    "isComplete": true,
+    "contact": {
+      "owner": "Alden",
+      "address": "879 Prairieview Way",
+      "number": "719-129-7136",
+      "email": "athwaites2@homestead.com"
+    },
+    "detail": {
+      "summary": "justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit",
+      "startDate": "3/13/2021",
+      "endDate": "12/2/2020",
+      "jobType": "Both"
+    }
+  },
+  {
+    "id": 4,
+    "jobName": "Toughjoyfax",
+    "isComplete": true,
+    "contact": {
+      "owner": "Stillmann",
+      "address": "96 Vidon Crossing",
+      "number": "826-347-4561",
+      "email": "sdallander3@msu.edu"
+    },
+    "detail": {
+      "summary": "convallis nulla neque libero convallis eget eleifend luctus ultricies eu nibh quisque id justo sit",
+      "startDate": "9/27/2021",
+      "endDate": "7/7/2021",
+      "jobType": "Sanding"
+    }
+  },
+  {
+    "id": 5,
+    "jobName": "It",
+    "isComplete": true,
+    "contact": {
+      "owner": "Jone",
+      "address": "3 Cardinal Way",
+      "number": "275-240-7825",
+      "email": "jmeasen4@addtoany.com"
+    },
+    "detail": {
+      "summary": "maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida nisi at",
+      "startDate": "10/18/2021",
+      "endDate": "1/15/2021",
+      "jobType": "Installation"
+    }
+  },
+  {
+    "id": 6,
+    "jobName": "Domainer",
+    "isComplete": false,
+    "contact": {
+      "owner": "Fionnula",
+      "address": "58 Lakeland Way",
+      "number": "751-170-7580",
+      "email": "fkaminski5@pcworld.com"
+    },
+    "detail": {
+      "summary": "morbi vestibulum velit id pretium iaculis diam erat fermentum justo nec condimentum neque sapien placerat ante nulla justo aliquam",
+      "startDate": "8/6/2021",
+      "endDate": "8/10/2021",
+      "jobType": "Both"
+    }
+  },
+  {
+    "id": 7,
+    "jobName": "Zamit",
+    "isComplete": false,
+    "contact": {
+      "owner": "Ursula",
+      "address": "084 Melody Road",
+      "number": "430-876-0886",
+      "email": "upiperley6@admin.ch"
+    },
+    "detail": {
+      "summary": "diam erat fermentum justo nec condimentum neque sapien placerat ante nulla justo",
+      "startDate": "6/1/2021",
+      "endDate": "10/11/2021",
+      "jobType": "Installation"
+    }
+  },
+  {
+    "id": 8,
+    "jobName": "Treeflex",
+    "isComplete": true,
+    "contact": {
+      "owner": "Aline",
+      "address": "6502 Farragut Court",
+      "number": "218-262-5648",
+      "email": "aedgworth7@youtube.com"
+    },
+    "detail": {
+      "summary": "neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi",
+      "startDate": "9/17/2021",
+      "endDate": "6/7/2021",
+      "jobType": "Both"
+    }
+  },
+  {
+    "id": 9,
+    "jobName": "Stronghold",
+    "isComplete": true,
+    "contact": {
+      "owner": "Latashia",
+      "address": "3 Bultman Hill",
+      "number": "588-881-1375",
+      "email": "lgheraldi8@vimeo.com"
+    },
+    "detail": {
+      "summary": "at dolor quis odio consequat varius integer ac leo pellentesque ultrices mattis odio donec vitae nisi nam ultrices libero non",
+      "startDate": "4/29/2021",
+      "endDate": "3/5/2021",
+      "jobType": "Sanding"
+    }
+  },
+  {
+    "id": 10,
+    "jobName": "Asoka",
+    "isComplete": true,
+    "contact": {
+      "owner": "Emory",
+      "address": "58 Kingsford Parkway",
+      "number": "881-117-4844",
+      "email": "ereading9@de.vu"
+    },
+    "detail": {
+      "summary": "ipsum integer a nibh in quis justo maecenas rhoncus aliquam lacus",
+      "startDate": "7/5/2021",
+      "endDate": "7/22/2021",
+      "jobType": "Sanding"
+    }
+  }
+]

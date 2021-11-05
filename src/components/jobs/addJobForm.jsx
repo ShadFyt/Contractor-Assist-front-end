@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { nanoid } from "@reduxjs/toolkit";
 import { FiPhone } from "react-icons/fi";
 import { FaAddressCard } from "react-icons/fa";
+
+import { jobAdded } from "../../features/job/jobSlice";
 
 import {
   FormControl,
@@ -30,40 +34,127 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-const ContactInfo = () => {
+const ContactInfo = ({ handleJobInputs }) => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNum, setPhoneNum] = useState("");
+  const [address, setAddress] = useState("");
+
+  const dispatch = useDispatch();
+
+  const onFirstNameChanged = (e) => {
+    setFirstName(e.target.value);
+  };
+  const onLastNameChanged = (e) => setLastName(e.target.value);
+  const onEmailChanged = (e) => setEmail(e.target.value);
+  const onPhoneNumChanged = (e) => {
+    setPhoneNum(e.target.value);
+    console.log(phoneNum);
+  };
+  const onAddressChanged = (e) => setAddress(e.target.value);
+
+  useEffect(() => {
+    handleJobInputs.current = addJob;
+  });
+
+  const addJob = () => {
+    if (firstName && lastName) {
+      console.log("is working");
+      dispatch(
+        jobAdded({
+          id: nanoid(),
+          isComplete: false,
+          jobName: "test",
+          contact: {
+            firstName,
+            lastName,
+            email,
+            phoneNum,
+            address,
+          },
+          detail: {
+            summary: "some fake content",
+            startDate: "12/28/2020",
+            endDate: "7/9/2021",
+            jobType: "Both",
+          },
+        })
+      );
+      console.log("submitted");
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPhoneNum("");
+      setAddress("");
+    }
+  };
+
   return (
     <>
       <HStack>
-        <FormControl id="firstName">
-          <FormLabel>First Name</FormLabel>
-          <Input type="text" />
+        <FormControl>
+          <FormLabel htmlFor="firstName">First Name</FormLabel>
+          <Input
+            type="text"
+            id="firstName"
+            name="firstName"
+            value={firstName}
+            onChange={onFirstNameChanged}
+          />
         </FormControl>
-        <FormControl id="lastName">
-          <FormLabel>Last Name</FormLabel>
-          <Input type="text" />
+        <FormControl>
+          <FormLabel htmlFor="lastName">Last Name</FormLabel>
+          <Input
+            type="text"
+            id="lastName"
+            name="lastName"
+            value={lastName}
+            onChange={onLastNameChanged}
+          />
         </FormControl>
       </HStack>
-      <FormControl id="email">
-        <FormLabel>Email</FormLabel>
-        <Input type="email" />
+      <FormControl>
+        <FormLabel htmlFor="email">Email</FormLabel>
+        <Input
+          type="email"
+          id="email"
+          name="email"
+          value={email}
+          onChange={onEmailChanged}
+        />
       </FormControl>
       <HStack>
-        <FormControl id="phone">
+        <FormControl>
           <InputGroup>
             <InputLeftElement
               pointerEvent="none"
               children={<Icon as={FiPhone} color="gray.600" />}
             />
-            <Input type="tel" placeholder="Phone Number" />
+            <Input
+              type="tel"
+              placeholder="Phone Number"
+              id="phone"
+              name="name"
+              value={phoneNum}
+              onChange={onPhoneNumChanged}
+            />
           </InputGroup>
         </FormControl>
-        <FormControl id="address">
+        <FormControl>
           <InputGroup>
             <InputLeftElement
               pointerEvent="none"
               children={<Icon as={FaAddressCard} color="gray.600" />}
             />
-            <Input type="text" placeholder="Address" />
+            <Input
+              type="text"
+              placeholder="Address"
+              id="address"
+              name="address"
+              value={address}
+              onChange={onAddressChanged}
+            />
           </InputGroup>
         </FormControl>
       </HStack>
@@ -106,6 +197,13 @@ const JobInfo = () => {
 const JobFormModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const handleJobInputs = useRef(null);
+
+  const handleSubmit = () => {
+    handleJobInputs.current();
+    onClose();
+  };
+
   return (
     <>
       <Button onClick={onOpen}>Add</Button>
@@ -118,13 +216,13 @@ const JobFormModal = () => {
           <ModalCloseButton />
           <ModalBody>
             <VStack>
-              <ContactInfo />
+              <ContactInfo handleJobInputs={handleJobInputs} />
               <Divider />
               <JobInfo />
             </VStack>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="green" mr={1}>
+            <Button onClick={() => handleSubmit()} colorScheme="green" mr={1}>
               Submit
             </Button>
             <Button onClick={onClose}>Cancel</Button>
