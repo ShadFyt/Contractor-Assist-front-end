@@ -9,8 +9,6 @@ import { jobAdded } from "../../features/job/jobSlice";
 import {
   FormControl,
   FormLabel,
-  FormErrorMessage,
-  FormHelperText,
   Icon,
   Input,
   InputGroup,
@@ -34,73 +32,21 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-const ContactInfo = ({ handleJobInputs }) => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phoneNum, setPhoneNum] = useState("");
-  const [address, setAddress] = useState("");
-
-  const dispatch = useDispatch();
-
-  const onFirstNameChanged = (e) => {
-    setFirstName(e.target.value);
-  };
-  const onLastNameChanged = (e) => setLastName(e.target.value);
-  const onEmailChanged = (e) => setEmail(e.target.value);
-  const onPhoneNumChanged = (e) => {
-    setPhoneNum(e.target.value);
-    console.log(phoneNum);
-  };
-  const onAddressChanged = (e) => setAddress(e.target.value);
-
-  useEffect(() => {
-    handleJobInputs.current = addJob;
-  });
-
-  const addJob = () => {
-    if (firstName && lastName) {
-      console.log("is working");
-      dispatch(
-        jobAdded({
-          id: nanoid(),
-          isComplete: false,
-          jobName: "test",
-          contact: {
-            firstName,
-            lastName,
-            email,
-            phoneNum,
-            address,
-          },
-          detail: {
-            summary: "some fake content",
-            startDate: "12/28/2020",
-            endDate: "7/9/2021",
-            jobType: "Both",
-          },
-        })
-      );
-      console.log("submitted");
-      setFirstName("");
-      setLastName("");
-      setEmail("");
-      setPhoneNum("");
-      setAddress("");
-    }
-  };
+const ContactInfo = ({ contactFormData, setContactFormData }) => {
+  const handleChange = (e) =>
+    setContactFormData({ ...contactFormData, [e.target.name]: e.target.value });
 
   return (
     <>
       <HStack>
         <FormControl>
-          <FormLabel htmlFor="firstName">First Name</FormLabel>
+          <FormLabel htmlFor="owner">First Name</FormLabel>
           <Input
             type="text"
-            id="firstName"
-            name="firstName"
-            value={firstName}
-            onChange={onFirstNameChanged}
+            id="owner"
+            name="owner"
+            value={contactFormData.owner}
+            onChange={handleChange}
           />
         </FormControl>
         <FormControl>
@@ -109,8 +55,8 @@ const ContactInfo = ({ handleJobInputs }) => {
             type="text"
             id="lastName"
             name="lastName"
-            value={lastName}
-            onChange={onLastNameChanged}
+            value={contactFormData.lastName}
+            onChange={handleChange}
           />
         </FormControl>
       </HStack>
@@ -120,8 +66,8 @@ const ContactInfo = ({ handleJobInputs }) => {
           type="email"
           id="email"
           name="email"
-          value={email}
-          onChange={onEmailChanged}
+          value={contactFormData.email}
+          onChange={handleChange}
         />
       </FormControl>
       <HStack>
@@ -134,10 +80,10 @@ const ContactInfo = ({ handleJobInputs }) => {
             <Input
               type="tel"
               placeholder="Phone Number"
-              id="phone"
-              name="name"
-              value={phoneNum}
-              onChange={onPhoneNumChanged}
+              id="number"
+              name="number"
+              value={contactFormData.number}
+              onChange={handleChange}
             />
           </InputGroup>
         </FormControl>
@@ -152,8 +98,8 @@ const ContactInfo = ({ handleJobInputs }) => {
               placeholder="Address"
               id="address"
               name="address"
-              value={address}
-              onChange={onAddressChanged}
+              value={contactFormData.address}
+              onChange={handleChange}
             />
           </InputGroup>
         </FormControl>
@@ -197,10 +143,50 @@ const JobInfo = () => {
 const JobFormModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const handleJobInputs = useRef(null);
+  const [contactFormData, setContactFormData] = useState({
+    owner: "",
+    lastName: "",
+    email: "",
+    number: "",
+    address: "",
+  });
+
+  const details = {
+    summary: "some fake content",
+    startDate: "12/28/2020",
+    endDate: "7/9/2021",
+    jobType: "Both",
+  };
+
+  const resetForm = () =>
+    setContactFormData({
+      ...contactFormData,
+      owner: "",
+      lastName: "",
+      email: "",
+      number: "",
+      address: "",
+    });
+  const dispatch = useDispatch();
+  const AddJob = () => {
+    if (contactFormData.owner) {
+      console.log("is working");
+      dispatch(
+        jobAdded({
+          id: nanoid(),
+          isComplete: false,
+          jobName: "test",
+          contact: { ...contactFormData },
+          detail: { ...details },
+        })
+      );
+      console.log(contactFormData.number);
+      resetForm();
+    }
+  };
 
   const handleSubmit = () => {
-    handleJobInputs.current();
+    AddJob();
     onClose();
   };
 
@@ -216,7 +202,10 @@ const JobFormModal = () => {
           <ModalCloseButton />
           <ModalBody>
             <VStack>
-              <ContactInfo handleJobInputs={handleJobInputs} />
+              <ContactInfo
+                contactFormData={contactFormData}
+                setContactFormData={setContactFormData}
+              />
               <Divider />
               <JobInfo />
             </VStack>
