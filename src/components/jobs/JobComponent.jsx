@@ -87,7 +87,9 @@ const InfoTabs = ({ job }) => {
           <TabPanel>
             <ContactInfo jobContact={job.contact} />
           </TabPanel>
-          <TabPanel><DetailTab jobDetail={job.detail}/></TabPanel>
+          <TabPanel>
+            <DetailTab jobDetail={job.detail} />
+          </TabPanel>
           <TabPanel>some content3</TabPanel>
         </TabPanels>
       </Tabs>
@@ -95,18 +97,19 @@ const InfoTabs = ({ job }) => {
   );
 };
 
-const DetailTab = ({jobDetail}) => {
+const DetailTab = ({ jobDetail }) => {
   return (
     <SimpleGrid columns={2} spacing={4}>
       <VStack>
-        <Heading as="h4" size="md">Summary</Heading>
-        <Text>{ jobDetail.summary }</Text>
+        <Heading as="h4" size="md">
+          Summary
+        </Heading>
+        <Text>{jobDetail.summary}</Text>
       </VStack>
       <Box></Box>
     </SimpleGrid>
-  )
-}
-
+  );
+};
 function Job({ job }) {
   const [value, setValue] = React.useState("10 bloor st");
   return (
@@ -120,12 +123,14 @@ function Job({ job }) {
             <Text align="end" fontSize="2xl" fontWeight="hairline">
               {job.contact.owner}
             </Text>
-            <Badge variant="subtle" colorScheme="green" mt={8} ml={2}>New</Badge>
+            <Badge variant="subtle" colorScheme="green" mt={8} ml={2}>
+              New
+            </Badge>
           </Box>
           <VStack p={2} boxShadow="base" _hover={{ boxShadow: "dark-lg" }}>
             <Link isExternal>
               <iframe
-                title={value}
+                title={job.contact.address}
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11535.988402242036!2d-79.27491817896484!3d43.7106093246573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4ce7b488e5fcd%3A0xad322c8c32ab7f01!2sWarden!5e0!3m2!1sen!2sca!4v1634930038310!5m2!1sen!2sca"
                 width="250"
                 height="100px"
@@ -133,7 +138,7 @@ function Job({ job }) {
                 loading="lazy"
               />
             </Link>
-            <Address address={value} />
+            <Address address={job.contact.address} />
           </VStack>
         </HStack>
         <Divider orientation="horizontal" />

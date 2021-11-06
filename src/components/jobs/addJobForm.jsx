@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
 import { FiPhone } from "react-icons/fi";
@@ -117,9 +117,9 @@ const JobInfo = () => {
       <FormControl id="jobType">
         <FormLabel>Job Type</FormLabel>
         <Select placeholder="Select a job type">
-          <option>Sanding</option>
-          <option>Installation</option>
-          <option>Both</option>
+          <option value="sanding">Sanding</option>
+          <option value="installation">Installation</option>
+          <option value="both">Both</option>
         </Select>
       </FormControl>
       <HStack width="full">
@@ -151,6 +151,13 @@ const JobFormModal = () => {
     address: "",
   });
 
+  const [detailFormData, setDetailFormData] = useState({
+    summary: "",
+    startDate: "",
+    endDate: "",
+    jobType: "",
+  });
+
   const details = {
     summary: "some fake content",
     startDate: "12/28/2020",
@@ -158,7 +165,17 @@ const JobFormModal = () => {
     jobType: "Both",
   };
 
-  const resetForm = () =>
+  const resetDetailForm = () => {
+    setDetailFormData({
+      ...detailFormData,
+      summary: "",
+      startDate: "",
+      endDate: "",
+      jobType: "",
+    });
+  };
+
+  const resetContactForm = () =>
     setContactFormData({
       ...contactFormData,
       owner: "",
@@ -180,8 +197,8 @@ const JobFormModal = () => {
           detail: { ...details },
         })
       );
-      console.log(contactFormData.number);
-      resetForm();
+      resetContactForm();
+      resetDetailForm();
     }
   };
 
