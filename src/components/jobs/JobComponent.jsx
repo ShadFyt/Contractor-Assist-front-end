@@ -18,6 +18,8 @@ import {
   Link,
   Badge,
 } from "@chakra-ui/react";
+import { EditJobForm } from "./editJobForm";
+import { DeleteJob } from "./deleteJob";
 
 const Address = ({ address }) => {
   const { hasCopied, onCopy } = useClipboard(address);
@@ -145,6 +147,10 @@ function Job({ job }) {
 
         <HStack>
           <InfoTabs job={job} />
+        </HStack>
+        <HStack>
+          <EditJobForm jobId={job.id} width="full" />
+          <DeleteJob jobId={job.id} />
         </HStack>
       </Stack>
     </Box>

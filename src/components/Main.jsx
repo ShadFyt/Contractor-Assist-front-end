@@ -1,16 +1,16 @@
 import React from "react";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
-import { Box, Flex, Stack } from "@chakra-ui/react";
+import { Box, Stack } from "@chakra-ui/react";
 import Sidebar from "./layout/Sidebar";
 import ListJobs from "./jobs";
 
 const HomePage = () => {
-  return <div>Home page</div>
-}
+  return <div>Home page</div>;
+};
 
 const EmployeesPage = () => {
-  return <div>Employees page</div>
-}
+  return <div>Employees page</div>;
+};
 
 function MainComponent() {
   return (
@@ -26,16 +26,8 @@ function MainComponent() {
         <Box flex="1">
           <Switch>
             <Route path="/home" component={HomePage} />
-            <Route
-                exact
-                path="/jobs"
-                component={ListJobs}
-              />
-            <Route
-                exact
-                path="/employees"
-                component={EmployeesPage}
-              />
+            <Route exact path="/jobs" component={ListJobs} />
+            <Route exact path="/employees" component={EmployeesPage} />
           </Switch>
         </Box>
       </Stack>
@@ -44,4 +36,3 @@ function MainComponent() {
 }
 
 export default MainComponent;
-

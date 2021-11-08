@@ -108,33 +108,66 @@ const ContactInfo = ({ contactFormData, setContactFormData }) => {
   );
 };
 
-const JobInfo = () => {
+const JobInfo = ({ detailFormData, setDetailFormData }) => {
+  const handleChange = (e) =>
+    setDetailFormData({
+      ...detailFormData,
+      [e.target.name]: e.target.value,
+    });
+
   return (
     <Stack spacing={4} w="full">
       <Center>
         <Text fontSize="large">Job Details</Text>
       </Center>
-      <FormControl id="jobType">
+      <FormControl>
         <FormLabel>Job Type</FormLabel>
-        <Select placeholder="Select a job type">
-          <option value="sanding">Sanding</option>
-          <option value="installation">Installation</option>
-          <option value="both">Both</option>
+        <Select
+          id="jobType"
+          name="jobType"
+          value={detailFormData.jobType}
+          onChange={handleChange}
+          placeholder="Select a job type"
+        >
+          <option value="sanding">sanding</option>
+          <option value="installation">installation</option>
+          <option value="both">both</option>
         </Select>
       </FormControl>
       <HStack width="full">
-        <FormControl id="startDate">
-          <FormLabel>Start Date</FormLabel>
-          <Input type="date" textAlign="center" />
+        <FormControl>
+          <FormLabel htmlFor="startDate">Start Date</FormLabel>
+          <Input
+            id="startDate"
+            name="startDate"
+            value={detailFormData.startDate}
+            onChange={handleChange}
+            type="date"
+            textAlign="center"
+          />
         </FormControl>
         <FormControl id="endDate">
-          <FormLabel>End Date</FormLabel>
-          <Input type="date" textAlign="center" />
+          <FormLabel htmlFor="endDate">End Date</FormLabel>
+          <Input
+            id="endDate"
+            name="endDate"
+            value={detailFormData.endDate}
+            onChange={handleChange}
+            type="date"
+            textAlign="center"
+          />
         </FormControl>
       </HStack>
       <FormControl id="summary">
-        <FormLabel>Summary</FormLabel>
-        <Textarea type="text" placeholder="details of job goes here" />
+        <FormLabel htmlFor="summary">Summary</FormLabel>
+        <Textarea
+          id="summary"
+          name="summary"
+          value={detailFormData.summary}
+          onChange={handleChange}
+          type="text"
+          placeholder="details of job goes here"
+        />
       </FormControl>
     </Stack>
   );
@@ -155,15 +188,8 @@ const JobFormModal = () => {
     summary: "",
     startDate: "",
     endDate: "",
-    jobType: "",
+    jobType: "both",
   });
-
-  const details = {
-    summary: "some fake content",
-    startDate: "12/28/2020",
-    endDate: "7/9/2021",
-    jobType: "Both",
-  };
 
   const resetDetailForm = () => {
     setDetailFormData({
@@ -194,7 +220,7 @@ const JobFormModal = () => {
           isComplete: false,
           jobName: "test",
           contact: { ...contactFormData },
-          detail: { ...details },
+          detail: { ...detailFormData },
         })
       );
       resetContactForm();
@@ -224,7 +250,10 @@ const JobFormModal = () => {
                 setContactFormData={setContactFormData}
               />
               <Divider />
-              <JobInfo />
+              <JobInfo
+                detailFormData={detailFormData}
+                setDetailFormData={setDetailFormData}
+              />
             </VStack>
           </ModalBody>
           <ModalFooter>

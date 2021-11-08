@@ -4,7 +4,7 @@ import { Box, SimpleGrid } from "@chakra-ui/react";
 import Job from "./JobComponent";
 import JobFormModal from "./addJobForm";
 
-function ListJobs(props) {
+function ListJobs() {
   const jobs = useSelector((state) => state.job.listOfJobs);
   return (
     <>
