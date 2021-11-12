@@ -1,4 +1,6 @@
 import React from "react";
+import { Link as ReactLink } from "react-router-dom";
+
 import {
   Box,
   Stack,
@@ -113,14 +115,15 @@ const DetailTab = ({ jobDetail }) => {
   );
 };
 function Job({ job }) {
-  const [value, setValue] = React.useState("10 bloor st");
   return (
     <Box bg={"teal.600"} rounded="2xl" boxShadow="base">
       <Stack p={2}>
         <HStack justify="space-between">
           <Box>
             <Heading size={"lg"} marginLeft={6} color="white">
-              {job.jobName}
+              <Link as={ReactLink} to={`/jobs/${job.id}`}>
+                {job.jobName}
+              </Link>
             </Heading>
             <Text align="end" fontSize="2xl" fontWeight="hairline">
               {job.contact.owner}

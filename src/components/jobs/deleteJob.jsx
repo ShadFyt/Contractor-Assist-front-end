@@ -8,7 +8,7 @@ import {
   AlertDialogOverlay,
 } from "@chakra-ui/react";
 import React, { useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { jobDeleted } from "../../features/job/jobSlice";
 
@@ -16,10 +16,6 @@ export const DeleteJob = ({ jobId, ...rest }) => {
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
   const cancelRef = useRef();
-
-  const job = useSelector((state) =>
-    state.job.listOfJobs.find((job) => job.id === jobId)
-  );
 
   const dispatch = useDispatch();
 

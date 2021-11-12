@@ -1,5 +1,5 @@
 import React from "react";
-// import { Link } from "react-router-dom";
+import { Link as ReactLink } from "react-router-dom";
 
 import {
   IconButton,
@@ -57,7 +57,11 @@ const Content = ({ onClose, items_top, items_bottom, ...rest }) => {
         <Box>
           {" "}
           {items_top.map((link) => (
-            <NavItem key={link.name} icon={link.icon} navLink={link.name.toLowerCase()}>
+            <NavItem
+              key={link.name}
+              icon={link.icon}
+              navLink={link.name.toLowerCase()}
+            >
               {" "}
               {link.name}{" "}
             </NavItem>
@@ -79,7 +83,7 @@ const Content = ({ onClose, items_top, items_bottom, ...rest }) => {
 
 const NavItem = ({ icon, children, navLink, ...rest }) => {
   return (
-    <Link href={navLink} style={{ textDecoration: "none" }}>
+    <Link as={ReactLink} to={`/${navLink}`} style={{ textDecoration: "none" }}>
       <Flex
         align="center"
         p="4"
