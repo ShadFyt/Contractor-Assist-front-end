@@ -28,8 +28,8 @@ export const DeleteJob = ({ jobId, ...rest }) => {
         colorScheme="red"
         variant="outline"
         _hover={{ bgColor: "red.600", color: "white" }}
-        {...rest}
         onClick={() => setIsOpen(true)}
+        {...rest}
       >
         Delete
       </Button>

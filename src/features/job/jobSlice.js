@@ -12,11 +12,14 @@ export const jobSlice = createSlice({
         jobAdded(state, action) {
             state.listOfJobs.push(action.payload)
         },
-        jobUpdated(state, action) {
-            const { id, jobName, isComplete, contact, detail, } = action.payload
+        clientUpdated(state, action) {
+            const { id, address, email, number } = action.payload
             const existingJob = state.listOfJobs.find(job => job.id === id)
             if (existingJob) {
-                console.log("found", existingJob)
+                console.log("found", existingJob.contact.owner)
+                existingJob.contact.address = address
+                existingJob.contact.email = email
+                existingJob.contact.number = number
             }
         },
         jobDeleted(state, action) {
@@ -31,7 +34,7 @@ export const jobSlice = createSlice({
     }
 })
 
-export const { jobAdded, jobUpdated, jobDeleted } = jobSlice.actions
+export const { jobAdded, clientUpdated, jobDeleted } = jobSlice.actions
 export const selectJobs = state => state.job.listOfJobs
 export default jobSlice.reducer;
 

@@ -20,7 +20,7 @@ import {
   Link,
   Badge,
 } from "@chakra-ui/react";
-import { EditJobForm } from "./editJobForm";
+import { EditClientForm } from "./editClientForm";
 import { DeleteJob } from "./deleteJob";
 
 const Address = ({ address }) => {
@@ -43,7 +43,7 @@ const Address = ({ address }) => {
   );
 };
 
-const ContactInfo = ({ jobContact }) => {
+const ContactInfo = ({ jobContact, jobId }) => {
   return (
     <Box>
       <Heading as="h3" size="lg">
@@ -67,6 +67,7 @@ const ContactInfo = ({ jobContact }) => {
         </Text>
         : {jobContact.email}
       </Text>
+      <EditClientForm jobId={jobId} width="50%" />
     </Box>
   );
 };
@@ -89,7 +90,7 @@ const InfoTabs = ({ job }) => {
         </TabList>
         <TabPanels p={2} alignItems="center">
           <TabPanel>
-            <ContactInfo jobContact={job.contact} />
+            <ContactInfo jobContact={job.contact} jobId={job.id} />
           </TabPanel>
           <TabPanel>
             <DetailTab jobDetail={job.detail} />
@@ -151,10 +152,7 @@ function Job({ job }) {
         <HStack>
           <InfoTabs job={job} />
         </HStack>
-        <HStack>
-          <EditJobForm jobId={job.id} width="full" />
-          <DeleteJob jobId={job.id} />
-        </HStack>
+        <DeleteJob jobId={job.id} />
       </Stack>
     </Box>
   );
