@@ -216,7 +216,6 @@ const JobFormModal = () => {
       console.log("is working");
       dispatch(
         jobAdded({
-          id: nanoid(),
           isComplete: false,
           jobName: "test",
           contact: { ...contactFormData },

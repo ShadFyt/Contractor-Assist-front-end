@@ -19,6 +19,7 @@ import {
   TabPanel,
   Link,
   Badge,
+  Tooltip,
 } from "@chakra-ui/react";
 import { EditClientForm } from "./editClientForm";
 import { DeleteJob } from "./deleteJob";
@@ -123,7 +124,13 @@ function Job({ job }) {
           <Box>
             <Heading size={"lg"} marginLeft={6} color="white">
               <Link as={ReactLink} to={`/jobs/${job.id}`}>
-                {job.jobName}
+                <Tooltip
+                  label="Click to see full job page"
+                  aria-label="A tooltip"
+                  fontSize="md"
+                >
+                  <span tabIndex="0">{job.jobName}</span>
+                </Tooltip>
               </Link>
             </Heading>
             <Text align="end" fontSize="2xl" fontWeight="hairline">

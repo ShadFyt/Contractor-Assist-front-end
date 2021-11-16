@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, nanoid } from '@reduxjs/toolkit';
 
 import jobs from "../../components/jobs/job_board.json"
 
@@ -9,8 +9,25 @@ export const jobSlice = createSlice({
     },
 
     reducers: {
-        jobAdded(state, action) {
-            state.listOfJobs.push(action.payload)
+        employeesAdded(state, action) {
+            const { id, data } = action.payload
+            const existingJob = state.listOfJobs.find(job => job.id === parseInt(id))
+            if (existingJob) {
+                existingJob.workers.push(data)
+            }
+        },
+        jobAdded: {
+            reducer(state, action) {
+                state.listOfJobs.push(action.payload)
+            },
+            prepare(...rest) {
+                return {
+                    payload: {
+                        ...rest,
+                        id: nanoid()
+                    }
+                }
+            }
         },
         clientUpdated(state, action) {
             const { id, address, email, number } = action.payload
@@ -34,7 +51,7 @@ export const jobSlice = createSlice({
     }
 })
 
-export const { jobAdded, clientUpdated, jobDeleted } = jobSlice.actions
+export const { jobAdded, clientUpdated, jobDeleted, employeesAdded } = jobSlice.actions
 export const selectJobs = state => state.job.listOfJobs
 export default jobSlice.reducer;
 

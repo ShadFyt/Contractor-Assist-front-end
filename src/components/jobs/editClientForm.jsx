@@ -52,6 +52,7 @@ export const EditClientForm = ({ jobId, ...rest }) => {
         colorScheme="gray"
         bgColor="gray.500"
         mt={3}
+        _hover={{ bgColor: "gray.700", boxShadow: "lg" }}
         {...rest}
       >
         Edit

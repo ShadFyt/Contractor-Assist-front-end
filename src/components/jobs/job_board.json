@@ -14,7 +14,8 @@
       "startDate": "12/28/2020",
       "endDate": "7/9/2021",
       "jobType": "Both"
-    }
+    },
+    "workers": []
   },
   {
     "id": 2,
@@ -31,7 +32,8 @@
       "startDate": "7/20/2021",
       "endDate": "2/2/2021",
       "jobType": "Installation"
-    }
+    },
+    "workers": []
   },
   {
     "id": 3,
@@ -48,7 +50,8 @@
       "startDate": "3/13/2021",
       "endDate": "12/2/2020",
       "jobType": "Both"
-    }
+    },
+    "workers": []
   },
   {
     "id": 4,
@@ -65,7 +68,8 @@
       "startDate": "9/27/2021",
       "endDate": "7/7/2021",
       "jobType": "Sanding"
-    }
+    },
+    "workers": []
   },
   {
     "id": 5,
@@ -82,7 +86,8 @@
       "startDate": "10/18/2021",
       "endDate": "1/15/2021",
       "jobType": "Installation"
-    }
+    },
+    "workers": []
   },
   {
     "id": 6,
@@ -99,7 +104,8 @@
       "startDate": "8/6/2021",
       "endDate": "8/10/2021",
       "jobType": "Both"
-    }
+    },
+    "workers": []
   },
   {
     "id": 7,
@@ -116,7 +122,8 @@
       "startDate": "6/1/2021",
       "endDate": "10/11/2021",
       "jobType": "Installation"
-    }
+    },
+    "workers": []
   },
   {
     "id": 8,
@@ -133,7 +140,8 @@
       "startDate": "9/17/2021",
       "endDate": "6/7/2021",
       "jobType": "Both"
-    }
+    },
+    "workers": []
   },
   {
     "id": 9,
@@ -150,7 +158,8 @@
       "startDate": "4/29/2021",
       "endDate": "3/5/2021",
       "jobType": "Sanding"
-    }
+    },
+    "workers": []
   },
   {
     "id": 10,
@@ -167,6 +176,7 @@
       "startDate": "7/5/2021",
       "endDate": "7/22/2021",
       "jobType": "Sanding"
-    }
+    },
+    "workers": []
   }
 ]
