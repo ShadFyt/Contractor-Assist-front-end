@@ -1,5 +1,7 @@
 import React from "react";
 import { Link as ReactLink } from "react-router-dom";
+import { MdOutlineCancelPresentation } from "react-icons/md";
+import { AiOutlineCheckCircle } from "react-icons/ai";
 
 import {
   Box,
@@ -20,6 +22,9 @@ import {
   Link,
   Badge,
   Tooltip,
+  StackDivider,
+  Spacer,
+  Icon,
 } from "@chakra-ui/react";
 import { EditClientForm } from "./editClientForm";
 import { DeleteJob } from "./deleteJob";
@@ -73,6 +78,43 @@ const ContactInfo = ({ jobContact, jobId }) => {
   );
 };
 
+const TaskTab = ({ jobTasks }) => {
+  if (jobTasks.length <= 0) {
+    return <Text>No tasks</Text>;
+  }
+  return (
+    <VStack
+      alignItems="stretch"
+      w="100%"
+      border="1px"
+      rounded="lg"
+      marginBottom={3}
+      p={4}
+      divider={<StackDivider colorScheme="gray" color="gray.300" />}
+    >
+      <HStack>
+        <Heading as="h4" color="black">
+          Task
+        </Heading>
+        <Spacer />
+        <Text color="black">Status</Text>
+      </HStack>
+      {jobTasks.map((task) => (
+        <HStack key={task.id}>
+          console.log
+          <Text>{task.task}</Text>
+          <Spacer />
+          {task.isComplete ? (
+            <Icon as={AiOutlineCheckCircle} color="green.700" fontSize="lg" />
+          ) : (
+            <Icon as={MdOutlineCancelPresentation} color="red" fontSize="lg" />
+          )}
+        </HStack>
+      ))}
+    </VStack>
+  );
+};
+
 const InfoTabs = ({ job }) => {
   return (
     <Box w="full">
@@ -96,7 +138,10 @@ const InfoTabs = ({ job }) => {
           <TabPanel>
             <DetailTab jobDetail={job.detail} />
           </TabPanel>
-          <TabPanel>some content3</TabPanel>
+          <TabPanel>
+            {" "}
+            <TaskTab jobTasks={job.tasks} />
+          </TabPanel>
         </TabPanels>
       </Tabs>
     </Box>

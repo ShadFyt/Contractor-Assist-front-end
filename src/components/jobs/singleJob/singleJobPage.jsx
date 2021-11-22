@@ -1,19 +1,17 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { employeesAdded } from "../../features/job/jobSlice";
+import { employeesAdded } from "../../../features/job/jobSlice";
 
 import {
   Button,
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
   TableCaption,
   Box,
-  Stack,
   FormControl,
   FormLabel,
   Input,
@@ -28,12 +26,9 @@ import {
   VStack,
   HStack,
   Select,
+  SimpleGrid,
 } from "@chakra-ui/react";
-
-const fakeData = [
-  { name: "Ryan", startTime: "6:00am", endTime: "5:00pm" },
-  { name: "Bob", startTime: "7:00am", endTime: "6:00pm" },
-];
+import TaskComponent from "./taskComponent";
 
 const ClockInForm = ({ jobId }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -42,16 +37,18 @@ const ClockInForm = ({ jobId }) => {
   const [employee, setEmployee] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+  const [date, setDate] = useState("");
 
   const onEmployeeChanged = (e) => setEmployee(e.target.value);
   const onStartTimeChanged = (e) => setStartTime(e.target.value);
   const onEndTimeChanged = (e) => setEndTime(e.target.value);
+  const onDateChanged = (e) => setDate(e.target.value);
 
   const onAddWorker = () => {
     console.log("clicked");
-    const data = { name: employee, startTime, endTime };
+    const data = { name: employee, date, startTime, endTime };
     onClose();
-    dispatch(employeesAdded({ id: jobId, data }));
+    dispatch(employeesAdded(jobId, data));
     setEmployee("");
   };
 
@@ -110,6 +107,17 @@ const ClockInForm = ({ jobId }) => {
                   />
                 </FormControl>
               </HStack>
+              <FormControl>
+                <FormLabel>Date</FormLabel>
+                <Input
+                  id="date"
+                  name="date"
+                  value={date}
+                  onChange={onDateChanged}
+                  type="date"
+                  textAlign="center"
+                />
+              </FormControl>
             </VStack>
           </ModalBody>
           <ModalFooter>
@@ -127,7 +135,7 @@ const ClockInForm = ({ jobId }) => {
 const RenderClockInTable = ({ job }) => {
   return (
     <>
-      <Table variant="simple" size="lg">
+      <Table variant="simple" size={{ base: "sm", md: "lg" }}>
         <TableCaption>
           Employees Clock In Table <ClockInForm jobId={job.id} />
         </TableCaption>
@@ -141,9 +149,9 @@ const RenderClockInTable = ({ job }) => {
         </Thead>
         <Tbody>
           {job.workers.map((data) => (
-            <Tr key={data.name}>
+            <Tr key={data.id}>
               <Td>{data.name}</Td>
-              <Td>n/a</Td>
+              <Td>{data.date}</Td>
               <Td>{data.startTime}</Td>
               <Td>{data.endTime}</Td>
             </Tr>
@@ -172,9 +180,14 @@ export const SingleJobPage = ({ match }) => {
   return (
     <section>
       <h2>{job.jobName}</h2>
-      <Box padding={2} margin={4} border="1px" rounded="2xl">
-        <RenderClockInTable job={job} />
-      </Box>
+      <SimpleGrid columns={{ base: 1, xl: 2 }} spacing={4}>
+        <Box marginY={2} padding={2} border="1px" rounded="lg" h="fit-content">
+          <RenderClockInTable job={job} />
+        </Box>
+        <Box marginY={2} marginRight={2} h="fit-content">
+          <TaskComponent jobId={jobId} jobTasks={job.tasks} />
+        </Box>
+      </SimpleGrid>
     </section>
   );
 };

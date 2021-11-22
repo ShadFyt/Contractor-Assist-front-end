@@ -3,7 +3,7 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { Box, Stack } from "@chakra-ui/react";
 import Sidebar from "./layout/Sidebar";
 import ListJobs from "./jobs";
-import { SingleJobPage } from "./jobs/singleJobPage";
+import { SingleJobPage } from "./jobs/singleJob/singleJobPage";
 
 const HomePage = () => {
   return <div>Home page</div>;
