@@ -99,6 +99,7 @@ const TaskComponent = ({ jobId, jobTasks }) => {
             type="text"
             id="task"
             name="task"
+            boxShadow="dark-lg"
             value={task}
             onChange={onTaskChanged}
           />

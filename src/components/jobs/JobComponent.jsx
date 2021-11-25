@@ -29,27 +29,39 @@ import {
 import { EditClientForm } from "./editClientForm";
 import { DeleteJob } from "./deleteJob";
 
-const Address = ({ address }) => {
+export const Address = ({ address, ...rest }) => {
   const { hasCopied, onCopy } = useClipboard(address);
   return (
-    <HStack>
-      <Text>{address}</Text>
-      <Button
-        onClick={onCopy}
-        ml={2}
-        variant="solid"
-        _hover={{ boxShadow: "lg" }}
-        colorScheme="gray"
-        color="gray.900"
-        size="xs"
-      >
-        {hasCopied ? "Copied" : "Copy"}
-      </Button>
-    </HStack>
+    <VStack p={2} boxShadow="base" _hover={{ boxShadow: "dark-lg" }} {...rest}>
+      <Link isExternal>
+        <iframe
+          title={address}
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11535.988402242036!2d-79.27491817896484!3d43.7106093246573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4ce7b488e5fcd%3A0xad322c8c32ab7f01!2sWarden!5e0!3m2!1sen!2sca!4v1634930038310!5m2!1sen!2sca"
+          width="250"
+          height="100px"
+          style={{ border: 0 }}
+          loading="lazy"
+        />
+        <HStack>
+          <Text>{address}</Text>
+          <Button
+            onClick={onCopy}
+            ml={2}
+            variant="solid"
+            _hover={{ boxShadow: "lg" }}
+            colorScheme="gray"
+            color="gray.900"
+            size="xs"
+          >
+            {hasCopied ? "Copied" : "Copy"}
+          </Button>
+        </HStack>
+      </Link>
+    </VStack>
   );
 };
 
-const ContactInfo = ({ jobContact, jobId }) => {
+export const ContactInfo = ({ jobContact, jobId }) => {
   return (
     <Box>
       <Heading as="h3" size="lg">
@@ -161,9 +173,9 @@ const DetailTab = ({ jobDetail }) => {
     </SimpleGrid>
   );
 };
-function Job({ job }) {
+function Job({ job, ...rest }) {
   return (
-    <Box bg={"teal.600"} rounded="2xl" boxShadow="base">
+    <Box bg={"teal.600"} rounded="2xl" boxShadow="base" sx={{ ...rest }}>
       <Stack p={2}>
         <HStack justify="space-between">
           <Box>
@@ -185,19 +197,7 @@ function Job({ job }) {
               New
             </Badge>
           </Box>
-          <VStack p={2} boxShadow="base" _hover={{ boxShadow: "dark-lg" }}>
-            <Link isExternal>
-              <iframe
-                title={job.contact.address}
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11535.988402242036!2d-79.27491817896484!3d43.7106093246573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4ce7b488e5fcd%3A0xad322c8c32ab7f01!2sWarden!5e0!3m2!1sen!2sca!4v1634930038310!5m2!1sen!2sca"
-                width="250"
-                height="100px"
-                style={{ border: 0 }}
-                loading="lazy"
-              />
-            </Link>
-            <Address address={job.contact.address} />
-          </VStack>
+          <Address address={job.contact.address} />
         </HStack>
         <Divider orientation="horizontal" />
 

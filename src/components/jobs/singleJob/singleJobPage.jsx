@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { employeesAdded } from "../../../features/job/jobSlice";
+import Header from "./header";
 
 import {
   Button,
@@ -28,6 +29,8 @@ import {
   Select,
   SimpleGrid,
 } from "@chakra-ui/react";
+
+import Job from "../JobComponent";
 import TaskComponent from "./taskComponent";
 
 const ClockInForm = ({ jobId }) => {
@@ -179,7 +182,7 @@ export const SingleJobPage = ({ match }) => {
 
   return (
     <section>
-      <h2>{job.jobName}</h2>
+      <Header job={job} />
       <SimpleGrid columns={{ base: 1, xl: 2 }} spacing={4}>
         <Box marginY={2} padding={2} border="1px" rounded="lg" h="fit-content">
           <RenderClockInTable job={job} />
