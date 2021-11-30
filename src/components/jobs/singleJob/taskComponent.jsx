@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   taskAdded,
+  taskEdited,
   taskIsCompleteUpdate,
 } from "../../../features/job/jobSlice";
 
@@ -9,23 +10,59 @@ import {
   Button,
   Box,
   FormControl,
-  FormLabel,
   Input,
   VStack,
   HStack,
   Center,
-  SimpleGrid,
   Text,
   Spacer,
   StackDivider,
   Heading,
   useToast,
+  Editable,
+  EditableInput,
+  EditablePreview,
+  useEditableControls,
+  ButtonGroup,
+  IconButton,
 } from "@chakra-ui/react";
+
+import { CheckIcon, CloseIcon, EditIcon } from "@chakra-ui/icons";
+
+import DeleteTask from "./deleteTask";
 
 const DisplayTasks = ({ jobTasks }) => {
   const dispatch = useDispatch();
+  const [editTask, setEditTask] = useState("");
 
-  const onUpdateTask = (jobId, taskId, isComplete) => {
+  const onTaskChanged = (e) => setEditTask(e.target.value);
+
+  function EditableControls() {
+    const {
+      isEditing,
+      getSubmitButtonProps,
+      getCancelButtonProps,
+      getEditButtonProps,
+    } = useEditableControls();
+
+    return isEditing ? (
+      <ButtonGroup size="sm">
+        <IconButton icon={<CheckIcon />} {...getSubmitButtonProps()} />
+        <IconButton icon={<CloseIcon />} {...getCancelButtonProps()} />
+      </ButtonGroup>
+    ) : (
+      <Box justifyContent="center">
+        <IconButton size="sm" icon={<EditIcon />} {...getEditButtonProps()} />
+      </Box>
+    );
+  }
+
+  const onEditClick = (jobId, taskId, editTask) => {
+    console.log("from onEdit", editTask);
+    dispatch(taskEdited({ jobId, taskId, value: editTask }));
+  };
+
+  const onComplete = (jobId, taskId, isComplete) => {
     console.log("from dispatch", isComplete.toString(), jobId, taskId);
     dispatch(taskIsCompleteUpdate({ jobId, taskId, isComplete }));
   };
@@ -38,7 +75,7 @@ const DisplayTasks = ({ jobTasks }) => {
       rounded="lg"
       marginBottom={3}
       p={4}
-      divider={<StackDivider colorScheme="gray" color="gray.300" />}
+      divider={<StackDivider color="gray.300" />}
     >
       <Center>
         <Heading as="h3" fontSize="xl">
@@ -48,18 +85,26 @@ const DisplayTasks = ({ jobTasks }) => {
       {jobTasks.map((task) => (
         <HStack key={task.id}>
           <Text marginLeft={2} fontSize="xl">
-            {task.task}
+            <Editable
+              defaultValue={task.task}
+              isPreviewFocusable={false}
+              onSubmit={() => onEditClick(task.jobId, task.id, editTask)}
+            >
+              <HStack>
+                <EditableControls task={task} />
+                <EditablePreview />
+                <EditableInput onChange={onTaskChanged} />
+              </HStack>
+            </Editable>
           </Text>
           <Spacer />
           <Button
-            onClick={() => onUpdateTask(task.jobId, task.id, task.isComplete)}
+            onClick={() => onComplete(task.jobId, task.id, task.isComplete)}
             size="sm"
           >
             complete
           </Button>
-          <Button colorScheme="red" size="sm">
-            Delete
-          </Button>
+          <DeleteTask jobId={task.jobId} taskId={task.id} />
         </HStack>
       ))}
     </VStack>

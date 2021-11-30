@@ -30,7 +30,6 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 
-import Job from "../JobComponent";
 import TaskComponent from "./taskComponent";
 
 const ClockInForm = ({ jobId }) => {

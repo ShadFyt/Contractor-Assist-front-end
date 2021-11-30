@@ -28,6 +28,16 @@ export const jobSlice = createSlice({
             }
         },
 
+        taskEdited(state, action) {
+            const { jobId, taskId, value } = action.payload
+            const existingJob = state.listOfJobs.find(job => job.id === parseInt(jobId))
+            const existingTask = existingJob.tasks.find(task => task.id === taskId)
+            if (existingTask) {
+                existingTask.task = value
+                console.log(" from redux: task is set to", existingTask.task)
+            }
+        },
+
         taskIsCompleteUpdate(state, action) {
             const { jobId, taskId, isComplete } = action.payload
             console.log(jobId, isComplete)
@@ -58,6 +68,18 @@ export const jobSlice = createSlice({
                         isComplete: false
                     }
                 }
+            }
+        },
+
+        taskDeleted(state, action) {
+            const { jobId, taskId } = action.payload
+            console.log(jobId, taskId)
+            const existingJob = state.listOfJobs.find(job => job.id === parseInt(jobId))
+            const existingTask = existingJob.tasks.find(task => task.id === taskId)
+            if (existingTask) {
+                const index = existingJob.tasks.indexOf(existingTask)
+                existingJob.tasks.splice(index, 1)
+                console.log(`Task ${existingTask.task}: deleted`)
             }
         },
 
@@ -100,7 +122,7 @@ export const {
     jobAdded,
     clientUpdated,
     jobDeleted, employeesAdded,
-    taskAdded, taskIsCompleteUpdate,
+    taskAdded, taskIsCompleteUpdate, taskEdited, taskDeleted,
 } = jobSlice.actions
 export const selectJobs = state => state.job.listOfJobs
 export default jobSlice.reducer;

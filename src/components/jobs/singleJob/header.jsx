@@ -20,9 +20,9 @@ const Header = ({ job }) => {
           <ContactInfo jobContact={job.contact} jobId={job.id} />
         </Box>
         <Spacer />
-
+        <Heading m={2}>{job.jobName}</Heading>
+        <Spacer />
         <VStack>
-          <Heading m={2}>{job.jobName}</Heading>
           <Address address={job.contact.address} width={"fit-content"} />
         </VStack>
       </HStack>
