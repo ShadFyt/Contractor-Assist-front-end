@@ -28,12 +28,15 @@ import {
 } from "@chakra-ui/react";
 
 import { CheckIcon, CloseIcon, EditIcon } from "@chakra-ui/icons";
+import { FaCheck } from "react-icons/fa";
+import { GiCancel } from "react-icons/gi";
 
 import DeleteTask from "./deleteTask";
 
 const DisplayTasks = ({ jobTasks }) => {
   const dispatch = useDispatch();
   const [editTask, setEditTask] = useState("");
+  const completiontoast = useToast();
 
   const onTaskChanged = (e) => setEditTask(e.target.value);
 
@@ -62,8 +65,15 @@ const DisplayTasks = ({ jobTasks }) => {
     dispatch(taskEdited({ jobId, taskId, value: editTask }));
   };
 
-  const onComplete = (jobId, taskId, isComplete) => {
+  const onComplete = (jobId, taskId, isComplete, task) => {
     console.log("from dispatch", isComplete.toString(), jobId, taskId);
+    completiontoast({
+      title: "Task completed",
+      description: task,
+      status: "success",
+      duration: 4000,
+      isClosable: true,
+    });
     dispatch(taskIsCompleteUpdate({ jobId, taskId, isComplete }));
   };
 
@@ -92,19 +102,27 @@ const DisplayTasks = ({ jobTasks }) => {
             >
               <HStack>
                 <EditableControls task={task} />
-                <EditablePreview />
+                <EditablePreview
+                  textDecoration={task.isComplete ? "line-through" : "none"}
+                />
                 <EditableInput onChange={onTaskChanged} />
               </HStack>
             </Editable>
           </Text>
           <Spacer />
-          <Button
-            onClick={() => onComplete(task.jobId, task.id, task.isComplete)}
-            size="sm"
-          >
-            complete
-          </Button>
-          <DeleteTask jobId={task.jobId} taskId={task.id} />
+          <IconButton
+            onClick={() =>
+              onComplete(task.jobId, task.id, task.isComplete, task.task)
+            }
+            icon={
+              task.isComplete ? (
+                <GiCancel />
+              ) : (
+                <FaCheck colorScheme="green" color="green" fontSize="25px" />
+              )
+            }
+          />
+          <DeleteTask jobId={task.jobId} taskId={task.id} colorScheme="red" />
         </HStack>
       ))}
     </VStack>
