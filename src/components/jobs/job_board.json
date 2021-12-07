@@ -16,7 +16,8 @@
       "jobType": "Both"
     },
     "workers": [],
-    "tasks": []
+    "tasks": [],
+    "expenses": []
   },
   {
     "id": 2,
@@ -35,7 +36,8 @@
       "jobType": "Installation"
     },
     "workers": [],
-    "tasks": []
+    "tasks": [],
+    "expenses": []
   },
   {
     "id": 3,
@@ -54,7 +56,8 @@
       "jobType": "Both"
     },
     "workers": [],
-    "tasks": []
+    "tasks": [],
+    "expenses": []
   },
   {
     "id": 4,
@@ -92,7 +95,8 @@
       "jobType": "Installation"
     },
     "workers": [],
-    "tasks": []
+    "tasks": [],
+    "expenses": []
   },
   {
     "id": 6,
@@ -111,7 +115,8 @@
       "jobType": "Both"
     },
     "workers": [],
-    "tasks": []
+    "tasks": [],
+    "expenses": []
   },
   {
     "id": 7,
@@ -130,7 +135,8 @@
       "jobType": "Installation"
     },
     "workers": [],
-    "tasks": []
+    "tasks": [],
+    "expenses": []
   },
   {
     "id": 8,
@@ -149,7 +155,8 @@
       "jobType": "Both"
     },
     "workers": [],
-    "tasks": []
+    "tasks": [],
+    "expenses": []
   },
   {
     "id": 9,
@@ -168,7 +175,8 @@
       "jobType": "Sanding"
     },
     "workers": [],
-    "tasks": []
+    "tasks": [],
+    "expenses": []
   },
   {
     "id": 10,
@@ -187,6 +195,7 @@
       "jobType": "Sanding"
     },
     "workers": [],
-    "tasks": []
+    "tasks": [],
+    "expenses": []
   }
 ]

@@ -28,6 +28,26 @@ export const jobSlice = createSlice({
             }
         },
 
+        expenseAdded: {
+            reducer(state, action) {
+                const { jobId } = action.payload
+                const existingJob = state.listOfJobs.find(job => job.id === parseInt(jobId))
+                if (existingJob) {
+                    existingJob.expenses.push(action.payload)
+                    console.log(action.payload)
+                }
+            },
+            prepare(jobId, expense) {
+                return {
+                    payload: {
+                        jobId,
+                        expense,
+                        id: nanoid(),
+                    }
+                }
+            }
+        },
+
         taskEdited(state, action) {
             const { jobId, taskId, value } = action.payload
             const existingJob = state.listOfJobs.find(job => job.id === parseInt(jobId))
@@ -123,6 +143,7 @@ export const {
     clientUpdated,
     jobDeleted, employeesAdded,
     taskAdded, taskIsCompleteUpdate, taskEdited, taskDeleted,
+    expenseAdded
 } = jobSlice.actions
 export const selectJobs = state => state.job.listOfJobs
 export default jobSlice.reducer;

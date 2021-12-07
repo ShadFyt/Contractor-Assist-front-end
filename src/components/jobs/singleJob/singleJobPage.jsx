@@ -5,7 +5,6 @@ import Header from "./header";
 import { Box, SimpleGrid } from "@chakra-ui/react";
 
 import TaskComponent from "./taskComponent";
-import RenderClockInTable from "./renderClockInTable";
 import TrackingTabs from "./trackingTabs";
 
 export const SingleJobPage = ({ match }) => {

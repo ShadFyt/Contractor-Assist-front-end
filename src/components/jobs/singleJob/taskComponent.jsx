@@ -68,9 +68,9 @@ const DisplayTasks = ({ jobTasks }) => {
   const onComplete = (jobId, taskId, isComplete, task) => {
     console.log("from dispatch", isComplete.toString(), jobId, taskId);
     completiontoast({
-      title: "Task completed",
+      title: !isComplete ? "Task completed" : "Task not completed",
       description: task,
-      status: "success",
+      status: !isComplete ? "success" : "warning",
       duration: 4000,
       isClosable: true,
     });

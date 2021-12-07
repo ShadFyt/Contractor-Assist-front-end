@@ -61,12 +61,21 @@ export const Address = ({ address, ...rest }) => {
   );
 };
 
-export const ContactInfo = ({ jobContact, jobId }) => {
+export const ContactInfo = ({ jobContact, jobId, isHeader }) => {
   return (
     <Box>
-      <Heading as="h3" size="lg">
-        {jobContact.owner}
-      </Heading>
+      {isHeader ? (
+        <Heading as="h3" size="lg">
+          {jobContact.owner}
+        </Heading>
+      ) : (
+        <Text>
+          <Text as="span" fontWeight="bold">
+            CUSTOMER
+          </Text>{" "}
+          : {jobContact.owner}
+        </Text>
+      )}
       <Text>
         <Text as="span" fontWeight="bold">
           ADDRESS
@@ -145,7 +154,11 @@ const InfoTabs = ({ job }) => {
         </TabList>
         <TabPanels p={2} alignItems="center">
           <TabPanel>
-            <ContactInfo jobContact={job.contact} jobId={job.id} />
+            <ContactInfo
+              jobContact={job.contact}
+              jobId={job.id}
+              isHeader={true}
+            />
           </TabPanel>
           <TabPanel>
             <DetailTab jobDetail={job.detail} />
