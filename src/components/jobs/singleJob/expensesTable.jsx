@@ -10,12 +10,13 @@ import {
   TableCaption,
   Button,
 } from "@chakra-ui/react";
+import ExpenseForm from "./expenseForm";
 
 const RenderExpensesTable = () => {
   return (
     <Table variant="striped" size={{ base: "sm", md: "lg" }}>
       <TableCaption>
-        <Button>Add Expense</Button>
+        <ExpenseForm />
       </TableCaption>
       <Thead>
         <Tr>
