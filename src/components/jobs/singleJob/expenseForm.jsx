@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { expenseAdded } from "../../../features/job/jobSlice";
 
 import {
   Button,
   FormControl,
-  FormLabel,
   Input,
   Modal,
   ModalOverlay,
@@ -18,7 +17,6 @@ import {
   useDisclosure,
   VStack,
   HStack,
-  Select,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
@@ -44,7 +42,25 @@ const ExpenseForm = ({ jobId }) => {
   const onStoreChanged = (e) => setStore(e.target.value);
   const onDateChanged = (e) => setDate(e.target.value);
   const onLocationChanged = (e) => setLocation(e.target.value);
-  const onPriceChanged = (e) => setPrice(e.target.value);
+  const onPriceChanged = (e) => setPrice(e);
+
+  const addExpense = () => {
+    dispatch(
+      expenseAdded({
+        store,
+        date,
+        location,
+        price,
+        jobId,
+      })
+    );
+    setStore("");
+    setDate("");
+    setLocation("");
+    setPrice("");
+    onClose();
+    console.log("dispatch expense to store");
+  };
 
   return (
     <>
@@ -82,7 +98,7 @@ const ExpenseForm = ({ jobId }) => {
                       children={<Icon as={FaDollarSign} color="green.400" />}
                     />
                     <NumberInput
-                      onChange={(value) => setPrice(value)}
+                      onChange={onPriceChanged}
                       value={price}
                       precision={2}
                       marginLeft={3}
@@ -130,7 +146,7 @@ const ExpenseForm = ({ jobId }) => {
             </VStack>
           </ModalBody>
           <ModalFooter>
-            <Button>Add</Button>
+            <Button onClick={addExpense}>Add</Button>
             <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>
         </ModalContent>

@@ -8,15 +8,14 @@ import {
   Th,
   Td,
   TableCaption,
-  Button,
 } from "@chakra-ui/react";
 import ExpenseForm from "./expenseForm";
 
-const RenderExpensesTable = () => {
+const RenderExpensesTable = ({ expenses, jobId }) => {
   return (
     <Table variant="striped" size={{ base: "sm", md: "lg" }}>
       <TableCaption>
-        <ExpenseForm />
+        <ExpenseForm jobId={jobId} />
       </TableCaption>
       <Thead>
         <Tr>
@@ -27,18 +26,14 @@ const RenderExpensesTable = () => {
         </Tr>
       </Thead>
       <Tbody>
-        <Tr>
-          <Td>Rona</Td>
-          <Td>10-10-2021</Td>
-          <Td>24 hardware Dr</Td>
-          <Td>$10</Td>
-        </Tr>
-        <Tr>
-          <Td>Rona</Td>
-          <Td>10-10-2021</Td>
-          <Td>24 hardware Dr</Td>
-          <Td>$10</Td>
-        </Tr>
+        {expenses.map((item) => (
+          <Tr key={item.id}>
+            <Td>{item.store}</Td>
+            <Td>{item.date}</Td>
+            <Td>{item.location}</Td>
+            <Td>$ {item.price}</Td>
+          </Tr>
+        ))}
       </Tbody>
     </Table>
   );

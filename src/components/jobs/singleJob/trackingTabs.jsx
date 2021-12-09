@@ -19,7 +19,7 @@ const TrackingTabs = ({ job }) => {
             <RenderClockInTable job={job} />
           </TabPanel>
           <TabPanel>
-            <RenderExpensesTable />
+            <RenderExpensesTable expenses={job.expenses} jobId={job.id} />
           </TabPanel>
         </TabPanels>
       </Tabs>

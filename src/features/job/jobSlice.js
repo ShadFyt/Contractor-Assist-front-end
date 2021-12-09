@@ -30,18 +30,17 @@ export const jobSlice = createSlice({
 
         expenseAdded: {
             reducer(state, action) {
+                console.log("from reducer", action.payload)
                 const { jobId } = action.payload
                 const existingJob = state.listOfJobs.find(job => job.id === parseInt(jobId))
                 if (existingJob) {
                     existingJob.expenses.push(action.payload)
-                    console.log(action.payload)
                 }
             },
-            prepare(jobId, expense) {
+            prepare(expense) {
                 return {
                     payload: {
-                        jobId,
-                        expense,
+                        ...expense,
                         id: nanoid(),
                     }
                 }
