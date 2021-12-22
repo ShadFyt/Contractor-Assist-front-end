@@ -4,8 +4,20 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 export const apiSlice = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000" }),
-    tagTypes: ["Employee"],
+    tagTypes: ["Employee", "Jobs"],
     endpoints: builder => ({
+        getJobs: builder.query({
+            query: () => "/jobs",
+            providesTags: ["Jobs"]
+        }),
+        addNewJob: builder.mutation({
+            query: initialJob => ({
+                url: "/jobs",
+                method: "POST",
+                body: initialJob
+            }),
+            invalidatesTags: ["Jobs"]
+        }),
         getEmployees: builder.query({
             query: () => "/employees",
             providesTags: ["Employee"]
@@ -22,4 +34,7 @@ export const apiSlice = createApi({
 })
 
 
-export const { useGetEmployeesQuery, useAddNewEmployeeMutation } = apiSlice
+export const {
+    useGetEmployeesQuery, useAddNewEmployeeMutation,
+    useGetJobsQuery, useAddNewJobMutation,
+} = apiSlice

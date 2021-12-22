@@ -1,21 +1,9 @@
 import React from "react";
-import { Link as ReactLink } from "react-router-dom";
-
-import { Box, Spinner, Text, Button } from "@chakra-ui/react";
+import { Box, Spinner, Text, Button, SimpleGrid } from "@chakra-ui/react";
 
 import { useGetEmployeesQuery } from "../../features/api/apiSlice";
 import { AddEmployeeForm } from "./addNewEmployeeForm";
-
-const DisplayEmployee = ({ employee }) => {
-  return (
-    <Box>
-      <Text>{employee.firstName}</Text>
-      <Text>{employee.lastName}</Text>
-      <Text>{employee.birthDate}</Text>
-      <Text>{employee.payRate}</Text>
-    </Box>
-  );
-};
+import { EmployeeProfile } from "./employeeProfile";
 
 const ListEmployees = () => {
   const {
@@ -32,7 +20,7 @@ const ListEmployees = () => {
     content = <Spinner />;
   } else if (isSuccess) {
     content = employees.map((employee) => (
-      <DisplayEmployee key={employee.id} employee={employee} />
+      <EmployeeProfile key={employee.id} employee={employee} />
     ));
   } else if (isError) {
     content = <div>{error.toString()}</div>;
@@ -41,7 +29,7 @@ const ListEmployees = () => {
   return (
     <section>
       <h2>Employees</h2>
-      <Box>{content}</Box>
+      <SimpleGrid columns={3}>{content}</SimpleGrid>
       <Box w="50%">
         <AddEmployeeForm />
       </Box>

@@ -1,14 +1,8 @@
 import React, { useState } from "react";
 import {
-  Box,
-  Spinner,
-  Text,
   FormControl,
   FormLabel,
-  Icon,
   Input,
-  InputGroup,
-  InputLeftElement,
   HStack,
   VStack,
   Button,
@@ -21,6 +15,8 @@ export const AddEmployeeForm = () => {
   const [lastName, setLastName] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [payRate, setPayRate] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
 
   const [addNewEmployee, { isLoading }] = useAddNewEmployeeMutation();
 
@@ -28,9 +24,13 @@ export const AddEmployeeForm = () => {
   const onLastNameChanged = (e) => setLastName(e.target.value);
   const onBirthDateChanged = (e) => setBirthDate(e.target.value);
   const onPayRateChanged = (e) => setPayRate(e.target.value);
+  const onPhoneNumberChanged = (e) => setPhoneNumber(e.target.value);
+  const onEmailChanged = (e) => setEmail(e.target.value);
 
   const canSave =
-    [firstName, lastName, birthDate, payRate].every(Boolean) && !isLoading;
+    [firstName, lastName, birthDate, payRate, phoneNumber, email].every(
+      Boolean
+    ) && !isLoading;
 
   const onSaveEmployee = async () => {
     if (canSave) {
@@ -40,11 +40,15 @@ export const AddEmployeeForm = () => {
           lastName,
           birthDate,
           payRate,
+          phoneNumber,
+          email,
         }).unwrap();
         setFirstName("");
         setLastName("");
         setBirthDate("");
         setPayRate("");
+        setPhoneNumber("");
+        setEmail("");
       } catch (err) {
         console.error("failed to save employee", err);
       }
@@ -97,6 +101,26 @@ export const AddEmployeeForm = () => {
           />
         </FormControl>
       </HStack>
+      <FormControl>
+        <FormLabel htmlFor="phoneNumber">Phone Number</FormLabel>
+        <Input
+          type="tel"
+          id="phoneNumber"
+          name="phoneNumber"
+          value={phoneNumber}
+          onChange={onPhoneNumberChanged}
+        />
+      </FormControl>
+      <FormControl>
+        <FormLabel htmlFor="email">Email</FormLabel>
+        <Input
+          type="email"
+          id="email"
+          name="email"
+          value={email}
+          onChange={onEmailChanged}
+        />
+      </FormControl>
       <Button onClick={() => onSaveEmployee()}>Add new employee</Button>
     </VStack>
   );

@@ -5,33 +5,31 @@ import Job from "./JobComponent";
 import JobFormModal from "./addJobForm";
 
 import { selectAllJobs, fetchJobs } from "../../features/job/jobSlice";
+import { useGetJobsQuery } from "../../features/api/apiSlice";
 
 function ListJobs() {
-  const dispatch = useDispatch();
-  const jobs = useSelector(selectAllJobs);
+  // const dispatch = useDispatch();
+  // const jobs = useSelector(selectAllJobs);
 
-  const jobStatus = useSelector((state) => state.job.status);
-  const error = useSelector((state) => state.job.error);
-
-  useEffect(() => {
-    if (jobStatus === "idle") {
-      console.log(jobStatus);
-      dispatch(fetchJobs());
-    }
-  }, [jobStatus, dispatch]);
+  const {
+    data: jobs,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetJobsQuery();
 
   let content;
 
-  if (jobStatus === "loading") {
+  if (isLoading) {
     content = <p>Loading....</p>;
-  } else if (jobStatus === "succeeded") {
-    console.log("from console", jobs[0].jobName);
+  } else if (isSuccess) {
     content = jobs.map((job) => (
       <Box h="full" w="full" key={job.id}>
         <Job job={job} />
       </Box>
     ));
-  } else if (jobStatus === "failed") {
+  } else if (isError) {
     content = <div>{error}</div>;
   }
 

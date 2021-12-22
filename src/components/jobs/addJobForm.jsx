@@ -1,18 +1,15 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { nanoid } from "@reduxjs/toolkit";
-import { FiPhone } from "react-icons/fi";
-import { FaAddressCard } from "react-icons/fa";
-
-import { jobAdded } from "../../features/job/jobSlice";
+import React, {
+  useState,
+  forwardRef,
+  useRef,
+  useImperativeHandle,
+} from "react";
+import { useAddNewJobMutation } from "../../features/api/apiSlice";
 
 import {
   FormControl,
   FormLabel,
-  Icon,
   Input,
-  InputGroup,
-  InputLeftElement,
   HStack,
   VStack,
   Button,
@@ -24,7 +21,6 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Divider,
   Text,
   Textarea,
   Select,
@@ -32,108 +28,89 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-const ContactInfo = ({ contactFormData, setContactFormData }) => {
-  const handleChange = (e) =>
-    setContactFormData({ ...contactFormData, [e.target.name]: e.target.value });
+const AddJobForm = forwardRef((props, ref) => {
+  const [detailFormData, setDetailFormData] = useState({
+    jobName: "",
+    startDate: "",
+    finishDate: "",
+    location: "",
+    jobType: "both",
+    summary: "",
+  });
 
-  return (
-    <>
-      <HStack>
-        <FormControl>
-          <FormLabel htmlFor="owner">First Name</FormLabel>
-          <Input
-            type="text"
-            id="owner"
-            name="owner"
-            value={contactFormData.owner}
-            onChange={handleChange}
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel htmlFor="lastName">Last Name</FormLabel>
-          <Input
-            type="text"
-            id="lastName"
-            name="lastName"
-            value={contactFormData.lastName}
-            onChange={handleChange}
-          />
-        </FormControl>
-      </HStack>
-      <FormControl>
-        <FormLabel htmlFor="email">Email</FormLabel>
-        <Input
-          type="email"
-          id="email"
-          name="email"
-          value={contactFormData.email}
-          onChange={handleChange}
-        />
-      </FormControl>
-      <HStack>
-        <FormControl>
-          <InputGroup>
-            <InputLeftElement
-              pointerEvent="none"
-              children={<Icon as={FiPhone} color="gray.600" />}
-            />
-            <Input
-              type="tel"
-              placeholder="Phone Number"
-              id="number"
-              name="number"
-              value={contactFormData.number}
-              onChange={handleChange}
-            />
-          </InputGroup>
-        </FormControl>
-        <FormControl>
-          <InputGroup>
-            <InputLeftElement
-              pointerEvent="none"
-              children={<Icon as={FaAddressCard} color="gray.600" />}
-            />
-            <Input
-              type="text"
-              placeholder="Address"
-              id="address"
-              name="address"
-              value={contactFormData.address}
-              onChange={handleChange}
-            />
-          </InputGroup>
-        </FormControl>
-      </HStack>
-    </>
-  );
-};
+  const resetDetailForm = () => {
+    setDetailFormData({
+      ...detailFormData,
+      jobName: "",
+      startDate: "",
+      finishDate: "",
+      location: "",
+      jobType: "both",
+      summary: "",
+    });
+  };
 
-const JobInfo = ({ detailFormData, setDetailFormData }) => {
   const handleChange = (e) =>
     setDetailFormData({
       ...detailFormData,
       [e.target.name]: e.target.value,
     });
 
+  const [addNewJob, { isLoading }] = useAddNewJobMutation();
+
+  const canSave = [detailFormData].every(Boolean) && !isLoading;
+
+  const onSaveJob = async () => {
+    if (canSave) {
+      try {
+        await addNewJob({
+          ...detailFormData,
+        }).unwrap();
+        resetDetailForm();
+      } catch (err) {
+        console.log("failed to save job", err);
+      }
+    }
+  };
+
+  useImperativeHandle(ref, () => ({
+    handleClick() {
+      onSaveJob();
+    },
+  }));
+
   return (
     <Stack spacing={4} w="full">
       <Center>
         <Text fontSize="large">Job Details</Text>
       </Center>
-      <FormControl>
-        <FormLabel>Job Type</FormLabel>
-        <Select
-          id="jobType"
-          name="jobType"
-          value={detailFormData.jobType}
-          onChange={handleChange}
-          placeholder="Select a job type"
-        >
-          <option value="sanding">sanding</option>
-          <option value="installation">installation</option>
-          <option value="both">both</option>
-        </Select>
-      </FormControl>
+      <HStack>
+        <FormControl>
+          <FormLabel htmlFor="jobName">Job Name</FormLabel>
+          <Input
+            id="jobName"
+            name="jobName"
+            value={detailFormData.jobName}
+            onChange={handleChange}
+            type="text"
+            textAlign="center"
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Job Type</FormLabel>
+          <Select
+            id="jobType"
+            name="jobType"
+            value={detailFormData.jobType}
+            onChange={handleChange}
+            placeholder="Select a job type"
+          >
+            <option value="sanding">sanding</option>
+            <option value="installation">installation</option>
+            <option value="both">both</option>
+          </Select>
+        </FormControl>
+      </HStack>
       <HStack width="full">
         <FormControl>
           <FormLabel htmlFor="startDate">Start Date</FormLabel>
@@ -158,6 +135,17 @@ const JobInfo = ({ detailFormData, setDetailFormData }) => {
           />
         </FormControl>
       </HStack>
+      <FormControl id="location">
+        <FormLabel htmlFor="location">Location</FormLabel>
+        <Input
+          id="location"
+          name="location"
+          value={detailFormData.location}
+          onChange={handleChange}
+          type="text"
+          placeholder="address of job goes here"
+        />
+      </FormControl>
       <FormControl id="summary">
         <FormLabel htmlFor="summary">Summary</FormLabel>
         <Textarea
@@ -171,64 +159,13 @@ const JobInfo = ({ detailFormData, setDetailFormData }) => {
       </FormControl>
     </Stack>
   );
-};
+});
 
 const JobFormModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const [contactFormData, setContactFormData] = useState({
-    owner: "",
-    lastName: "",
-    email: "",
-    number: "",
-    address: "",
-  });
-
-  const [detailFormData, setDetailFormData] = useState({
-    summary: "",
-    startDate: "",
-    endDate: "",
-    jobType: "both",
-  });
-
-  const resetDetailForm = () => {
-    setDetailFormData({
-      ...detailFormData,
-      summary: "",
-      startDate: "",
-      endDate: "",
-      jobType: "",
-    });
-  };
-
-  const resetContactForm = () =>
-    setContactFormData({
-      ...contactFormData,
-      owner: "",
-      lastName: "",
-      email: "",
-      number: "",
-      address: "",
-    });
-  const dispatch = useDispatch();
-  const AddJob = () => {
-    if (contactFormData.owner) {
-      console.log("is working");
-      dispatch(
-        jobAdded({
-          isComplete: false,
-          jobName: "test",
-          contact: { ...contactFormData },
-          detail: { ...detailFormData },
-        })
-      );
-      resetContactForm();
-      resetDetailForm();
-    }
-  };
-
+  const childRef = useRef();
   const handleSubmit = () => {
-    AddJob();
+    childRef.current.handleClick();
     onClose();
   };
 
@@ -244,15 +181,7 @@ const JobFormModal = () => {
           <ModalCloseButton />
           <ModalBody>
             <VStack>
-              <ContactInfo
-                contactFormData={contactFormData}
-                setContactFormData={setContactFormData}
-              />
-              <Divider />
-              <JobInfo
-                detailFormData={detailFormData}
-                setDetailFormData={setDetailFormData}
-              />
+              <AddJobForm ref={childRef} />
             </VStack>
           </ModalBody>
           <ModalFooter>
