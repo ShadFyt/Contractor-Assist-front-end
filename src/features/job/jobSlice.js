@@ -2,10 +2,20 @@ import { createAsyncThunk, createSlice, nanoid } from '@reduxjs/toolkit';
 
 import jobs from "../../components/jobs/job_board.json"
 
+export const fetchJobs = createAsyncThunk("jobs/fetchJobs", async () => {
+    const res = await fetch("http://localhost:8000/jobs")
+    console.log("fetching from api")
+    const jobs = res.json()
+    console.log(jobs)
+    return jobs
+})
+
 export const jobSlice = createSlice({
-    name: "job",
+    name: "jobs",
     initialState: {
-        listOfJobs: jobs,
+        listOfJobs: [],
+        status: "idle",
+        error: null
     },
 
     reducers: {
@@ -134,6 +144,24 @@ export const jobSlice = createSlice({
                 state.listOfJobs.splice(index, 1)
             }
         }
+    },
+    extraReducers(builder) {
+        builder.addCase(
+            fetchJobs.pending, (state, action) => {
+                state.status = "loading"
+            }
+        ).addCase(
+            fetchJobs.fulfilled, (state, action) => {
+                state.status = "succeeded"
+                state.listOfJobs = state.listOfJobs.concat(action.payload)
+                console.log("new list of jobs", state.listOfJobs)
+            }
+        ).addCase(
+            fetchJobs.rejected, (state, action) => {
+                state.status = "failed"
+                state.error = action.error.message
+            }
+        )
     }
 })
 
@@ -144,6 +172,11 @@ export const {
     taskAdded, taskIsCompleteUpdate, taskEdited, taskDeleted,
     expenseAdded
 } = jobSlice.actions
-export const selectJobs = state => state.job.listOfJobs
 export default jobSlice.reducer;
+
+export const selectAllJobs = state => state.job.listOfJobs
+
+export const selectJobById = (state, jobId) =>
+    state.job.listOfJobs.find(job => job.id === jobId)
+
 

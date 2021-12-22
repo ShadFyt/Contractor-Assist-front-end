@@ -61,38 +61,38 @@ export const Address = ({ address, ...rest }) => {
   );
 };
 
-export const ContactInfo = ({ jobContact, jobId, isHeader }) => {
+export const ContactInfo = ({ jobId, isHeader }) => {
   return (
     <Box>
       {isHeader ? (
         <Heading as="h3" size="lg">
-          {jobContact.owner}
+          {"Ryan"}
         </Heading>
       ) : (
         <Text>
           <Text as="span" fontWeight="bold">
             CUSTOMER
           </Text>{" "}
-          : {jobContact.owner}
+          : {"Ryan"}
         </Text>
       )}
       <Text>
         <Text as="span" fontWeight="bold">
           ADDRESS
         </Text>
-        : {jobContact.address}
+        : {"24 lake street"}
       </Text>
       <Text>
         <Text as="span" fontWeight="bold">
           TELEPHONE
         </Text>
-        : {jobContact.number}
+        : {"999-999-9999"}
       </Text>
       <Text>
         <Text as="span" fontWeight="bold">
           EMAIL
         </Text>
-        : {jobContact.email}
+        : {"fake@hotmail.com"}
       </Text>
       <EditClientForm jobId={jobId} width="50%" />
     </Box>
@@ -155,13 +155,13 @@ const InfoTabs = ({ job }) => {
         <TabPanels p={2} alignItems="center">
           <TabPanel>
             <ContactInfo
-              jobContact={job.contact}
+              // jobContact={job.contact}
               jobId={job.id}
               isHeader={true}
             />
           </TabPanel>
           <TabPanel>
-            <DetailTab jobDetail={job.detail} />
+            <DetailTab jobDetail={job} />
           </TabPanel>
           <TabPanel>
             {" "}
@@ -204,13 +204,13 @@ function Job({ job, ...rest }) {
               </Link>
             </Heading>
             <Text align="end" fontSize="2xl" fontWeight="hairline">
-              {job.contact.owner}
+              {"Ryan"}
             </Text>
             <Badge variant="subtle" colorScheme="green" mt={8} ml={2}>
               New
             </Badge>
           </Box>
-          <Address address={job.contact.address} />
+          <Address address={job.location} />
         </HStack>
         <Divider orientation="horizontal" />
 

@@ -28,9 +28,9 @@ export const EditClientForm = ({ jobId, ...rest }) => {
     state.job.listOfJobs.find((job) => job.id === jobId)
   );
 
-  const [address, setAddress] = useState(job.contact.address);
-  const [email, setEmail] = useState(job.contact.email);
-  const [number, setNumber] = useState(job.contact.number);
+  const [address, setAddress] = useState("");
+  const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -40,7 +40,6 @@ export const EditClientForm = ({ jobId, ...rest }) => {
   const onNumberChanged = (e) => setNumber(e.target.value);
 
   const handleEditSubmit = () => {
-    console.log(job.contact);
     dispatch(clientUpdated({ id: jobId, address, email, number }));
     onClose();
   };
@@ -62,7 +61,7 @@ export const EditClientForm = ({ jobId, ...rest }) => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            <Center>Edit {job.contact.owner} Info</Center>
+            <Center>Edit {"some user"} Info</Center>
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
