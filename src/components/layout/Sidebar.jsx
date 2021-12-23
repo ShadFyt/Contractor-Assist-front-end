@@ -27,6 +27,7 @@ import {
 const LinkItemsTop = [
   { name: "Home", icon: GoHome },
   { name: "Employees", icon: GrUserWorker },
+  { name: "Clients", icon: GrUserWorker },
   { name: "Jobs", icon: AiOutlineContacts },
   { name: "Equipment", icon: GoTools },
 ];

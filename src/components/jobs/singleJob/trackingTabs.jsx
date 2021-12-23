@@ -1,6 +1,13 @@
 import React from "react";
 
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import {
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Text,
+} from "@chakra-ui/react";
 
 import RenderClockInTable from "./renderClockInTable";
 import RenderExpensesTable from "./expensesTable";
@@ -19,7 +26,7 @@ const TrackingTabs = ({ job }) => {
             <RenderClockInTable job={job} />
           </TabPanel>
           <TabPanel>
-            <RenderExpensesTable expenses={job.expenses} jobId={job.id} />
+            <Text>under maintenance</Text>
           </TabPanel>
         </TabPanels>
       </Tabs>

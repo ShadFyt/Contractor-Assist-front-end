@@ -36,6 +36,7 @@ const AddJobForm = forwardRef((props, ref) => {
     location: "",
     jobType: "both",
     summary: "",
+    clientId: "",
   });
 
   const resetDetailForm = () => {
@@ -47,6 +48,7 @@ const AddJobForm = forwardRef((props, ref) => {
       location: "",
       jobType: "both",
       summary: "",
+      clientId: "",
     });
   };
 
@@ -135,17 +137,29 @@ const AddJobForm = forwardRef((props, ref) => {
           />
         </FormControl>
       </HStack>
-      <FormControl id="location">
-        <FormLabel htmlFor="location">Location</FormLabel>
-        <Input
-          id="location"
-          name="location"
-          value={detailFormData.location}
-          onChange={handleChange}
-          type="text"
-          placeholder="address of job goes here"
-        />
-      </FormControl>
+      <HStack>
+        <FormControl id="location">
+          <FormLabel htmlFor="location">Location</FormLabel>
+          <Input
+            id="location"
+            name="location"
+            value={detailFormData.location}
+            onChange={handleChange}
+            type="text"
+            placeholder="address of job goes here"
+          />
+        </FormControl>
+        <FormControl id="clientId">
+          <FormLabel htmlFor="clientId">Client</FormLabel>
+          <Input
+            id="clientId"
+            name="clientId"
+            value={detailFormData.clientId}
+            onChange={handleChange}
+            type="number"
+          />
+        </FormControl>
+      </HStack>
       <FormControl id="summary">
         <FormLabel htmlFor="summary">Summary</FormLabel>
         <Textarea

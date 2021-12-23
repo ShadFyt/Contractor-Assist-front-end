@@ -3,6 +3,8 @@ import { Link as ReactLink } from "react-router-dom";
 import { MdOutlineCancelPresentation } from "react-icons/md";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 
+import { useGetClientByIdQuery } from "../../features/api/apiSlice";
+
 import {
   Box,
   Stack,
@@ -25,6 +27,7 @@ import {
   StackDivider,
   Spacer,
   Icon,
+  Spinner,
 } from "@chakra-ui/react";
 import { EditClientForm } from "./editClientForm";
 import { DeleteJob } from "./deleteJob";
@@ -61,19 +64,19 @@ export const Address = ({ address, ...rest }) => {
   );
 };
 
-export const ContactInfo = ({ jobId, isHeader }) => {
+export const ContactInfo = ({ jobId, client, isHeader }) => {
   return (
     <Box>
       {isHeader ? (
         <Heading as="h3" size="lg">
-          {"Ryan"}
+          {client.firstName}
         </Heading>
       ) : (
         <Text>
           <Text as="span" fontWeight="bold">
             CUSTOMER
           </Text>{" "}
-          : {"Ryan"}
+          : {client.firstName}
         </Text>
       )}
       <Text>
@@ -86,13 +89,13 @@ export const ContactInfo = ({ jobId, isHeader }) => {
         <Text as="span" fontWeight="bold">
           TELEPHONE
         </Text>
-        : {"999-999-9999"}
+        : {client.phoneNumber}
       </Text>
       <Text>
         <Text as="span" fontWeight="bold">
           EMAIL
         </Text>
-        : {"fake@hotmail.com"}
+        : {client.email}
       </Text>
       <EditClientForm jobId={jobId} width="50%" />
     </Box>
@@ -136,7 +139,15 @@ const TaskTab = ({ jobTasks }) => {
   );
 };
 
-const InfoTabs = ({ job }) => {
+const InfoTabs = ({ job, client, isFetching, isSuccess }) => {
+  let content;
+
+  if (isFetching) {
+    content = <Spinner />;
+  } else if (isSuccess) {
+    content = <ContactInfo jobId={job.id} client={client} isHeader={true} />;
+  }
+
   return (
     <Box w="full">
       <Tabs
@@ -153,13 +164,7 @@ const InfoTabs = ({ job }) => {
           <Tab color="green.100">TASKS</Tab>
         </TabList>
         <TabPanels p={2} alignItems="center">
-          <TabPanel>
-            <ContactInfo
-              // jobContact={job.contact}
-              jobId={job.id}
-              isHeader={true}
-            />
-          </TabPanel>
+          <TabPanel>{content}</TabPanel>
           <TabPanel>
             <DetailTab jobDetail={job} />
           </TabPanel>
@@ -187,6 +192,19 @@ const DetailTab = ({ jobDetail }) => {
   );
 };
 function Job({ job, ...rest }) {
+  const {
+    data: client,
+    isFetching,
+    isSuccess,
+  } = useGetClientByIdQuery(job.clientId);
+
+  let name;
+  if (isFetching) {
+    name = <Spinner />;
+  } else if (isSuccess) {
+    name = client.firstName;
+  }
+
   return (
     <Box bg={"teal.600"} rounded="2xl" boxShadow="base" sx={{ ...rest }}>
       <Stack p={2}>
@@ -204,7 +222,7 @@ function Job({ job, ...rest }) {
               </Link>
             </Heading>
             <Text align="end" fontSize="2xl" fontWeight="hairline">
-              {"Ryan"}
+              {name}
             </Text>
             <Badge variant="subtle" colorScheme="green" mt={8} ml={2}>
               New
@@ -215,7 +233,12 @@ function Job({ job, ...rest }) {
         <Divider orientation="horizontal" />
 
         <HStack>
-          <InfoTabs job={job} />
+          <InfoTabs
+            job={job}
+            client={client}
+            isFetching={isFetching}
+            isSuccess={isSuccess}
+          />
         </HStack>
         <DeleteJob jobId={job.id} />
       </Stack>

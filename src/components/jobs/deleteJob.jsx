@@ -11,6 +11,7 @@ import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 
 import { jobDeleted } from "../../features/job/jobSlice";
+import { useDeleteJobMutation } from "../../features/api/apiSlice";
 
 export const DeleteJob = ({ jobId, ...rest }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,9 +19,10 @@ export const DeleteJob = ({ jobId, ...rest }) => {
   const cancelRef = useRef();
 
   const dispatch = useDispatch();
+  const [deleteJob] = useDeleteJobMutation();
 
-  const handleDelete = () => {
-    dispatch(jobDeleted({ id: jobId }));
+  const handleDelete = async () => {
+    await deleteJob({ id: jobId });
   };
   return (
     <>

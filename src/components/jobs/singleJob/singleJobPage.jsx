@@ -7,12 +7,12 @@ import { Box, SimpleGrid } from "@chakra-ui/react";
 import TaskComponent from "./taskComponent";
 import TrackingTabs from "./trackingTabs";
 
+import { useGetJobByIdQuery } from "../../../features/api/apiSlice";
+
 export const SingleJobPage = ({ match }) => {
   const { jobId } = match.params;
 
-  const job = useSelector((state) => {
-    return state.job.listOfJobs.find((job) => job.id === parseInt(jobId));
-  });
+  const { data: job, isFetching, isSuccess } = useGetJobByIdQuery(jobId);
 
   if (!job) {
     return (

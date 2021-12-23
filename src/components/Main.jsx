@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, Redirect, withRouter } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { Box, Stack } from "@chakra-ui/react";
 import Sidebar from "./layout/Sidebar";
 import ListJobs from "./jobs";
@@ -9,9 +9,8 @@ import ListEmployees from "./employees/index";
 const HomePage = () => {
   return <div>Home page</div>;
 };
-
-const EmployeesPage = () => {
-  return <div>Employees page</div>;
+const ListClients = () => {
+  return <div>Clients page</div>;
 };
 
 function MainComponent() {
@@ -30,6 +29,7 @@ function MainComponent() {
             <Route path="/home" component={HomePage} />
             <Route exact path="/jobs" component={ListJobs} />
             <Route exact path="/employees" component={ListEmployees} />
+            <Route exact path="/clients" component={ListClients} />
             <Route exact path="/jobs/:jobId" component={SingleJobPage} />
             <Redirect to="/" />
           </Switch>

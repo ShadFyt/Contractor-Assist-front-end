@@ -1,16 +1,14 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import Job from "./JobComponent";
 import JobFormModal from "./addJobForm";
 
-import { selectAllJobs, fetchJobs } from "../../features/job/jobSlice";
-import { useGetJobsQuery } from "../../features/api/apiSlice";
+import {
+  useGetJobsQuery,
+  useGetClientByIdQuery,
+} from "../../features/api/apiSlice";
 
 function ListJobs() {
-  // const dispatch = useDispatch();
-  // const jobs = useSelector(selectAllJobs);
-
   const {
     data: jobs,
     isLoading,
