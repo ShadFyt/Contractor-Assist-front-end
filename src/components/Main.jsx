@@ -5,12 +5,10 @@ import Sidebar from "./layout/Sidebar";
 import ListJobs from "./jobs";
 import { SingleJobPage } from "./jobs/singleJob/singleJobPage";
 import ListEmployees from "./employees/index";
+import ListClients from "./clients/listClients";
 
 const HomePage = () => {
   return <div>Home page</div>;
-};
-const ListClients = () => {
-  return <div>Clients page</div>;
 };
 
 function MainComponent() {

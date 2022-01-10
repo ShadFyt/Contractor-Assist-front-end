@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FiPhone } from "react-icons/fi";
-import { FaAddressCard } from "react-icons/fa";
+
+import { useAddNewClientMutation } from "../../features/api/apiSlice";
 
 import {
   FormControl,
@@ -10,40 +11,56 @@ import {
   InputGroup,
   InputLeftElement,
   HStack,
+  Button,
 } from "@chakra-ui/react";
 
 export const AddNewClientForm = () => {
   const [contactFormData, setContactFormData] = useState({
-    owner: "",
+    firstName: "",
     lastName: "",
     email: "",
-    number: "",
-    address: "",
+    phoneNumber: "",
   });
 
   const resetContactForm = () =>
     setContactFormData({
       ...contactFormData,
-      owner: "",
+      firstName: "",
       lastName: "",
       email: "",
-      number: "",
-      address: "",
+      phoneNumber: "",
     });
 
   const handleChange = (e) =>
     setContactFormData({ ...contactFormData, [e.target.name]: e.target.value });
 
+  const [addNewClient, { isLoading}] = useAddNewClientMutation()
+
+  const canSave = [contactFormData].every(Boolean) && !isLoading;
+
+  const onSaveClient = async () => {
+    if(canSave) {
+      try {
+        await addNewClient({
+          ...contactFormData,
+        }).unwrap();
+        resetContactForm();
+      } catch (err) {
+        console.log("failed to save client info", err)
+      }
+    }
+  };
+
   return (
     <>
       <HStack>
         <FormControl>
-          <FormLabel htmlFor="owner">First Name</FormLabel>
+          <FormLabel htmlFor="firstName">First Name</FormLabel>
           <Input
             type="text"
-            id="owner"
-            name="owner"
-            value={contactFormData.owner}
+            id="firstName"
+            name="firstName"
+            value={contactFormData.firstName}
             onChange={handleChange}
           />
         </FormControl>
@@ -78,29 +95,14 @@ export const AddNewClientForm = () => {
             <Input
               type="tel"
               placeholder="Phone Number"
-              id="number"
-              name="number"
+              id="phoneNumber"
+              name="phoneNumber"
               value={contactFormData.number}
               onChange={handleChange}
             />
           </InputGroup>
         </FormControl>
-        <FormControl>
-          <InputGroup>
-            <InputLeftElement
-              pointerEvent="none"
-              children={<Icon as={FaAddressCard} color="gray.600" />}
-            />
-            <Input
-              type="text"
-              placeholder="Address"
-              id="address"
-              name="address"
-              value={contactFormData.address}
-              onChange={handleChange}
-            />
-          </InputGroup>
-        </FormControl>
+        <Button onClick={() => onSaveClient()}>Add Client</Button>
       </HStack>
     </>
   );

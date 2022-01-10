@@ -1,6 +1,7 @@
 import React from "react";
 import { Box } from "@chakra-ui/react";
 import { useGetClientsQuery } from "../../features/api/apiSlice";
+import { AddNewClientForm } from "./addNewClientForm";
 
 const ListClients = () => {
   const {
@@ -13,7 +14,9 @@ const ListClients = () => {
 
   return (
     <>
-      <Box></Box>
+      <Box>
+        <AddNewClientForm />
+      </Box>
     </>
   );
 };
