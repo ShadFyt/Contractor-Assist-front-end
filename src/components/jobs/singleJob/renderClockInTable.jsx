@@ -28,7 +28,7 @@ const RenderClockInTable = ({ job }) => {
           </Tr>
         </Thead>
         <Tbody>
-          {job.workers.map((data) => (
+          {job.timeEntries.map((data) => (
             <Tr key={data.id}>
               <Td>{data.name}</Td>
               <Td>{data.date}</Td>

@@ -13,11 +13,11 @@ const ListClients = () => {
   } = useGetClientsQuery();
 
   return (
-    <>
-      <Box>
+    <Box>
+      <Box w={"50%"}>
         <AddNewClientForm />
       </Box>
-    </>
+    </Box>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import {useGetEmployeesQuery} from "../../../features/api/apiSlice"
 
 import { employeesAdded } from "../../../features/job/jobSlice";
 
@@ -19,6 +20,7 @@ import {
   VStack,
   HStack,
   Select,
+  Spinner
 } from "@chakra-ui/react";
 
 const ClockInForm = ({ jobId }) => {
@@ -43,13 +45,28 @@ const ClockInForm = ({ jobId }) => {
     setEmployee("");
   };
 
-  const employees = useSelector((state) => state.employees);
+  const {
+    data: employees,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetEmployeesQuery();
+  
+  let content;
 
-  const employeesOptions = employees.map((employee) => (
-    <option key={employee.id} value={employee.name}>
-      {employee.name}
-    </option>
-  ));
+  if (isLoading) {
+    content = <Spinner />;
+  } else if (isSuccess) {
+    content = employees.map((employee) => (
+      <option key={employee.id} value={employee.firstName}>
+        {employee.firstName}
+      </option>
+    ));
+  } else if (isError) {
+    content = <div>{error.toString()}</div>;
+  }
+
   return (
     <>
       <Button variant="outline" onClick={onOpen}>
@@ -71,7 +88,7 @@ const ClockInForm = ({ jobId }) => {
                   onChange={onEmployeeChanged}
                   placeholder="Select an employee"
                 >
-                  {employeesOptions}
+                  {content}
                 </Select>
               </FormControl>
               <HStack w="full">

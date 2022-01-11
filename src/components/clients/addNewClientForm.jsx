@@ -85,7 +85,7 @@ export const AddNewClientForm = () => {
           onChange={handleChange}
         />
       </FormControl>
-      <HStack>
+      <HStack marginTop={2}>
         <FormControl>
           <InputGroup>
             <InputLeftElement
