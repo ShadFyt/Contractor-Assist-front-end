@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {useGetEmployeesQuery} from "../../../features/api/apiSlice"
+import {  useDispatch } from "react-redux";
+import {useGetEmployeesQuery, useAddNewTimeEntryMutation, useGetEmployeeByNameQuery} from "../../../features/api/apiSlice"
 
 import { employeesAdded } from "../../../features/job/jobSlice";
 
@@ -27,22 +27,55 @@ const ClockInForm = ({ jobId }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
 
-  const [employee, setEmployee] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
+  const [name, setName] = useState("");
+  const [clockIn , setClockIn] = useState("");
+  const [clockOut, setClockOut] = useState("");
   const [date, setDate] = useState("");
 
-  const onEmployeeChanged = (e) => setEmployee(e.target.value);
-  const onStartTimeChanged = (e) => setStartTime(e.target.value);
-  const onEndTimeChanged = (e) => setEndTime(e.target.value);
+  const onEmployeeChanged = (e) => setName(e.target.value);
+  const onClockInChanged = (e) => setClockIn(e.target.value);
+  const onClockOutChanged = (e) => setClockOut(e.target.value);
   const onDateChanged = (e) => setDate(e.target.value);
+
+  const [addNewTimeEntry, {isLoading: isTimeEntryLoading}] = useAddNewTimeEntryMutation()
+  const {data: employee} = useGetEmployeeByNameQuery(name)
+
+  const canSave =
+    [date, clockIn, clockOut].every(
+      Boolean
+    ) && !isTimeEntryLoading;
+
+  const onClockIn = async () => {
+    if(canSave) {
+      try {
+        console.log("adding...")
+        console.log(employee.firstName)
+        console.log(employee.id)
+        await addNewTimeEntry({
+          date,
+          clockIn,
+          clockOut,
+          jobId,
+          employeeId: employee.id
+        }).unwrap();
+        setName("");
+        setClockIn("");
+        setClockOut("");
+        setDate("")
+        onClose()
+      } catch (err){
+        console.error("failed", err)
+      }
+    }
+  }
+
 
   const onAddWorker = () => {
     console.log("clicked");
-    const data = { name: employee, date, startTime, endTime };
+    const data = { name: employee, date, clockIn, clockOut };
     onClose();
     dispatch(employeesAdded(jobId, data));
-    setEmployee("");
+    setName("");
   };
 
   const {
@@ -82,9 +115,9 @@ const ClockInForm = ({ jobId }) => {
               <FormControl>
                 <FormLabel>Employee</FormLabel>
                 <Select
-                  id="employee"
-                  name="employee"
-                  value={employee}
+                  id="name"
+                  name="name"
+                  value={name}
                   onChange={onEmployeeChanged}
                   placeholder="Select an employee"
                 >
@@ -95,10 +128,10 @@ const ClockInForm = ({ jobId }) => {
                 <FormControl>
                   <FormLabel>Start Time</FormLabel>
                   <Input
-                    id="startTime"
-                    name="startTime"
-                    value={startTime}
-                    onChange={onStartTimeChanged}
+                    id="clockIn"
+                    name="clockIn"
+                    value={clockIn}
+                    onChange={onClockInChanged}
                     type="time"
                     textAlign="center"
                   />
@@ -106,10 +139,10 @@ const ClockInForm = ({ jobId }) => {
                 <FormControl>
                   <FormLabel>End Time</FormLabel>
                   <Input
-                    id="endTime"
-                    name="endTime"
-                    value={endTime}
-                    onChange={onEndTimeChanged}
+                    id="clockOut"
+                    name="clockOut"
+                    value={clockOut}
+                    onChange={onClockOutChanged}
                     type="time"
                     textAlign="center"
                   />
@@ -129,7 +162,7 @@ const ClockInForm = ({ jobId }) => {
             </VStack>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={onAddWorker} colorScheme="green" mr={1}>
+            <Button onClick={onClockIn} colorScheme="green" mr={1}>
               Submit
             </Button>
             <Button onClick={onClose}>Cancel</Button>

@@ -1,5 +1,7 @@
 import React from "react";
 
+import {useGetEmployeeByIdQuery} from "../../../features/api/apiSlice"
+
 import ClockInForm from "./clockInForm";
 
 import {
@@ -10,9 +12,22 @@ import {
   Th,
   Td,
   TableCaption,
+  Text,
+  Spinner
 } from "@chakra-ui/react";
 
 const RenderClockInTable = ({ job }) => {
+  const RenderName = ({id}) => {
+    const {data: employee, isLoading, isSuccess,
+    } = useGetEmployeeByIdQuery(id)
+    let content = ""
+    if (isLoading) {
+      content = <Spinner />
+    } else if (isSuccess) {
+      content = <Text>{employee.firstName}</Text>
+    }
+    return content
+  }
   return (
     <>
       <Table variant="simple" size={{ base: "sm", md: "lg" }}>
@@ -30,10 +45,10 @@ const RenderClockInTable = ({ job }) => {
         <Tbody>
           {job.timeEntries.map((data) => (
             <Tr key={data.id}>
-              <Td>{data.name}</Td>
+              <Td>{<RenderName id ={data.employeeId} />}</Td>
               <Td>{data.date}</Td>
-              <Td>{data.startTime}</Td>
-              <Td>{data.endTime}</Td>
+              <Td>{data.clockIn}</Td>
+              <Td>{data.clockOut}</Td>
             </Tr>
           ))}
         </Tbody>

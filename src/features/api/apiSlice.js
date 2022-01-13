@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 export const apiSlice = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000" }),
-    tagTypes: ["Employee", "Jobs", "Clients"],
+    tagTypes: ["Employee", "Jobs", "Clients", "TimeEntries"],
     endpoints: builder => ({
         getJobs: builder.query({
             query: () => "/jobs",
@@ -32,6 +32,12 @@ export const apiSlice = createApi({
             query: () => "/employees",
             providesTags: ["Employee"]
         }),
+        getEmployeeById: builder.query({
+            query: id => `/employees/${id}`
+        }),
+        getEmployeeByName: builder.query({
+            query: name => `/employees/name/${name}`
+        }),
         addNewEmployee: builder.mutation({
             query: initialEmployee => ({
                 url: "/employees",
@@ -54,13 +60,22 @@ export const apiSlice = createApi({
                 body: initialClient
             }),
             invalidatesTags: ["Clients"]
+        }),
+        addNewTimeEntry: builder.mutation({
+            query: (initalTimeEntry) => ({
+                url: `/employee/${initalTimeEntry.employeeId}/time_sheet`,
+                method: "POST",
+                body: initalTimeEntry,
+            }),
+            invalidatesTags: ["Jobs", "Employee"]
         })
     }),
 })
 
 
 export const {
-    useGetEmployeesQuery, useAddNewEmployeeMutation,
+    useGetEmployeesQuery, useAddNewEmployeeMutation, useGetEmployeeByNameQuery, useGetEmployeeByIdQuery,
     useGetJobsQuery, useAddNewJobMutation, useDeleteJobMutation, useGetJobByIdQuery,
     useGetClientsQuery, useAddNewClientMutation, useGetClientByIdQuery,
+    useAddNewTimeEntryMutation,
 } = apiSlice
