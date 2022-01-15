@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import Header from "./header";
 
 import { Box, SimpleGrid } from "@chakra-ui/react";
@@ -12,7 +11,7 @@ import { useGetJobByIdQuery } from "../../../features/api/apiSlice";
 export const SingleJobPage = ({ match }) => {
   const { jobId } = match.params;
 
-  const { data: job, isFetching, isSuccess } = useGetJobByIdQuery(jobId);
+  const { data: job } = useGetJobByIdQuery(jobId);
 
   if (!job) {
     return (
@@ -30,7 +29,7 @@ export const SingleJobPage = ({ match }) => {
           <TrackingTabs job={job} />
         </Box>
         <Box marginY={2} marginRight={2} h="fit-content">
-          <TaskComponent jobId={jobId} jobTasks={job.tasks} />
+          <TaskComponent jobId={jobId} />
         </Box>
       </SimpleGrid>
     </section>

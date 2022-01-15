@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, nanoid } from '@reduxjs/toolkit';
 
-import jobs from "../../components/jobs/job_board.json"
 
 export const fetchJobs = createAsyncThunk("jobs/fetchJobs", async () => {
     const res = await fetch("http://localhost:8000/jobs")

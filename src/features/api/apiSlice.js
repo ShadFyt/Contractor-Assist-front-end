@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 export const apiSlice = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000" }),
-    tagTypes: ["Employee", "Jobs", "Clients", "TimeEntries"],
+    tagTypes: ["Employee", "Jobs", "Clients", "TimeEntries", "Tasks"],
     endpoints: builder => ({
         getJobs: builder.query({
             query: () => "/jobs",
@@ -22,8 +22,8 @@ export const apiSlice = createApi({
             invalidatesTags: ["Jobs"]
         }),
         deleteJob: builder.mutation({
-            query: job => ({
-                url: `/jobs/${job.id}`,
+            query: id => ({
+                url: `/jobs/${id}`,
                 method: "DELETE"
             }),
             invalidatesTags: ["Jobs"]
@@ -61,14 +61,45 @@ export const apiSlice = createApi({
             }),
             invalidatesTags: ["Clients"]
         }),
+        getTimeEntriesByJob: builder.query({
+            query: jobId => `/time_sheet/job/${jobId}`,
+            providesTags: ["TimeEntries"]
+        }),
         addNewTimeEntry: builder.mutation({
             query: (initalTimeEntry) => ({
-                url: `/employee/${initalTimeEntry.employeeId}/time_sheet`,
+                url: `/time_sheet/employee/${initalTimeEntry.employeeId}`,
                 method: "POST",
                 body: initalTimeEntry,
             }),
-            invalidatesTags: ["Jobs", "Employee"]
-        })
+            invalidatesTags: ["TimeEntries"]
+        }),
+        getTasksByJob: builder.query({
+            query: jobId => `/tasks/${jobId}`,
+            providesTags: ["Tasks"]
+        }),
+        addNewTask: builder.mutation({
+            query: ({jobId, ...task}) => ({
+                url: `/tasks/${jobId}`,
+                method: "POST",
+                body: task
+            }),
+            invalidatesTags: ["Tasks"]
+        }),
+        deleteTask: builder.mutation({
+            query: (taskId) => ({
+                url: `/tasks/${taskId}`,
+                method: "DELETE"
+            }),
+            invalidatesTags: ["Tasks"]
+        }),
+        updateTask: builder.mutation({
+            query: ({taskId, ...patch}) => ({
+                url: `/tasks/${taskId}`,
+                method: "PATCH",
+                body: patch
+            }),
+            invalidatesTags: ["Tasks"]
+        }),
     }),
 })
 
@@ -77,5 +108,6 @@ export const {
     useGetEmployeesQuery, useAddNewEmployeeMutation, useGetEmployeeByNameQuery, useGetEmployeeByIdQuery,
     useGetJobsQuery, useAddNewJobMutation, useDeleteJobMutation, useGetJobByIdQuery,
     useGetClientsQuery, useAddNewClientMutation, useGetClientByIdQuery,
-    useAddNewTimeEntryMutation,
+    useAddNewTimeEntryMutation, useGetTimeEntriesByJobQuery,
+    useAddNewTaskMutation, useGetTasksByJobQuery, useDeleteTaskMutation, useUpdateTaskMutation
 } = apiSlice

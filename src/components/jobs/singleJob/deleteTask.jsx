@@ -10,19 +10,18 @@ import {
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import React, { useState, useRef } from "react";
-import { useDispatch } from "react-redux";
-
-import { taskDeleted } from "../../../features/job/jobSlice";
+import { useDispatch } from "react-redux" 
+import { useDeleteTaskMutation } from "../../../features/api/apiSlice"
 
 const DeleteTask = ({ jobId, taskId, ...rest }) => {
-  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const cancelRef = useRef();
 
   const onClose = () => setIsOpen(false);
+  const [deleteTask] = useDeleteTaskMutation()
 
-  const handleDelete = () => {
-    dispatch(taskDeleted({ jobId, taskId }));
+  const handleDelete = async () => {
+    await deleteTask(taskId)
   };
 
   return (

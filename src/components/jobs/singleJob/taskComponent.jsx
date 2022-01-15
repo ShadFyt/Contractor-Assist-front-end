@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {useGetTasksByJobQuery, useAddNewTaskMutation, useUpdateTaskMutation} from "../../../features/api/apiSlice"
 import { useDispatch } from "react-redux";
 import {
   taskAdded,
@@ -25,6 +26,7 @@ import {
   useEditableControls,
   ButtonGroup,
   IconButton,
+  Spinner,
 } from "@chakra-ui/react";
 
 import { CheckIcon, CloseIcon, EditIcon } from "@chakra-ui/icons";
@@ -33,12 +35,18 @@ import { GiCancel } from "react-icons/gi";
 
 import DeleteTask from "./deleteTask";
 
-const DisplayTasks = ({ jobTasks }) => {
+const DisplayTasks = ({ jobId }) => {
   const dispatch = useDispatch();
-  const [editTask, setEditTask] = useState("");
   const completiontoast = useToast();
+  const {
+    data: tasks,
+    isLoading,
+    isSuccess,
+    isError,
+    error
+  } = useGetTasksByJobQuery(jobId)
 
-  const onTaskChanged = (e) => setEditTask(e.target.value);
+  const [updateTask, {isLoading: isUpdating}] = useUpdateTaskMutation()
 
   function EditableControls() {
     const {
@@ -60,13 +68,18 @@ const DisplayTasks = ({ jobTasks }) => {
     );
   }
 
-  const onEditClick = (jobId, taskId, editTask) => {
+  const onEditClick = async (taskId, editTask) => {
     console.log("from onEdit", editTask);
-    dispatch(taskEdited({ jobId, taskId, value: editTask }));
+    if(editTask){
+      console.log(editTask)
+      await updateTask({taskId, task: editTask})
+    }
   };
+  const [completion, setCompletion] = useState("")
 
-  const onComplete = (jobId, taskId, isComplete, task) => {
-    console.log("from dispatch", isComplete.toString(), jobId, taskId);
+  const onComplete = async (taskId, isComplete, task) => {
+    setCompletion(!isComplete)
+    await updateTask({ taskId, task, isComplete: !isComplete });
     completiontoast({
       title: !isComplete ? "Task completed" : "Task not completed",
       description: task,
@@ -74,8 +87,61 @@ const DisplayTasks = ({ jobTasks }) => {
       duration: 4000,
       isClosable: true,
     });
-    dispatch(taskIsCompleteUpdate({ jobId, taskId, isComplete }));
+    console.log("from on complete func", completion)
   };
+  
+  const ListTasks = ({task}) => {
+    const [editTask, setEditTask] = useState(task.task);
+
+    const onTaskChanged = (e) => setEditTask(e);
+
+    return (
+      <HStack marginBottom={2}>
+          <Text marginLeft={2} fontSize="xl">
+            <Editable
+              value={editTask}
+              isPreviewFocusable={false}
+              onChange={onTaskChanged}
+              onSubmit={() => onEditClick(task.id, editTask)}
+            >
+              <HStack>
+                <EditableControls />
+                <EditablePreview
+                  textDecoration={task.isComplete ? "line-through" : "none"}
+                />
+                <EditableInput onChange={onTaskChanged} />
+              </HStack>
+            </Editable>
+          </Text>
+          <Spacer />
+          <IconButton
+            onClick={() =>
+              onComplete(task.id, task.isComplete, task.task)
+            }
+            icon={
+              task.isComplete ? (
+                <GiCancel />
+              ) : (
+                <FaCheck colorScheme="green" color="green" fontSize="25px" />
+              )
+            }
+          />
+          <DeleteTask jobId={task.jobId} taskId={task.id} colorScheme="red" />
+      </HStack>
+    )
+  }
+
+  let content = ""
+
+  if(isLoading){
+    content = <Spinner />
+  } else if(isSuccess){
+    console.log(tasks);
+    content = tasks.map((task) => ( <ListTasks key={task.id} task={task} />));
+  } else if(isError) {
+    content = <div>{error.toString()}</div>
+  }
+
 
   return (
     <VStack
@@ -92,55 +158,34 @@ const DisplayTasks = ({ jobTasks }) => {
           Task to complete
         </Heading>
       </Center>
-      {jobTasks.map((task) => (
-        <HStack key={task.id}>
-          <Text marginLeft={2} fontSize="xl">
-            <Editable
-              defaultValue={task.task}
-              isPreviewFocusable={false}
-              onSubmit={() => onEditClick(task.jobId, task.id, editTask)}
-            >
-              <HStack>
-                <EditableControls task={task} />
-                <EditablePreview
-                  textDecoration={task.isComplete ? "line-through" : "none"}
-                />
-                <EditableInput onChange={onTaskChanged} />
-              </HStack>
-            </Editable>
-          </Text>
-          <Spacer />
-          <IconButton
-            onClick={() =>
-              onComplete(task.jobId, task.id, task.isComplete, task.task)
-            }
-            icon={
-              task.isComplete ? (
-                <GiCancel />
-              ) : (
-                <FaCheck colorScheme="green" color="green" fontSize="25px" />
-              )
-            }
-          />
-          <DeleteTask jobId={task.jobId} taskId={task.id} colorScheme="red" />
-        </HStack>
-      ))}
-    </VStack>
+      <Box>{content}</Box>
+   </VStack>
   );
 };
 
-const TaskComponent = ({ jobId, jobTasks }) => {
-  const dispatch = useDispatch();
+const TaskComponent = ({ jobId }) => {
   const toast = useToast();
 
   const [task, setTask] = useState("");
   const onTaskChanged = (e) => setTask(e.target.value);
 
-  const onAddTask = () => {
-    console.log("add task");
-    dispatch(taskAdded(jobId, task));
-    setTask("");
-  };
+  const [addNewTask, {isLoading}] = useAddNewTaskMutation()
+
+  const canSave = [task].every(Boolean) && !isLoading;
+  const onSaveTask = async () => {
+    if(canSave) {
+      try {
+        console.log("adding new task")
+        await addNewTask({
+          task,
+          jobId
+        }).unwrap();
+        setTask("");
+      } catch(err) {
+        console.log("failed to save new task", err)
+      }
+    }
+  }
 
   const handleSubmit = () => {
     toast({
@@ -150,12 +195,12 @@ const TaskComponent = ({ jobId, jobTasks }) => {
       duration: 1500,
       isClosable: true,
     });
-    onAddTask();
+    onSaveTask();
   };
 
   return (
     <>
-      <DisplayTasks jobTasks={jobTasks} />
+      <DisplayTasks jobId={jobId} />
       <HStack width="sm" marginX="auto">
         <FormControl>
           <Input

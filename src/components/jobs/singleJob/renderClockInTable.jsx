@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useMemo} from "react";
 
-import {useGetEmployeeByIdQuery} from "../../../features/api/apiSlice"
+import {useGetEmployeeByIdQuery, useGetTimeEntriesByJobQuery} from "../../../features/api/apiSlice"
 
 import ClockInForm from "./clockInForm";
 
@@ -28,6 +28,41 @@ const RenderClockInTable = ({ job }) => {
     }
     return content
   }
+
+  const {
+    data: timeEntries = [],
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetTimeEntriesByJobQuery(job.id)
+
+  const sortedTimeEntries = useMemo(() => {
+    // sorts list by date
+    const sortedTimeEntries = timeEntries.slice()
+    sortedTimeEntries.sort((a,b) => b.date.localeCompare(a.date))
+    return sortedTimeEntries
+  }, [timeEntries])
+
+  let content = ""
+
+  if(isLoading){
+    content = <Spinner />
+  } else if (isSuccess){
+    console.log(timeEntries)
+    content =          
+    sortedTimeEntries.map((data) => (
+      <Tr key={data.id}>
+        <Td>{<RenderName id ={data.employeeId} />}</Td>
+        <Td>{data.date}</Td>
+        <Td>{data.clockIn}</Td>
+        <Td>{data.clockOut}</Td>
+      </Tr>
+    ))
+  }  else if (isError) {
+    content = <div>{error.toString()}</div>;
+  }
+
   return (
     <>
       <Table variant="simple" size={{ base: "sm", md: "lg" }}>
@@ -43,14 +78,7 @@ const RenderClockInTable = ({ job }) => {
           </Tr>
         </Thead>
         <Tbody>
-          {job.timeEntries.map((data) => (
-            <Tr key={data.id}>
-              <Td>{<RenderName id ={data.employeeId} />}</Td>
-              <Td>{data.date}</Td>
-              <Td>{data.clockIn}</Td>
-              <Td>{data.clockOut}</Td>
-            </Tr>
-          ))}
+          {content}
         </Tbody>
       </Table>
     </>
