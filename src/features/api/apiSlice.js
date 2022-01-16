@@ -65,11 +65,29 @@ export const apiSlice = createApi({
             query: jobId => `/time_sheet/job/${jobId}`,
             providesTags: ["TimeEntries"]
         }),
+        getTimeEntryById: builder.query({
+            query: (id) => `/time_sheet/${id}`,
+        }),
         addNewTimeEntry: builder.mutation({
             query: (initalTimeEntry) => ({
                 url: `/time_sheet/employee/${initalTimeEntry.employeeId}`,
                 method: "POST",
                 body: initalTimeEntry,
+            }),
+            invalidatesTags: ["TimeEntries"]
+        }),
+        updateTimeEntry: builder.mutation({
+            query: ({id, ...patch}) =>({
+                url: `/time_sheet/${id}`,
+                method: "PATCH",
+                body: patch
+            }),
+            invalidatesTags: ["TimeEntries"]
+        }),
+        deleteTimeEntry: builder.mutation({
+            query: (id) => ({
+                url: `/time_sheet/${id}`,
+                method: "DELETE"
             }),
             invalidatesTags: ["TimeEntries"]
         }),
@@ -108,6 +126,7 @@ export const {
     useGetEmployeesQuery, useAddNewEmployeeMutation, useGetEmployeeByNameQuery, useGetEmployeeByIdQuery,
     useGetJobsQuery, useAddNewJobMutation, useDeleteJobMutation, useGetJobByIdQuery,
     useGetClientsQuery, useAddNewClientMutation, useGetClientByIdQuery,
-    useAddNewTimeEntryMutation, useGetTimeEntriesByJobQuery,
-    useAddNewTaskMutation, useGetTasksByJobQuery, useDeleteTaskMutation, useUpdateTaskMutation
+    useAddNewTimeEntryMutation, useGetTimeEntriesByJobQuery, useDeleteTimeEntryMutation,
+    useUpdateTimeEntryMutation, useGetTimeEntryByIdQuery,
+    useAddNewTaskMutation, useGetTasksByJobQuery, useDeleteTaskMutation, useUpdateTaskMutation,
 } = apiSlice

@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import {  useDispatch } from "react-redux";
-import {useGetEmployeesQuery, useAddNewTimeEntryMutation, useGetEmployeeByNameQuery} from "../../../features/api/apiSlice"
+import {
+  useGetEmployeesQuery,
+  useAddNewTimeEntryMutation,
+  useGetEmployeeByNameQuery,
+  useUpdateTimeEntryMutation,
+} from "../../../features/api/apiSlice"
 
-import { employeesAdded } from "../../../features/job/jobSlice";
 
 import {
   Button,
@@ -20,25 +23,24 @@ import {
   VStack,
   HStack,
   Select,
-  Spinner
+  Spinner,
+  Heading,
 } from "@chakra-ui/react";
 
-const ClockInForm = ({ jobId }) => {
+const ClockInForm = ({ jobId, timeEntry, employeeName }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const dispatch = useDispatch();
-
-  const [name, setName] = useState("");
-  const [clockIn , setClockIn] = useState("");
-  const [clockOut, setClockOut] = useState("");
-  const [date, setDate] = useState("");
-
+  const [name, setName] = useState(timeEntry ? employeeName : "");
+  const [clockIn, setClockIn] = useState(timeEntry ? timeEntry.clockIn : "");
+  const [clockOut, setClockOut] = useState(timeEntry ? timeEntry.clockOut : "");
+  const [date, setDate] = useState(timeEntry ? timeEntry.date : "");
   const onEmployeeChanged = (e) => setName(e.target.value);
   const onClockInChanged = (e) => setClockIn(e.target.value);
   const onClockOutChanged = (e) => setClockOut(e.target.value);
   const onDateChanged = (e) => setDate(e.target.value);
 
-  const [addNewTimeEntry, {isLoading: isTimeEntryLoading}] = useAddNewTimeEntryMutation()
-  const {data: employee} = useGetEmployeeByNameQuery(name)
+  const [updateTimeEntry] = useUpdateTimeEntryMutation()
+  const [addNewTimeEntry, { isLoading: isTimeEntryLoading }] = useAddNewTimeEntryMutation()
+  const { data: employee } = useGetEmployeeByNameQuery(name)
 
   const canSave =
     [date, clockIn, clockOut].every(
@@ -46,11 +48,9 @@ const ClockInForm = ({ jobId }) => {
     ) && !isTimeEntryLoading;
 
   const onClockIn = async () => {
-    if(canSave) {
+    if (canSave) {
       try {
         console.log("adding...")
-        console.log(employee.firstName)
-        console.log(employee.id)
         await addNewTimeEntry({
           date,
           clockIn,
@@ -63,20 +63,20 @@ const ClockInForm = ({ jobId }) => {
         setClockOut("");
         setDate("")
         onClose()
-      } catch (err){
+      } catch (err) {
         console.error("failed", err)
       }
     }
   }
 
-
-  const onAddWorker = () => {
-    console.log("clicked");
-    const data = { name: employee, date, clockIn, clockOut };
-    onClose();
-    dispatch(employeesAdded(jobId, data));
-    setName("");
-  };
+  const onUpdate = async () => {
+    await updateTimeEntry({
+      id: timeEntry.id,
+      date,
+      clockIn,
+      clockOut
+    })
+  }
 
   const {
     data: employees,
@@ -85,7 +85,7 @@ const ClockInForm = ({ jobId }) => {
     isError,
     error,
   } = useGetEmployeesQuery();
-  
+
   let content;
 
   if (isLoading) {
@@ -103,7 +103,7 @@ const ClockInForm = ({ jobId }) => {
   return (
     <>
       <Button variant="outline" onClick={onOpen}>
-        Clock In
+        {timeEntry ? "x" : "Clock In"}
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -112,18 +112,21 @@ const ClockInForm = ({ jobId }) => {
           <ModalCloseButton />
           <ModalBody>
             <VStack>
-              <FormControl>
-                <FormLabel>Employee</FormLabel>
-                <Select
-                  id="name"
-                  name="name"
-                  value={name}
-                  onChange={onEmployeeChanged}
-                  placeholder="Select an employee"
-                >
-                  {content}
-                </Select>
-              </FormControl>
+              {timeEntry ? <Heading>{employeeName}</Heading> :
+                <FormControl>
+                  <FormLabel>Employee</FormLabel>
+                  <Select
+                    id="name"
+                    name="name"
+                    value={name}
+                    onChange={onEmployeeChanged}
+                    placeholder={timeEntry ? employeeName : "Select an employee"}
+                  >
+                    {content}
+                  </Select>
+                </FormControl>
+              }
+
               <HStack w="full">
                 <FormControl>
                   <FormLabel>Start Time</FormLabel>
@@ -162,8 +165,8 @@ const ClockInForm = ({ jobId }) => {
             </VStack>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={onClockIn} colorScheme="green" mr={1}>
-              Submit
+            <Button onClick={timeEntry ? onUpdate : onClockIn} colorScheme="green" mr={1}>
+              {timeEntry ? "Update" : "Submit"}
             </Button>
             <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>

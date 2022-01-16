@@ -1,6 +1,6 @@
-import React, {useMemo} from "react";
+import React, {useMemo, useState} from "react";
 
-import {useGetEmployeeByIdQuery, useGetTimeEntriesByJobQuery} from "../../../features/api/apiSlice"
+import {useGetEmployeeByIdQuery, useGetTimeEntriesByJobQuery, useDeleteTimeEntryMutation, useGetTimeEntryByIdQuery} from "../../../features/api/apiSlice"
 
 import ClockInForm from "./clockInForm";
 
@@ -13,7 +13,8 @@ import {
   Td,
   TableCaption,
   Text,
-  Spinner
+  Spinner,
+  Button
 } from "@chakra-ui/react";
 
 const RenderClockInTable = ({ job }) => {
@@ -24,7 +25,7 @@ const RenderClockInTable = ({ job }) => {
     if (isLoading) {
       content = <Spinner />
     } else if (isSuccess) {
-      content = <Text>{employee.firstName}</Text>
+      content = employee.firstName
     }
     return content
   }
@@ -37,12 +38,39 @@ const RenderClockInTable = ({ job }) => {
     error,
   } = useGetTimeEntriesByJobQuery(job.id)
 
+  const [deleteTimeEntry] = useDeleteTimeEntryMutation()
+
   const sortedTimeEntries = useMemo(() => {
     // sorts list by date
     const sortedTimeEntries = timeEntries.slice()
     sortedTimeEntries.sort((a,b) => b.date.localeCompare(a.date))
     return sortedTimeEntries
   }, [timeEntries])
+
+  const handleDelete = async (id) => {
+    await deleteTimeEntry(id)
+  }
+
+  const RenderTimeEntry = ({timeEntry}) => {
+    const [employeeName, setEmployeeName] = useState("")
+    const {data: employee, isLoading, isSuccess,
+    } = useGetEmployeeByIdQuery(timeEntry.employeeId)
+    let content = ""
+    if (isLoading) {
+      content = "loading"
+    } else if (isSuccess) {
+      content = employee.firstName
+    }
+
+    return (
+      <Tr>
+        <Td><ClockInForm timeEntry={timeEntry} employeeName={content} /> { content}</Td>
+        <Td>{timeEntry.date}</Td>
+        <Td>{timeEntry.clockIn}</Td>
+      <Td>{timeEntry.clockOut} <Button onClick={() => handleDelete(timeEntry.id)}>x</Button></Td>
+    </Tr>
+    )
+  }
 
   let content = ""
 
@@ -52,12 +80,7 @@ const RenderClockInTable = ({ job }) => {
     console.log(timeEntries)
     content =          
     sortedTimeEntries.map((data) => (
-      <Tr key={data.id}>
-        <Td>{<RenderName id ={data.employeeId} />}</Td>
-        <Td>{data.date}</Td>
-        <Td>{data.clockIn}</Td>
-        <Td>{data.clockOut}</Td>
-      </Tr>
+      <RenderTimeEntry key={data.id} timeEntry={data} />
     ))
   }  else if (isError) {
     content = <div>{error.toString()}</div>;
@@ -67,7 +90,7 @@ const RenderClockInTable = ({ job }) => {
     <>
       <Table variant="simple" size={{ base: "sm", md: "lg" }}>
         <TableCaption>
-          Employees Clock In Table <ClockInForm jobId={job.id} />
+          Employees Clock In Table <ClockInForm jobId={job.id}/>
         </TableCaption>
         <Thead>
           <Tr>
