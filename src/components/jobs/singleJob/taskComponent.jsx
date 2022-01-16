@@ -1,11 +1,5 @@
 import React, { useState } from "react";
 import {useGetTasksByJobQuery, useAddNewTaskMutation, useUpdateTaskMutation} from "../../../features/api/apiSlice"
-import { useDispatch } from "react-redux";
-import {
-  taskAdded,
-  taskEdited,
-  taskIsCompleteUpdate,
-} from "../../../features/job/jobSlice";
 
 import {
   Button,
@@ -36,7 +30,6 @@ import { GiCancel } from "react-icons/gi";
 import DeleteTask from "./deleteTask";
 
 const DisplayTasks = ({ jobId }) => {
-  const dispatch = useDispatch();
   const completiontoast = useToast();
   const {
     data: tasks,
@@ -75,10 +68,8 @@ const DisplayTasks = ({ jobId }) => {
       await updateTask({taskId, task: editTask})
     }
   };
-  const [completion, setCompletion] = useState("")
 
   const onComplete = async (taskId, isComplete, task) => {
-    setCompletion(!isComplete)
     await updateTask({ taskId, task, isComplete: !isComplete });
     completiontoast({
       title: !isComplete ? "Task completed" : "Task not completed",
@@ -87,7 +78,6 @@ const DisplayTasks = ({ jobId }) => {
       duration: 4000,
       isClosable: true,
     });
-    console.log("from on complete func", completion)
   };
   
   const ListTasks = ({task}) => {
