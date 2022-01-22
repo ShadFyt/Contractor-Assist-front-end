@@ -27,6 +27,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 
+
 const ClockInForm = ({ jobId, timeEntry, employeeName }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [name, setName] = useState(timeEntry ? employeeName : "");
@@ -102,9 +103,10 @@ const ClockInForm = ({ jobId, timeEntry, employeeName }) => {
 
   return (
     <>
-      <Button variant="outline" onClick={onOpen}>
-        {timeEntry ? "x" : "Clock In"}
-      </Button>
+      {
+      timeEntry ? <Button variant={"ghost"} onClick={onOpen}>Edit</Button> :
+       <Button variant="outline" onClick={onOpen}> Clock In</Button>
+      }
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

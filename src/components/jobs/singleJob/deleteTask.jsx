@@ -10,7 +10,6 @@ import {
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import React, { useState, useRef } from "react";
-import { useDispatch } from "react-redux" 
 import { useDeleteTaskMutation } from "../../../features/api/apiSlice"
 
 const DeleteTask = ({ jobId, taskId, ...rest }) => {

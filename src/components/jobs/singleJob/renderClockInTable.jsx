@@ -1,8 +1,9 @@
 import React, {useMemo, useState} from "react";
 
-import {useGetEmployeeByIdQuery, useGetTimeEntriesByJobQuery, useDeleteTimeEntryMutation, useGetTimeEntryByIdQuery} from "../../../features/api/apiSlice"
+import {useGetEmployeeByIdQuery, useGetTimeEntriesByJobQuery, useDeleteTimeEntryMutation, } from "../../../features/api/apiSlice"
 
 import ClockInForm from "./clockInForm";
+import TimeEntryPopOver from "./timeEntryPopOver";
 
 import {
   Table,
@@ -18,17 +19,6 @@ import {
 } from "@chakra-ui/react";
 
 const RenderClockInTable = ({ job }) => {
-  const RenderName = ({id}) => {
-    const {data: employee, isLoading, isSuccess,
-    } = useGetEmployeeByIdQuery(id)
-    let content = ""
-    if (isLoading) {
-      content = <Spinner />
-    } else if (isSuccess) {
-      content = employee.firstName
-    }
-    return content
-  }
 
   const {
     data: timeEntries = [],
@@ -52,22 +42,21 @@ const RenderClockInTable = ({ job }) => {
   }
 
   const RenderTimeEntry = ({timeEntry}) => {
-    const [employeeName, setEmployeeName] = useState("")
     const {data: employee, isLoading, isSuccess,
     } = useGetEmployeeByIdQuery(timeEntry.employeeId)
-    let content = ""
+    let firstName = ""
     if (isLoading) {
-      content = "loading"
+      firstName = "loading"
     } else if (isSuccess) {
-      content = employee.firstName
+      firstName = employee.firstName
     }
 
     return (
       <Tr>
-        <Td><ClockInForm timeEntry={timeEntry} employeeName={content} /> { content}</Td>
+        <Td>{ firstName}</Td>
         <Td>{timeEntry.date}</Td>
         <Td>{timeEntry.clockIn}</Td>
-      <Td>{timeEntry.clockOut} <Button onClick={() => handleDelete(timeEntry.id)}>x</Button></Td>
+      <Td>{timeEntry.clockOut} <TimeEntryPopOver timeEntry={timeEntry} employeeName={firstName}/></Td>
     </Tr>
     )
   }

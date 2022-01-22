@@ -2,7 +2,6 @@ import {
   Button,
   Center,
   VStack,
-  HStack,
   FormControl,
   FormLabel,
   Input,
@@ -17,23 +16,17 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, Link } from "react-router-dom";
 
 import { clientUpdated } from "../../features/job/jobSlice";
 
 export const EditClientForm = ({ jobId, ...rest }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const job = useSelector((state) =>
-    state.job.listOfJobs.find((job) => job.id === jobId)
-  );
-
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
 
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const onAddressChanged = (e) => setAddress(e.target.value);
   const onEmailChanged = (e) => setEmail(e.target.value);
