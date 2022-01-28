@@ -4,8 +4,7 @@ import {
   useAddNewTimeEntryMutation,
   useGetEmployeeByNameQuery,
   useUpdateTimeEntryMutation,
-} from "../../../features/api/apiSlice"
-
+} from "../../../features/api/apiSlice";
 
 import {
   Button,
@@ -27,8 +26,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 
-
-const ClockInForm = ({ jobId, timeEntry, employeeName }) => {
+const ClockInForm = ({ jobId, timeEntry, employeeName, ...rest }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [name, setName] = useState(timeEntry ? employeeName : "");
   const [clockIn, setClockIn] = useState(timeEntry ? timeEntry.clockIn : "");
@@ -39,45 +37,44 @@ const ClockInForm = ({ jobId, timeEntry, employeeName }) => {
   const onClockOutChanged = (e) => setClockOut(e.target.value);
   const onDateChanged = (e) => setDate(e.target.value);
 
-  const [updateTimeEntry] = useUpdateTimeEntryMutation()
-  const [addNewTimeEntry, { isLoading: isTimeEntryLoading }] = useAddNewTimeEntryMutation()
-  const { data: employee } = useGetEmployeeByNameQuery(name)
+  const [updateTimeEntry] = useUpdateTimeEntryMutation();
+  const [addNewTimeEntry, { isLoading: isTimeEntryLoading }] =
+    useAddNewTimeEntryMutation();
+  const { data: employee } = useGetEmployeeByNameQuery(name);
 
   const canSave =
-    [date, clockIn, clockOut].every(
-      Boolean
-    ) && !isTimeEntryLoading;
+    [date, clockIn, clockOut].every(Boolean) && !isTimeEntryLoading;
 
   const onClockIn = async () => {
     if (canSave) {
       try {
-        console.log("adding...")
+        console.log("adding...");
         await addNewTimeEntry({
           date,
           clockIn,
           clockOut,
           jobId,
-          employeeId: employee.id
+          employeeId: employee.id,
         }).unwrap();
         setName("");
         setClockIn("");
         setClockOut("");
-        setDate("")
-        onClose()
+        setDate("");
+        onClose();
       } catch (err) {
-        console.error("failed", err)
+        console.error("failed", err);
       }
     }
-  }
+  };
 
   const onUpdate = async () => {
     await updateTimeEntry({
       id: timeEntry.id,
       date,
       clockIn,
-      clockOut
-    })
-  }
+      clockOut,
+    });
+  };
 
   const {
     data: employees,
@@ -103,10 +100,16 @@ const ClockInForm = ({ jobId, timeEntry, employeeName }) => {
 
   return (
     <>
-      {
-      timeEntry ? <Button variant={"ghost"} onClick={onOpen}>Edit</Button> :
-       <Button variant="outline" onClick={onOpen}> Clock In</Button>
-      }
+      {timeEntry ? (
+        <Button variant={"ghost"} onClick={onOpen} {...rest}>
+          Edit
+        </Button>
+      ) : (
+        <Button variant="outline" onClick={onOpen}>
+          {" "}
+          Clock In
+        </Button>
+      )}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -114,7 +117,9 @@ const ClockInForm = ({ jobId, timeEntry, employeeName }) => {
           <ModalCloseButton />
           <ModalBody>
             <VStack>
-              {timeEntry ? <Heading>{employeeName}</Heading> :
+              {timeEntry ? (
+                <Heading>{employeeName}</Heading>
+              ) : (
                 <FormControl>
                   <FormLabel>Employee</FormLabel>
                   <Select
@@ -122,12 +127,14 @@ const ClockInForm = ({ jobId, timeEntry, employeeName }) => {
                     name="name"
                     value={name}
                     onChange={onEmployeeChanged}
-                    placeholder={timeEntry ? employeeName : "Select an employee"}
+                    placeholder={
+                      timeEntry ? employeeName : "Select an employee"
+                    }
                   >
                     {content}
                   </Select>
                 </FormControl>
-              }
+              )}
 
               <HStack w="full">
                 <FormControl>
@@ -167,7 +174,11 @@ const ClockInForm = ({ jobId, timeEntry, employeeName }) => {
             </VStack>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={timeEntry ? onUpdate : onClockIn} colorScheme="green" mr={1}>
+            <Button
+              onClick={timeEntry ? onUpdate : onClockIn}
+              colorScheme="green"
+              mr={1}
+            >
               {timeEntry ? "Update" : "Submit"}
             </Button>
             <Button onClick={onClose}>Cancel</Button>
