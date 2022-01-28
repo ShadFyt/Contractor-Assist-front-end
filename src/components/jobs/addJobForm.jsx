@@ -21,7 +21,6 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Text,
   Textarea,
   Select,
   Stack,
@@ -83,9 +82,6 @@ const AddJobForm = forwardRef((props, ref) => {
 
   return (
     <Stack spacing={4} w="full">
-      <Center>
-        <Text fontSize="large">Job Details</Text>
-      </Center>
       <HStack>
         <FormControl>
           <FormLabel htmlFor="jobName">Job Name</FormLabel>
@@ -99,7 +95,7 @@ const AddJobForm = forwardRef((props, ref) => {
           />
         </FormControl>
         <FormControl>
-          <FormLabel>Job Type</FormLabel>
+          <FormLabel>Type</FormLabel>
           <Select
             id="jobType"
             name="jobType"
@@ -107,9 +103,9 @@ const AddJobForm = forwardRef((props, ref) => {
             onChange={handleChange}
             placeholder="Select a job type"
           >
-            <option value="sanding">sanding</option>
-            <option value="installation">installation</option>
-            <option value="both">both</option>
+            <option value="sanding">Sanding</option>
+            <option value="installation">Installation</option>
+            <option value="both">Both</option>
           </Select>
         </FormControl>
       </HStack>
@@ -185,10 +181,17 @@ const JobFormModal = () => {
 
   return (
     <>
-      <Button onClick={onOpen}>Add</Button>
+      <Button
+        bgColor={"teal.500"}
+        mr={2}
+        onClick={onOpen}
+        _hover={{ bgColor: "teal.400" }}
+      >
+        Add job
+      </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent bg="gray.500">
+        <ModalContent bg="gray.100">
           <ModalHeader>
             <Center>Add New Job</Center>
           </ModalHeader>

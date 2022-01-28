@@ -1,9 +1,9 @@
 import React from "react";
-import { Box, Spinner, Text, Button, SimpleGrid } from "@chakra-ui/react";
+import { Spinner, SimpleGrid } from "@chakra-ui/react";
 
 import { useGetEmployeesQuery } from "../../features/api/apiSlice";
-import { AddEmployeeForm } from "./addNewEmployeeForm";
 import { EmployeeProfile } from "./employeeProfile";
+import EmployeeHeader from "./employeeHeader";
 
 const ListEmployees = () => {
   const {
@@ -28,11 +28,8 @@ const ListEmployees = () => {
 
   return (
     <section>
-      <h2>Employees</h2>
+      <EmployeeHeader />
       <SimpleGrid columns={3}>{content}</SimpleGrid>
-      <Box w="50%">
-        <AddEmployeeForm />
-      </Box>
     </section>
   );
 };

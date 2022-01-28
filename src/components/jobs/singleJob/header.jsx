@@ -1,5 +1,15 @@
 import React from "react";
-import { Box, Heading, Spacer, Flex, Spinner } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Spacer,
+  Flex,
+  Spinner,
+  Link,
+  Icon,
+} from "@chakra-ui/react";
+import { Link as ReactLink } from "react-router-dom";
+import { TiArrowBack } from "react-icons/ti";
 
 import { Address, ContactInfo } from "../JobComponent";
 import { useGetClientByIdQuery } from "../../../features/api/apiSlice";
@@ -22,6 +32,15 @@ const Header = ({ job }) => {
   return (
     <Flex bg="teal.600" borderLeftRadius="2xl" h="200px" p={2}>
       <Box marginLeft={6} alignSelf="flex-end">
+        <Link as={ReactLink} to={"/jobs"}>
+          <Icon
+            color={"white"}
+            fontSize={"3xl"}
+            as={TiArrowBack}
+            marginBottom={1}
+            _hover={{ color: "gray.400" }}
+          />
+        </Link>
         {content}
       </Box>
       <Spacer />

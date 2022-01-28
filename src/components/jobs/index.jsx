@@ -2,11 +2,9 @@ import React from "react";
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import Job from "./JobComponent";
 import JobFormModal from "./addJobForm";
+import JobPageHeader from "./jobPageHeader";
 
-import {
-  useGetJobsQuery,
-  useGetClientByIdQuery,
-} from "../../features/api/apiSlice";
+import { useGetJobsQuery } from "../../features/api/apiSlice";
 
 function ListJobs() {
   const {
@@ -33,7 +31,7 @@ function ListJobs() {
 
   return (
     <>
-      <JobFormModal />
+      <JobPageHeader />
       <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={10} m={3}>
         {content}
       </SimpleGrid>
