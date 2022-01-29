@@ -18,6 +18,7 @@ import {
   Td,
   TableCaption,
   Spinner,
+  Text,
 } from "@chakra-ui/react";
 
 const RenderClockInTable = ({ job }) => {
@@ -51,7 +52,11 @@ const RenderClockInTable = ({ job }) => {
 
     return (
       <Tr>
-        <Td>{firstName}</Td>
+        <Td>
+          <Text fontWeight={"bold"} fontSize={"large"}>
+            {firstName}
+          </Text>
+        </Td>
         <Td>{timeEntry.date}</Td>
         <Td>{timeEntry.clockIn}</Td>
         <Td>

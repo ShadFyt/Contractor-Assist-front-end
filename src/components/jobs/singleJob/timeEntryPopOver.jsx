@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import ClockInForm from "./clockInForm";
 import { useDeleteTimeEntryMutation } from "../../../features/api/apiSlice";
@@ -17,7 +17,6 @@ import {
   Text,
   Box,
   useToast,
-  useDisclosure,
 } from "@chakra-ui/react";
 
 import { RiMenuUnfoldLine } from "react-icons/ri";
@@ -62,11 +61,12 @@ const TimeEntryPopOver = ({ timeEntry, employeeName }) => {
                   <Button
                     color={"white"}
                     bgColor={"red.600"}
+                    _hover={{ bgColor: "red.400" }}
                     onClick={() => handleDelete(timeEntry.id)}
                   >
                     Delete
                   </Button>
-                  <Button ml={2} onClick={onClose}>
+                  <Button bgColor={"gray.400"} ml={2} onClick={onClose}>
                     Cancel
                   </Button>
                 </Box>

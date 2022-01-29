@@ -24,7 +24,10 @@ import {
   Select,
   Spinner,
   Heading,
+  IconButton,
 } from "@chakra-ui/react";
+
+import { FiClock } from "react-icons/fi";
 
 const ClockInForm = ({ jobId, timeEntry, employeeName, ...rest }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -105,10 +108,13 @@ const ClockInForm = ({ jobId, timeEntry, employeeName, ...rest }) => {
           Edit
         </Button>
       ) : (
-        <Button variant="outline" onClick={onOpen}>
-          {" "}
-          Clock In
-        </Button>
+        <IconButton
+          icon={<FiClock boxSize="2em" />}
+          size={"lg"}
+          fontSize={"2xl"}
+          bgColor={"white"}
+          onClick={onOpen}
+        />
       )}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
