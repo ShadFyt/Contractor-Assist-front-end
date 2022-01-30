@@ -22,7 +22,7 @@ export const apiSlice = createApi({
             invalidatesTags: ["Jobs"]
         }),
         deleteJob: builder.mutation({
-            query: id => ({
+            query: (id) => ({
                 url: `/jobs/${id}`,
                 method: "DELETE"
             }),
@@ -69,15 +69,15 @@ export const apiSlice = createApi({
             query: (id) => `/time_sheet/${id}`,
         }),
         addNewTimeEntry: builder.mutation({
-            query: (initalTimeEntry) => ({
-                url: `/time_sheet/employee/${initalTimeEntry.employeeId}`,
+            query: (initialTimeEntry) => ({
+                url: `/time_sheet/employee/${initialTimeEntry.employeeId}`,
                 method: "POST",
-                body: initalTimeEntry,
+                body: initialTimeEntry,
             }),
             invalidatesTags: ["TimeEntries"]
         }),
         updateTimeEntry: builder.mutation({
-            query: ({id, ...patch}) =>({
+            query: ({ id, ...patch }) => ({
                 url: `/time_sheet/${id}`,
                 method: "PATCH",
                 body: patch
@@ -96,7 +96,7 @@ export const apiSlice = createApi({
             providesTags: ["Tasks"]
         }),
         addNewTask: builder.mutation({
-            query: ({jobId, ...task}) => ({
+            query: ({ jobId, ...task }) => ({
                 url: `/tasks/${jobId}`,
                 method: "POST",
                 body: task
@@ -111,7 +111,7 @@ export const apiSlice = createApi({
             invalidatesTags: ["Tasks"]
         }),
         updateTask: builder.mutation({
-            query: ({taskId, ...patch}) => ({
+            query: ({ taskId, ...patch }) => ({
                 url: `/tasks/${taskId}`,
                 method: "PATCH",
                 body: patch

@@ -19,7 +19,7 @@ export const DeleteJob = ({ jobId, ...rest }) => {
   const [deleteJob] = useDeleteJobMutation();
 
   const handleDelete = async () => {
-    await deleteJob({ id: jobId });
+    await deleteJob(jobId);
   };
   return (
     <>

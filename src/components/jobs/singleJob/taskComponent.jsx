@@ -55,12 +55,21 @@ const DisplayTasks = ({ jobId }) => {
 
     return isEditing ? (
       <ButtonGroup size="sm">
-        <IconButton icon={<CheckIcon />} {...getSubmitButtonProps()} />
-        <IconButton icon={<CloseIcon />} {...getCancelButtonProps()} />
+        <IconButton
+          aria-label="Check complete"
+          icon={<CheckIcon />}
+          {...getSubmitButtonProps()}
+        />
+        <IconButton
+          aria-label="Uncheck complete"
+          icon={<CloseIcon />}
+          {...getCancelButtonProps()}
+        />
       </ButtonGroup>
     ) : (
       <Box justifyContent="center">
         <IconButton
+          aria-label="edit"
           isDisabled={isComplete ? true : false}
           size="sm"
           icon={<EditIcon />}

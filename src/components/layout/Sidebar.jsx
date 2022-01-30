@@ -17,6 +17,7 @@ import {
 
 import { GoHome, GoTools } from "react-icons/go";
 import { GrUserWorker } from "react-icons/gr";
+import { BsFileEarmarkPerson } from "react-icons/bs";
 import {
   AiOutlineContacts,
   AiFillSetting,
@@ -27,7 +28,7 @@ import {
 const LinkItemsTop = [
   { name: "Home", icon: GoHome },
   { name: "Employees", icon: GrUserWorker },
-  { name: "Clients", icon: GrUserWorker },
+  { name: "Clients", icon: BsFileEarmarkPerson },
   { name: "Jobs", icon: AiOutlineContacts },
   { name: "Equipment", icon: GoTools },
 ];

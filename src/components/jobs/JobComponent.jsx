@@ -125,8 +125,9 @@ const TaskTab = ({ jobTasks }) => {
       </HStack>
       {jobTasks.map((task) => (
         <HStack key={task.id}>
-          console.log
-          <Text>{task.task}</Text>
+          <Text textDecoration={task.isComplete ? "line-through" : "none"}>
+            {task.task}
+          </Text>
           <Spacer />
           {task.isComplete ? (
             <Icon as={AiOutlineCheckCircle} color="green.700" fontSize="lg" />
@@ -213,7 +214,7 @@ function Job({ job, ...rest }) {
             <Heading size={"lg"} marginLeft={6} color="white">
               <Link as={ReactLink} to={`/jobs/${job.id}`}>
                 <Tooltip
-                  label="Click to see full job page"
+                  label="Click to view full detail"
                   aria-label="A tooltip"
                   fontSize="md"
                 >

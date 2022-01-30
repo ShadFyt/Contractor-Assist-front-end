@@ -22,8 +22,8 @@ export const EmployeeProfile = ({ employee }) => {
   return (
     <Center py={6}>
       <Box
-        maxW={"320px"}
-        w={"full"}
+        maxW={"380px"}
+        w={{ sm: "250px", md: "350px", lg: "400px", "2xl": "full" }}
         bg="white"
         boxShadow={"2xl"}
         rounded={"lg"}

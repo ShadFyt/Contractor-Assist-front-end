@@ -29,7 +29,9 @@ const ListEmployees = () => {
   return (
     <section>
       <EmployeeHeader />
-      <SimpleGrid columns={3}>{content}</SimpleGrid>
+      <SimpleGrid columns={{ sm: 1, md: 1, lg: 2, xl: 3 }}>
+        {content}
+      </SimpleGrid>
     </section>
   );
 };

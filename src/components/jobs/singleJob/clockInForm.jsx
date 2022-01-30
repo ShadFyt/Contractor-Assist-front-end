@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  useGetEmployeesQuery,
+  useGetClientsQuery,
   useAddNewTimeEntryMutation,
   useGetEmployeeByNameQuery,
   useUpdateTimeEntryMutation,
@@ -85,7 +85,7 @@ const ClockInForm = ({ jobId, timeEntry, employeeName, ...rest }) => {
     isSuccess,
     isError,
     error,
-  } = useGetEmployeesQuery();
+  } = useGetClientsQuery();
 
   let content;
 
@@ -109,6 +109,7 @@ const ClockInForm = ({ jobId, timeEntry, employeeName, ...rest }) => {
         </Button>
       ) : (
         <IconButton
+          aria-label="clock in button"
           icon={<FiClock boxSize="2em" />}
           size={"lg"}
           fontSize={"2xl"}

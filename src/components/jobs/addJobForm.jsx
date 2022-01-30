@@ -4,7 +4,10 @@ import React, {
   useRef,
   useImperativeHandle,
 } from "react";
-import { useAddNewJobMutation } from "../../features/api/apiSlice";
+import {
+  useAddNewJobMutation,
+  useGetClientsQuery,
+} from "../../features/api/apiSlice";
 
 import {
   FormControl,
@@ -25,6 +28,8 @@ import {
   Select,
   Stack,
   useDisclosure,
+  Spinner,
+  Text,
 } from "@chakra-ui/react";
 
 const AddJobForm = forwardRef((props, ref) => {
@@ -51,15 +56,43 @@ const AddJobForm = forwardRef((props, ref) => {
     });
   };
 
+  const [clientName, setClientName] = useState("");
+
   const handleChange = (e) =>
     setDetailFormData({
       ...detailFormData,
       [e.target.name]: e.target.value,
     });
 
-  const [addNewJob, { isLoading }] = useAddNewJobMutation();
+  const onClientChanged = (e) => {
+    console.log(e.target.value);
+    setClientName(e.target.value);
+  };
 
-  const canSave = [detailFormData].every(Boolean) && !isLoading;
+  const {
+    data: clients,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetClientsQuery();
+
+  let listOfClients;
+
+  if (isLoading) {
+    listOfClients = <Spinner />;
+  } else if (isSuccess) {
+    listOfClients = clients.map((client) => (
+      <option key={client.id} value={client.id}>
+        {client.firstName}
+      </option>
+    ));
+  } else if (isError) {
+    listOfClients = <Text>{error.toString()}</Text>;
+  }
+  const [addNewJob, { isLoading: isDataLoading }] = useAddNewJobMutation();
+
+  const canSave = [detailFormData].every(Boolean) && !isDataLoading;
 
   const onSaveJob = async () => {
     if (canSave) {
@@ -121,7 +154,7 @@ const AddJobForm = forwardRef((props, ref) => {
             textAlign="center"
           />
         </FormControl>
-        <FormControl id="endDate">
+        <FormControl>
           <FormLabel htmlFor="endDate">End Date</FormLabel>
           <Input
             id="endDate"
@@ -134,7 +167,7 @@ const AddJobForm = forwardRef((props, ref) => {
         </FormControl>
       </HStack>
       <HStack>
-        <FormControl id="location">
+        <FormControl>
           <FormLabel htmlFor="location">Location</FormLabel>
           <Input
             id="location"
@@ -145,18 +178,20 @@ const AddJobForm = forwardRef((props, ref) => {
             placeholder="address of job goes here"
           />
         </FormControl>
-        <FormControl id="clientId">
+        <FormControl>
           <FormLabel htmlFor="clientId">Client</FormLabel>
-          <Input
+          <Select
             id="clientId"
             name="clientId"
             value={detailFormData.clientId}
             onChange={handleChange}
-            type="number"
-          />
+            placeholder={"Select an client"}
+          >
+            {listOfClients}
+          </Select>
         </FormControl>
       </HStack>
-      <FormControl id="summary">
+      <FormControl>
         <FormLabel htmlFor="summary">Summary</FormLabel>
         <Textarea
           id="summary"
