@@ -34,19 +34,19 @@ export const AddNewClientForm = () => {
   const handleChange = (e) =>
     setContactFormData({ ...contactFormData, [e.target.name]: e.target.value });
 
-  const [addNewClient, { isLoading}] = useAddNewClientMutation()
+  const [addNewClient, { isLoading }] = useAddNewClientMutation();
 
   const canSave = [contactFormData].every(Boolean) && !isLoading;
 
   const onSaveClient = async () => {
-    if(canSave) {
+    if (canSave) {
       try {
         await addNewClient({
           ...contactFormData,
         }).unwrap();
         resetContactForm();
       } catch (err) {
-        console.log("failed to save client info", err)
+        console.log("failed to save client info", err);
       }
     }
   };
@@ -89,7 +89,6 @@ export const AddNewClientForm = () => {
         <FormControl>
           <InputGroup>
             <InputLeftElement
-              pointerEvent="none"
               children={<Icon as={FiPhone} color="gray.600" />}
             />
             <Input

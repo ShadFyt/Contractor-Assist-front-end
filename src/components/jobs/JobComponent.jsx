@@ -52,7 +52,6 @@ export const Address = ({ address, ...rest }) => {
             ml={2}
             variant="solid"
             _hover={{ boxShadow: "lg" }}
-            colorScheme="gray"
             color="gray.900"
             size="xs"
           >
@@ -114,7 +113,7 @@ const TaskTab = ({ jobTasks }) => {
       rounded="lg"
       marginBottom={3}
       p={4}
-      divider={<StackDivider colorScheme="gray" color="gray.300" />}
+      divider={<StackDivider color="gray.300" />}
     >
       <HStack>
         <Heading as="h4" color="black">
@@ -203,7 +202,11 @@ function Job({ job, ...rest }) {
   if (isFetching) {
     name = <Spinner />;
   } else if (isSuccess) {
-    name = client.firstName;
+    name = (
+      <Text align="end" fontSize="2xl" fontWeight="hairline">
+        {client.firstName}
+      </Text>
+    );
   }
 
   return (
@@ -222,9 +225,7 @@ function Job({ job, ...rest }) {
                 </Tooltip>
               </Link>
             </Heading>
-            <Text align="end" fontSize="2xl" fontWeight="hairline">
-              {name}
-            </Text>
+            <Box>{name}</Box>
             <Badge variant="subtle" colorScheme="green" mt={8} ml={2}>
               New
             </Badge>

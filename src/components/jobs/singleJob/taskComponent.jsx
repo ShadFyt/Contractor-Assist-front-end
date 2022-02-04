@@ -80,9 +80,7 @@ const DisplayTasks = ({ jobId }) => {
   }
 
   const onEditClick = async (taskId, editTask) => {
-    console.log("from onEdit", editTask);
     if (editTask) {
-      console.log(editTask);
       await updateTask({ taskId, task: editTask });
     }
   };
@@ -105,7 +103,7 @@ const DisplayTasks = ({ jobId }) => {
 
     return (
       <HStack marginBottom={2}>
-        <Text marginLeft={2} fontSize="xl">
+        <Text as={"article"} marginLeft={2} fontSize="xl">
           <Editable
             value={editTask}
             isPreviewFocusable={false}
@@ -128,11 +126,11 @@ const DisplayTasks = ({ jobId }) => {
             task.isComplete ? (
               <GiCancel fontSize={"25px"} color="red" />
             ) : (
-              <FaCheck colorScheme="green" color="green" fontSize="25px" />
+              <FaCheck color="green" color="green" fontSize="25px" />
             )
           }
         />
-        <DeleteTask jobId={task.jobId} taskId={task.id} colorScheme="red" />
+        <DeleteTask jobId={task.jobId} taskId={task.id} colorScheme={"red"} />
       </HStack>
     );
   };
@@ -142,7 +140,6 @@ const DisplayTasks = ({ jobId }) => {
   if (isLoading) {
     content = <Spinner />;
   } else if (isSuccess) {
-    console.log(tasks);
     content = tasks.map((task) => <ListTasks key={task.id} task={task} />);
   } else if (isError) {
     content = <div>{error.toString()}</div>;
@@ -180,7 +177,7 @@ const TaskComponent = ({ jobId }) => {
   const onSaveTask = async () => {
     if (canSave) {
       try {
-        console.log("adding new task");
+        console.log("adding new task:", task);
         await addNewTask({
           task,
           jobId,

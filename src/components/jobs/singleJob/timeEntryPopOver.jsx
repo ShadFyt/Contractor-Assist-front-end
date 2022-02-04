@@ -19,7 +19,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
-import { RiMenuUnfoldLine } from "react-icons/ri";
+import { AiOutlineEdit } from "react-icons/ai";
 
 const TimeEntryPopOver = ({ timeEntry, employeeName }) => {
   const [deleteTimeEntry] = useDeleteTimeEntryMutation();
@@ -41,7 +41,7 @@ const TimeEntryPopOver = ({ timeEntry, employeeName }) => {
       {({ onClose }) => (
         <>
           <PopoverTrigger>
-            <IconButton size={"lg"} bg={"white"} icon={<RiMenuUnfoldLine />} />
+            <IconButton size={"lg"} bg={"white"} icon={<AiOutlineEdit />} />
           </PopoverTrigger>
           <PopoverContent>
             <PopoverArrow />

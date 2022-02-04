@@ -10,17 +10,17 @@ import {
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import React, { useState, useRef } from "react";
-import { useDeleteTaskMutation } from "../../../features/api/apiSlice"
+import { useDeleteTaskMutation } from "../../../features/api/apiSlice";
 
 const DeleteTask = ({ jobId, taskId, ...rest }) => {
   const [isOpen, setIsOpen] = useState(false);
   const cancelRef = useRef();
 
   const onClose = () => setIsOpen(false);
-  const [deleteTask] = useDeleteTaskMutation()
+  const [deleteTask] = useDeleteTaskMutation();
 
   const handleDelete = async () => {
-    await deleteTask(taskId)
+    await deleteTask(taskId);
   };
 
   return (

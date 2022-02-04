@@ -1,7 +1,6 @@
 import React from "react";
-import { Box, SimpleGrid } from "@chakra-ui/react";
+import { Box, SimpleGrid, Spinner } from "@chakra-ui/react";
 import Job from "./JobComponent";
-import JobFormModal from "./addJobForm";
 import JobPageHeader from "./jobPageHeader";
 
 import { useGetJobsQuery } from "../../features/api/apiSlice";
@@ -18,7 +17,7 @@ function ListJobs() {
   let content;
 
   if (isLoading) {
-    content = <p>Loading....</p>;
+    content = <Spinner />;
   } else if (isSuccess) {
     content = jobs.map((job) => (
       <Box h="full" w="full" key={job.id}>
@@ -26,7 +25,7 @@ function ListJobs() {
       </Box>
     ));
   } else if (isError) {
-    content = <div>{error}</div>;
+    content = <span>{error}</span>;
   }
 
   return (

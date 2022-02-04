@@ -56,18 +56,11 @@ const AddJobForm = forwardRef((props, ref) => {
     });
   };
 
-  const [clientName, setClientName] = useState("");
-
   const handleChange = (e) =>
     setDetailFormData({
       ...detailFormData,
       [e.target.name]: e.target.value,
     });
-
-  const onClientChanged = (e) => {
-    console.log(e.target.value);
-    setClientName(e.target.value);
-  };
 
   const {
     data: clients,
@@ -80,7 +73,7 @@ const AddJobForm = forwardRef((props, ref) => {
   let listOfClients;
 
   if (isLoading) {
-    listOfClients = <Spinner />;
+    listOfClients = "loading...";
   } else if (isSuccess) {
     listOfClients = clients.map((client) => (
       <option key={client.id} value={client.id}>
@@ -155,11 +148,11 @@ const AddJobForm = forwardRef((props, ref) => {
           />
         </FormControl>
         <FormControl>
-          <FormLabel htmlFor="endDate">End Date</FormLabel>
+          <FormLabel htmlFor="finishDate">End Date</FormLabel>
           <Input
-            id="endDate"
-            name="endDate"
-            value={detailFormData.endDate}
+            id="finishDate"
+            name="finishDate"
+            value={detailFormData.finishDate}
             onChange={handleChange}
             type="date"
             textAlign="center"

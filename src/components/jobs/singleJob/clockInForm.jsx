@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  useGetClientsQuery,
+  useGetEmployeesQuery,
   useAddNewTimeEntryMutation,
   useGetEmployeeByNameQuery,
   useUpdateTimeEntryMutation,
@@ -51,7 +51,9 @@ const ClockInForm = ({ jobId, timeEntry, employeeName, ...rest }) => {
   const onClockIn = async () => {
     if (canSave) {
       try {
-        console.log("adding...");
+        console.log(
+          `adding: date- ${date}, time in- ${clockIn}, time out- ${clockOut}`
+        );
         await addNewTimeEntry({
           date,
           clockIn,
@@ -59,6 +61,7 @@ const ClockInForm = ({ jobId, timeEntry, employeeName, ...rest }) => {
           jobId,
           employeeId: employee.id,
         }).unwrap();
+        // setName() is triggering useGetEmployeeByNameQuery()
         setName("");
         setClockIn("");
         setClockOut("");
@@ -85,20 +88,20 @@ const ClockInForm = ({ jobId, timeEntry, employeeName, ...rest }) => {
     isSuccess,
     isError,
     error,
-  } = useGetClientsQuery();
+  } = useGetEmployeesQuery();
 
-  let content;
+  let listEmployees;
 
   if (isLoading) {
-    content = <Spinner />;
+    listEmployees = <Spinner />;
   } else if (isSuccess) {
-    content = employees.map((employee) => (
+    listEmployees = employees.map((employee) => (
       <option key={employee.id} value={employee.firstName}>
         {employee.firstName}
       </option>
     ));
   } else if (isError) {
-    content = <div>{error.toString()}</div>;
+    listEmployees = <div>{error.toString()}</div>;
   }
 
   return (
@@ -110,10 +113,12 @@ const ClockInForm = ({ jobId, timeEntry, employeeName, ...rest }) => {
       ) : (
         <IconButton
           aria-label="clock in button"
-          icon={<FiClock boxSize="2em" />}
-          size={"lg"}
+          border={"1px"}
+          icon={<FiClock />}
+          size={"md"}
+          rounded={"full"}
           fontSize={"2xl"}
-          bgColor={"white"}
+          bgColor={"gray.300"}
           onClick={onOpen}
         />
       )}
@@ -138,7 +143,7 @@ const ClockInForm = ({ jobId, timeEntry, employeeName, ...rest }) => {
                       timeEntry ? employeeName : "Select an employee"
                     }
                   >
-                    {content}
+                    {listEmployees}
                   </Select>
                 </FormControl>
               )}

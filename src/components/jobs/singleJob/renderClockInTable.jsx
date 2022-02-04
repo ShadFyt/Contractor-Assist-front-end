@@ -69,14 +69,13 @@ const RenderClockInTable = ({ job }) => {
   let content = "";
 
   if (isLoading) {
-    content = <Spinner />;
+    content = null;
   } else if (isSuccess) {
-    console.log(timeEntries);
     content = sortedTimeEntries.map((data) => (
       <RenderTimeEntry key={data.id} timeEntry={data} />
     ));
   } else if (isError) {
-    content = <div>{error.toString()}</div>;
+    content = <p>{error.toString()}</p>;
   }
 
   return (
