@@ -14,8 +14,14 @@ The server uses Python(FastAPI), SQLite and SQLModel.
     * Expenses
     * Client details
 
+![Job add form](./public/images/add_job.png)
+![list job page](./public/images/list_of_jobs.png)
+![single job page](./public/images/single_page_job.png)
+
+
 2. Employee component lists all employees and displays details & information
 ![Employee page](./public/images/employee_component.png)
+![Employee add form](./public/images/register_emp.png)
 
 
 3. Client component lists all clients and displays details & information
