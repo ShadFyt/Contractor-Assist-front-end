@@ -1,30 +1,30 @@
-# An easy solution to facilitating a contractors administrative workload
+# A solution for facilitating a contractors administrative workload
 
 Built using ReactJs(hooks), Redux(Toolkit) for state management and styled using Chakra ui components.
-Server side uses Python(FastAPI), SQLite and SQLModel.
+The server uses Python(FastAPI), SQLite and SQLModel.
 
 ## Link to server repo:
 [https://github.com/ShadFyt/Contractor-Assist-back-end](https://github.com/ShadFyt/Contractor-Assist-back-end)
 
 ## Application Components
 
-1. Job component is where you can add details related to the job such as
-    * Log the hours of employees that work there.
-    * List tasks required to me completed for job
+1. Job component is where you can add details related to the job such as:
+    * Logging the hours of employees.
+    * Lists tasks that are required to be completed.
     * Expenses
     * Client details
 
-2. Employee component shows details for a employee
+2. Employee component lists all employees and displays details & information
 
-3. Client component show details for a client
+3. Client component lists all clients and displays details & information
 
-4. Equipment component keeps tracks where equipments may be - not implemented yet
+4. Equipment component tracks location of the tools  - not implemented yet
 
 
 ## Road map/Todos
 
-- [ ] Create the homepage dashboard style showing important details about the company
-- [ ] List all clients on client page like the employee page - currently working on
+- [ ] Create a homepage component that is dashboard style and will show important details about the company
+- [ ] List all clients on client page similar to the employee page
 - [ ] Create single page for employees listing information like hours worked... 
-- [ ] Add a *Book time off* function for employees
+- [ ] Add a **Book time off** function for employees
 - [ ] Create the Equipment component 
