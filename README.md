@@ -15,6 +15,8 @@ The server uses Python(FastAPI), SQLite and SQLModel.
     * Client details
 
 2. Employee component lists all employees and displays details & information
+![Employee page](./public/images/employee_component.png)
+
 
 3. Client component lists all clients and displays details & information
 

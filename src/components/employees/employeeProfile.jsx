@@ -20,7 +20,7 @@ export const EmployeeProfile = ({ employee }) => {
   };
 
   return (
-    <Center py={6}>
+    <Center py={6} marginLeft={6}>
       <Box
         maxW={"380px"}
         w={{ sm: "250px", md: "350px", lg: "400px", "2xl": "full" }}
@@ -29,6 +29,7 @@ export const EmployeeProfile = ({ employee }) => {
         rounded={"lg"}
         p={6}
         textAlign={"center"}
+        m={1}
       >
         <Avatar
           size={"xl"}
