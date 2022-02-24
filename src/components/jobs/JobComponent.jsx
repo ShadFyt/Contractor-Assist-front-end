@@ -64,6 +64,10 @@ export const Address = ({ address, ...rest }) => {
 };
 
 export const ContactInfo = ({ jobId, client, isHeader }) => {
+  const formatPhoneNumber = (number) => {
+    let input = number.toString();
+    return input.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
+  };
   return (
     <Box>
       {isHeader ? (
@@ -88,7 +92,7 @@ export const ContactInfo = ({ jobId, client, isHeader }) => {
         <Text as="span" fontWeight="bold">
           TELEPHONE
         </Text>
-        : {client.phoneNumber}
+        : {formatPhoneNumber(client.phoneNumber)}
       </Text>
       <Text>
         <Text as="span" fontWeight="bold">
