@@ -6,7 +6,7 @@ import { RenderEmployeeForm } from "./addNewEmployeeForm";
 
 const EmployeeHeader = () => {
   return (
-    <Flex bg="gray.200" borderLeftRadius="2xl" h="100px" p={2} marginLeft={8}>
+    <Flex bg="gray.200" borderBottomLeftRadius="2xl" h="100px" p={2}>
       <Link as={ReactLink} to={"/home"}>
         <Icon
           color={"black"}

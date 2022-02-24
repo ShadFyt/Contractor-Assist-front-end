@@ -20,14 +20,14 @@ export const EmployeeProfile = ({ employee }) => {
   };
 
   return (
-    <Center py={6}>
+    <Center m={1} py={5}>
       <Box
         maxW={"380px"}
         w={{ sm: "250px", md: "350px", lg: "400px", "2xl": "full" }}
         bg="white"
         boxShadow={"2xl"}
         rounded={"lg"}
-        p={6}
+        p={5}
         textAlign={"center"}
       >
         <Avatar
@@ -44,7 +44,7 @@ export const EmployeeProfile = ({ employee }) => {
         <Text fontWeight={"500"} color={"gray.400"} mb={4}>
           {employee.email}
         </Text>
-        <HStack>
+        <HStack marginLeft={8}>
           <Tag>
             <TagLeftIcon as={FiPhone} />
             <TagLabel>{formatPhoneNumber(employee.phoneNumber)}</TagLabel>
