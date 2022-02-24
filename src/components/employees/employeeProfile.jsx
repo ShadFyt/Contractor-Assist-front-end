@@ -29,6 +29,7 @@ export const EmployeeProfile = ({ employee }) => {
         rounded={"lg"}
         p={5}
         textAlign={"center"}
+        m={1}
       >
         <Avatar
           size={"xl"}

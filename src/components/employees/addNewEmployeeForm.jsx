@@ -38,6 +38,7 @@ export const RenderEmployeeForm = () => {
         placement="right"
         onClose={onClose}
         finalFocusRef={btnRef}
+        size={"md"}
       >
         <DrawerOverlay />
         <DrawerContent>

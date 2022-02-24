@@ -1,44 +1,38 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+# A solution for facilitating a contractors administrative workload
 
-## Available Scripts
+Built using ReactJs(hooks), Redux(Toolkit) for state management and styled using Chakra ui components.
+The server uses Python(FastAPI), SQLite and SQLModel.
 
-In the project directory, you can run:
+## Link to server repo:
+[https://github.com/ShadFyt/Contractor-Assist-back-end](https://github.com/ShadFyt/Contractor-Assist-back-end)
 
-### `yarn start`
+## Application Components
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Job component is where you can add details related to the job such as:
+    * Logging the hours of employees.
+    * Lists tasks that are required to be completed.
+    * Expenses
+    * Client details
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+![Job add form](./public/images/add_job.png)
+![list job page](./public/images/list_of_jobs.png)
+![single job page](./public/images/single_page_job.png)
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. Employee component lists all employees and displays details & information
+![Employee page](./public/images/employee_component.png)
+![Employee add form](./public/images/register_emp.png)
 
-### `yarn build`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. Client component lists all clients and displays details & information
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+4. Equipment component tracks location of the tools  - not implemented yet
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
+## Road map/Todos
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [ ] Create a homepage component that is dashboard style and will show important details about the company
+- [ ] List all clients on client page similar to the employee page
+- [ ] Create single page for employees listing information like hours worked... 
+- [ ] Add a **Book time off** function for employees
+- [ ] Create the Equipment component 
