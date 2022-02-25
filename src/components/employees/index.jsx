@@ -3,7 +3,7 @@ import { Spinner, SimpleGrid } from "@chakra-ui/react";
 
 import { useGetEmployeesQuery } from "../../features/api/apiSlice";
 import { EmployeeProfile } from "./employeeProfile";
-import EmployeeHeader from "./employeeHeader";
+import Header from "../layout/Header";
 
 const ListEmployees = () => {
   const {
@@ -28,7 +28,7 @@ const ListEmployees = () => {
 
   return (
     <section>
-      <EmployeeHeader />
+      <Header isEmployeeHeader={true} />
       <SimpleGrid columns={{ sm: 1, md: 1, lg: 2, xl: 3 }}>
         {content}
       </SimpleGrid>
