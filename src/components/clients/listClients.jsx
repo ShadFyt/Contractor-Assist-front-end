@@ -32,7 +32,6 @@ const ListClients = () => {
       <SimpleGrid columns={{ sm: 1, md: 1, lg: 2, xl: 3 }}>
         {listOfClients}
       </SimpleGrid>
-      <AddNewClientForm />
     </section>
   );
 };

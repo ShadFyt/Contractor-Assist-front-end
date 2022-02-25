@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, forwardRef, useImperativeHandle } from "react";
 import { FiPhone } from "react-icons/fi";
 
 import { useAddNewClientMutation } from "../../features/api/apiSlice";
@@ -14,7 +14,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-export const AddNewClientForm = () => {
+export const AddNewClientForm = forwardRef((props, ref) => {
   const [contactFormData, setContactFormData] = useState({
     firstName: "",
     lastName: "",
@@ -30,6 +30,12 @@ export const AddNewClientForm = () => {
       email: "",
       phoneNumber: "",
     });
+
+  useImperativeHandle(ref, () => ({
+    handleSubmit() {
+      onSaveClient();
+    },
+  }));
 
   const handleChange = (e) =>
     setContactFormData({ ...contactFormData, [e.target.name]: e.target.value });
@@ -101,8 +107,7 @@ export const AddNewClientForm = () => {
             />
           </InputGroup>
         </FormControl>
-        <Button onClick={() => onSaveClient()}>Add Client</Button>
       </HStack>
     </>
   );
-};
+});
