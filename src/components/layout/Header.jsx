@@ -2,7 +2,8 @@ import { Box, Flex, Center, Heading, Link, Icon } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
 
-import { RenderEmployeeForm } from "../employees/addNewEmployeeForm";
+import { RenderDrawerForm } from "../shared/drawerForm";
+import { AddEmployeeForm } from "../employees/addNewEmployeeForm";
 
 const Header = ({ isEmployeeHeader }) => {
   return (
@@ -22,7 +23,7 @@ const Header = ({ isEmployeeHeader }) => {
         </Heading>
       </Center>
       <Box alignSelf="flex-end">
-        {isEmployeeHeader ? <RenderEmployeeForm /> : null}
+        {isEmployeeHeader ? <RenderDrawerForm Form={AddEmployeeForm} /> : null}
       </Box>
     </Flex>
   );

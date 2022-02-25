@@ -1,73 +1,13 @@
-import React, {
-  useState,
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-} from "react";
+import React, { useState, forwardRef, useImperativeHandle } from "react";
 import {
   FormControl,
   FormLabel,
   Input,
   HStack,
   VStack,
-  Button,
-  Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  useDisclosure,
 } from "@chakra-ui/react";
 
 import { useAddNewEmployeeMutation } from "../../features/api/apiSlice";
-
-export const RenderEmployeeForm = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useRef();
-  const childRef = useRef();
-
-  return (
-    <>
-      <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
-        Register
-      </Button>
-      <Drawer
-        isOpen={isOpen}
-        placement="right"
-        onClose={onClose}
-        finalFocusRef={btnRef}
-        size={"md"}
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Register employee</DrawerHeader>
-
-          <DrawerBody>
-            <AddEmployeeForm ref={childRef} />
-          </DrawerBody>
-
-          <DrawerFooter>
-            <Button variant="outline" mr={3} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button
-              colorScheme="blue"
-              onClick={() => {
-                childRef.current.handleSubmit();
-                onClose();
-              }}
-            >
-              Save
-            </Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-    </>
-  );
-};
 
 export const AddEmployeeForm = forwardRef((props, ref) => {
   const [firstName, setFirstName] = useState("");
