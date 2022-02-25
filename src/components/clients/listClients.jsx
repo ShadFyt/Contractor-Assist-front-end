@@ -3,6 +3,7 @@ import { Box, Spinner, SimpleGrid } from "@chakra-ui/react";
 import { AddNewClientForm } from "./addNewClientForm";
 import { useGetClientsQuery } from "../../features/api/apiSlice";
 import { ClientProfile } from "./clientProfile";
+import Header from "../layout/Header";
 
 const ListClients = () => {
   const {
@@ -27,7 +28,7 @@ const ListClients = () => {
 
   return (
     <section>
-      {/* <EmployeeHeader /> */}
+      <Header />
       <SimpleGrid columns={{ sm: 1, md: 1, lg: 2, xl: 3 }}>
         {listOfClients}
       </SimpleGrid>

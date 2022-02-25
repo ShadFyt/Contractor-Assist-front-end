@@ -31,7 +31,7 @@ export const RenderDrawerForm = ({ Form }) => {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>Register employee</DrawerHeader>
+          <DrawerHeader>Register</DrawerHeader>
 
           <DrawerBody>
             <Form ref={childRef} />

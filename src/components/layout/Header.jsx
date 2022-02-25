@@ -4,6 +4,7 @@ import { TiArrowBack } from "react-icons/ti";
 
 import { RenderDrawerForm } from "../shared/drawerForm";
 import { AddEmployeeForm } from "../employees/addNewEmployeeForm";
+import { AddNewClientForm } from "../clients/addNewClientForm";
 
 const Header = ({ isEmployeeHeader }) => {
   return (
@@ -23,7 +24,9 @@ const Header = ({ isEmployeeHeader }) => {
         </Heading>
       </Center>
       <Box alignSelf="flex-end">
-        {isEmployeeHeader ? <RenderDrawerForm Form={AddEmployeeForm} /> : null}
+        <RenderDrawerForm
+          Form={isEmployeeHeader ? AddEmployeeForm : AddNewClientForm}
+        />
       </Box>
     </Flex>
   );
