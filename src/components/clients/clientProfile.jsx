@@ -12,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 
 import { FiPhone } from "react-icons/fi";
-import { FaBirthdayCake } from "react-icons/fa";
 
 export const ClientProfile = ({ client }) => {
   const formatPhoneNumber = (number) => {

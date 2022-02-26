@@ -6,10 +6,7 @@ import ListJobs from "./jobs";
 import { SingleJobPage } from "./jobs/singleJob/singleJobPage";
 import ListEmployees from "./employees/index";
 import ListClients from "./clients/listClients";
-
-const HomePage = () => {
-  return <div>Home page</div>;
-};
+import Home from "./homePage/home";
 
 function MainComponent() {
   return (
@@ -24,7 +21,7 @@ function MainComponent() {
         </Box>
         <Box flex="1">
           <Switch>
-            <Route path="/home" component={HomePage} />
+            <Route path="/home" component={Home} />
             <Route exact path="/jobs" component={ListJobs} />
             <Route exact path="/employees" component={ListEmployees} />
             <Route exact path="/clients" component={ListClients} />
