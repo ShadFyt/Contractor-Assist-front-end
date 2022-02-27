@@ -1,10 +1,15 @@
-import { Box } from "@chakra-ui/react";
-import { ExpenseChart } from "./expenseChart";
+import { Box, HStack } from "@chakra-ui/react";
+import { ExpenseChart } from "./charts/expenseChart";
+import { RevenueChart } from "./charts/revenueChart";
 
 const Home = () => {
   return (
     <>
-      <ExpenseChart />
+      <HStack>
+        {" "}
+        <ExpenseChart />
+        <RevenueChart />
+      </HStack>
     </>
   );
 };
