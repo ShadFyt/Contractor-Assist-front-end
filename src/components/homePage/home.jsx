@@ -1,4 +1,4 @@
-import { Box, HStack } from "@chakra-ui/react";
+import { HStack } from "@chakra-ui/react";
 import { ExpenseChart } from "./charts/expenseChart";
 import { ProfitChart } from "./charts/profitChart";
 import { RevenueChart } from "./charts/revenueChart";

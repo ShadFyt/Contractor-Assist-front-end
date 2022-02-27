@@ -1,6 +1,5 @@
 import React from "react";
-import { Box, Spinner, SimpleGrid } from "@chakra-ui/react";
-import { AddNewClientForm } from "./addNewClientForm";
+import { Spinner, SimpleGrid } from "@chakra-ui/react";
 import { useGetClientsQuery } from "../../features/api/apiSlice";
 import { ClientProfile } from "./clientProfile";
 import Header from "../layout/Header";

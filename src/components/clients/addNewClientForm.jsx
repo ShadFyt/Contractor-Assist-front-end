@@ -11,7 +11,6 @@ import {
   InputGroup,
   InputLeftElement,
   HStack,
-  Button,
 } from "@chakra-ui/react";
 
 export const AddNewClientForm = forwardRef((props, ref) => {

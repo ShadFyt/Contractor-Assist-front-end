@@ -16,7 +16,6 @@ import {
   Th,
   Td,
   TableCaption,
-  Spinner,
   Text,
 } from "@chakra-ui/react";
 

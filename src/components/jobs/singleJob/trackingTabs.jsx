@@ -10,7 +10,6 @@ import {
 } from "@chakra-ui/react";
 
 import RenderClockInTable from "./renderClockInTable";
-import RenderExpensesTable from "./expensesTable";
 
 const TrackingTabs = ({ job }) => {
   return (

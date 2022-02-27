@@ -1,13 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 
 import JobFormModal from "./addJobForm";
 
-import {
-  Box,
-  Flex,
-  Center,
-  Heading,
-} from "@chakra-ui/react";
+import { Box, Flex, Center, Heading } from "@chakra-ui/react";
 
 const JobPageHeader = () => {
   return (

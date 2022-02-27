@@ -126,7 +126,7 @@ const DisplayTasks = ({ jobId }) => {
             task.isComplete ? (
               <GiCancel fontSize={"25px"} color="red" />
             ) : (
-              <FaCheck color="green" color="green" fontSize="25px" />
+              <FaCheck color="green" fontSize="25px" />
             )
           }
         />
