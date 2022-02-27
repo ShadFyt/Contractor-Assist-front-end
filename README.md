@@ -24,15 +24,18 @@ The server uses Python(FastAPI), SQLite and SQLModel.
    ![Employee add form](./public/images/register_emp.png)
 
 3. Client component lists all clients and displays details & information
+   ![Client add form](./public/images/client_page.png)
 
 4. Equipment component tracks location of the tools - not implemented yet
 
 ## Road map/Todos
 
-- [ ] Create a homepage component that is dashboard style and will show important details about the company
+- [ ] Create a homepage component that is dashboard style and will show important details about the company, static first
+- [ ] Make homepage dashboard data driven and dynamic
 - [x] List all clients on client page similar to the employee page
 - [ ] Create single page for employees listing information like hours worked...
 - [ ] Add a **Book time off** function for employees
 - [ ] Create the Equipment component
 - [ ] Refactor ClientProfile component
 - [ ] Add a button to delete a client & employee
+- [ ] Add user auth to web app
