@@ -1,7 +1,8 @@
-import { HStack } from "@chakra-ui/react";
+import { HStack, Box, Center } from "@chakra-ui/react";
 import { ExpenseChart } from "./charts/expenseChart";
 import { ProfitChart } from "./charts/profitChart";
 import { RevenueChart } from "./charts/revenueChart";
+import { EmployeesHoursChart } from "./charts/employeesHoursChart";
 
 const Home = () => {
   return (
@@ -12,6 +13,9 @@ const Home = () => {
         <RevenueChart />
         <ProfitChart />
       </HStack>
+      <Box>
+        <EmployeesHoursChart />
+      </Box>
     </>
   );
 };
