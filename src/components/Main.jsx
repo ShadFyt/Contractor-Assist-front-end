@@ -21,7 +21,7 @@ function MainComponent() {
         </Box>
         <Box flex="1">
           <Switch>
-            <Route path="/home" component={Home} />
+            <Route exact path="/" component={Home} />
             <Route exact path="/jobs" component={ListJobs} />
             <Route exact path="/employees" component={ListEmployees} />
             <Route exact path="/clients" component={ListClients} />
