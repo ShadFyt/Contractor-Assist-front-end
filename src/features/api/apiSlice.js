@@ -61,6 +61,9 @@ export const apiSlice = createApi({
             }),
             invalidatesTags: ["Clients"]
         }),
+        getTimeEntriesByWeek: builder.query({
+            query: week => `/time_sheet/week/${week}`
+        }),
         getTimeEntriesByJob: builder.query({
             query: jobId => `/time_sheet/job/${jobId}`,
             providesTags: ["TimeEntries"]
@@ -127,6 +130,6 @@ export const {
     useGetJobsQuery, useAddNewJobMutation, useDeleteJobMutation, useGetJobByIdQuery,
     useGetClientsQuery, useAddNewClientMutation, useGetClientByIdQuery,
     useAddNewTimeEntryMutation, useGetTimeEntriesByJobQuery, useDeleteTimeEntryMutation,
-    useUpdateTimeEntryMutation, useGetTimeEntryByIdQuery,
+    useUpdateTimeEntryMutation, useGetTimeEntryByIdQuery, useGetTimeEntriesByWeekQuery,
     useAddNewTaskMutation, useGetTasksByJobQuery, useDeleteTaskMutation, useUpdateTaskMutation,
 } = apiSlice

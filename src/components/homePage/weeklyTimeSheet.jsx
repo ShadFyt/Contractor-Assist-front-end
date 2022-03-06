@@ -2,6 +2,7 @@ import React from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 
 import { EmployeesHoursChart } from "./charts/employeesHoursChart";
+import { WeeklyTimeSheetTable } from "./weeklyTimeSheetTable";
 
 export const TimeSheetTab = () => {
   return (
@@ -14,7 +15,9 @@ export const TimeSheetTab = () => {
         <TabPanel>
           <EmployeesHoursChart />
         </TabPanel>
-        <TabPanel></TabPanel>
+        <TabPanel>
+          <WeeklyTimeSheetTable />
+        </TabPanel>
       </TabPanels>
     </Tabs>
   );
