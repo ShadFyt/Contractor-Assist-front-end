@@ -12,16 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
 
-import { useGetTimeEntriesByWeekQuery } from "../../features/api/apiSlice";
-
 export const WeeklyTimeSheetTable = ({ timeEntries }) => {
-  //   const {
-  //     data: timeEntries = [],
-  //     isLoading,
-  //     isSuccess,
-  //     isError,
-  //     error,
-  //   } = useGetTimeEntriesByWeekQuery(dateRange);
   let data = "";
   if (timeEntries) {
     data = timeEntries.map((timeEntry) => (

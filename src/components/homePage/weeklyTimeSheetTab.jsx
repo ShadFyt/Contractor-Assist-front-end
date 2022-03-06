@@ -13,7 +13,10 @@ export const TimeSheetTab = ({ dateRange, timeEntries }) => {
       </TabList>
       <TabPanels>
         <TabPanel>
-          <EmployeesHoursChart />
+          <EmployeesHoursChart
+            dateRange={dateRange}
+            timeEntries={timeEntries}
+          />
         </TabPanel>
         <TabPanel>
           <WeeklyTimeSheetTable timeEntries={timeEntries} />

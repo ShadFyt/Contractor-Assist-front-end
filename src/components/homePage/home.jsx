@@ -32,12 +32,12 @@ const Home = () => {
     error,
   } = useGetTimeEntriesByWeekQuery(dateRange);
 
-  // let data = "";
-  // if (isLoading) {
-  //   data = null;
-  // } else if (isSuccess) {
-  //   data = timeEntries;
-  // }
+  let data = "";
+  if (isLoading) {
+    data = "loading";
+  } else if (isSuccess) {
+    data = timeEntries;
+  }
 
   const handleDateChange = (e) => setDateRange(e.target.value);
 
@@ -51,7 +51,7 @@ const Home = () => {
         <ProfitChart />
       </HStack>
       <Box border={"1px"} m={2} borderRadius="2xl">
-        <TimeSheetTab timeEntries={timeEntries} />
+        <TimeSheetTab timeEntries={timeEntries} dateRange={dateRange} />
         <Center>
           <Box w={"15rem"} boxShadow="base">
             <FormControl>
