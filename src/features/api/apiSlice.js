@@ -62,7 +62,8 @@ export const apiSlice = createApi({
             invalidatesTags: ["Clients"]
         }),
         getTimeEntriesByWeek: builder.query({
-            query: week => `/time_sheet/week/${week}`
+            query: week => `/time_sheet/week/${week}`,
+            providesTags: ["TimeEntries"]
         }),
         getTimeEntriesByJob: builder.query({
             query: jobId => `/time_sheet/job/${jobId}`,

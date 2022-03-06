@@ -8,7 +8,9 @@ import {
   Td,
   TableCaption,
   Text,
+  Link,
 } from "@chakra-ui/react";
+import { Link as ReactLink } from "react-router-dom";
 
 import { useGetTimeEntriesByWeekQuery } from "../../features/api/apiSlice";
 
@@ -27,11 +29,16 @@ export const WeeklyTimeSheetTable = () => {
   } else if (isSuccess) {
     data = timeEntries.map((timeEntry) => (
       <Tr key={timeEntry.id}>
-        <Td>{timeEntry.jobId}</Td>
-        <Td>{timeEntry.employeeId}</Td>
+        <Td>
+          <Link as={ReactLink} to={`/jobs/${timeEntry.jobId}`}>
+            {timeEntry.jobId}
+          </Link>
+        </Td>
+        <Td>{timeEntry.employeeName}</Td>
         <Td>{timeEntry.date}</Td>
         <Td>{timeEntry.clockIn}</Td>
         <Td>{timeEntry.clockOut}</Td>
+        <Td>{timeEntry.hours}</Td>
       </Tr>
     ));
   } else if (isError) {
@@ -47,6 +54,7 @@ export const WeeklyTimeSheetTable = () => {
           <Th>Date</Th>
           <Th>Start Time</Th>
           <Th>End Time</Th>
+          <Th>Hours</Th>
         </Tr>
       </Thead>
       <Tbody>{data}</Tbody>
