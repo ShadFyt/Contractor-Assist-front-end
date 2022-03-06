@@ -14,19 +14,16 @@ import { Link as ReactLink } from "react-router-dom";
 
 import { useGetTimeEntriesByWeekQuery } from "../../features/api/apiSlice";
 
-export const WeeklyTimeSheetTable = () => {
-  const {
-    data: timeEntries = [],
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useGetTimeEntriesByWeekQuery("2022-02-28");
-
+export const WeeklyTimeSheetTable = ({ timeEntries }) => {
+  //   const {
+  //     data: timeEntries = [],
+  //     isLoading,
+  //     isSuccess,
+  //     isError,
+  //     error,
+  //   } = useGetTimeEntriesByWeekQuery(dateRange);
   let data = "";
-  if (isLoading) {
-    data = null;
-  } else if (isSuccess) {
+  if (timeEntries) {
     data = timeEntries.map((timeEntry) => (
       <Tr key={timeEntry.id}>
         <Td>
@@ -41,8 +38,6 @@ export const WeeklyTimeSheetTable = () => {
         <Td>{timeEntry.hours}</Td>
       </Tr>
     ));
-  } else if (isError) {
-    data = <p>{error.toString()}</p>;
   }
 
   return (

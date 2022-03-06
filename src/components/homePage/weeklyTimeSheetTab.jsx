@@ -4,7 +4,7 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { EmployeesHoursChart } from "./charts/employeesHoursChart";
 import { WeeklyTimeSheetTable } from "./weeklyTimeSheetTable";
 
-export const TimeSheetTab = () => {
+export const TimeSheetTab = ({ dateRange, timeEntries }) => {
   return (
     <Tabs isFitted variant={"solid-rounded"} m={4}>
       <TabList>
@@ -16,7 +16,7 @@ export const TimeSheetTab = () => {
           <EmployeesHoursChart />
         </TabPanel>
         <TabPanel>
-          <WeeklyTimeSheetTable />
+          <WeeklyTimeSheetTable timeEntries={timeEntries} />
         </TabPanel>
       </TabPanels>
     </Tabs>
