@@ -30,7 +30,7 @@ const LinkItemsTop = [
   { name: "Employees", icon: GrUserWorker },
   { name: "Clients", icon: BsFileEarmarkPerson },
   { name: "Jobs", icon: AiOutlineContacts },
-  { name: "Equipment", icon: GoTools },
+  // { name: "Equipment", icon: GoTools },
 ];
 
 const LinkItemsBottom = [

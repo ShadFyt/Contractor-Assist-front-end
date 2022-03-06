@@ -28,9 +28,11 @@ The server uses Python(FastAPI), SQLite and SQLModel.
 
 4. Equipment component tracks location of the tools - not implemented yet
 
+5. Home page dashboard style
+
 ## Road map/Todos
 
-- [ ] Create a homepage component that is dashboard style and will show important details about the company, static first
+- [x] Create a homepage component that is dashboard style and will show important details about the company, static first
 - [ ] Make homepage dashboard data driven and dynamic
 - [x] List all clients on client page similar to the employee page
 - [ ] Create single page for employees listing information like hours worked...
@@ -39,3 +41,4 @@ The server uses Python(FastAPI), SQLite and SQLModel.
 - [ ] Refactor ClientProfile component
 - [ ] Add a button to delete a client & employee
 - [ ] Add user auth to web app
+- [ ] make maps data driven instead of hard coded
