@@ -63,7 +63,7 @@ export const Address = ({ address, ...rest }) => {
   );
 };
 
-export const ContactInfo = ({ jobId, client, isHeader }) => {
+export const ContactInfo = ({ address, jobId, client, isHeader }) => {
   const formatPhoneNumber = (number) => {
     let input = number.toString();
     return input.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
@@ -86,7 +86,7 @@ export const ContactInfo = ({ jobId, client, isHeader }) => {
         <Text as="span" fontWeight="bold">
           ADDRESS
         </Text>
-        : {"24 lake street"}
+        : {address}
       </Text>
       <Text>
         <Text as="span" fontWeight="bold">
@@ -149,7 +149,14 @@ const InfoTabs = ({ job, client, isFetching, isSuccess }) => {
   if (isFetching) {
     content = <Spinner />;
   } else if (isSuccess) {
-    content = <ContactInfo jobId={job.id} client={client} isHeader={true} />;
+    content = (
+      <ContactInfo
+        address={job.location}
+        jobId={job.id}
+        client={client}
+        isHeader={true}
+      />
+    );
   }
 
   return (

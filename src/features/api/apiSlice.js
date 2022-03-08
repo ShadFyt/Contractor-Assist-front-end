@@ -3,9 +3,29 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const apiSlice = createApi({
     reducerPath: "api",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000" }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: "http://localhost:8000",
+        // baseUrl: "https://contractor-assister.herokuapp.com",
+        // prepareHeaders: (headers, { getState }) => {
+        //     const token = getState().auth.token
+
+        //     // If we have a token set in state, let's assume that we should be passing it.
+        //     if (token) {
+        //         headers.set('authorization', `Bearer ${token}`)
+        //     }
+
+        //     return headers
+        // },
+    }),
     tagTypes: ["Employee", "Jobs", "Clients", "TimeEntries", "Tasks"],
     endpoints: builder => ({
+        getToken: builder.mutation({
+            query: (data) => ({
+                url: "/admin",
+                method: "POST",
+                body: data
+            })
+        }),
         getJobs: builder.query({
             query: () => "/jobs",
             providesTags: ["Jobs"]
@@ -133,4 +153,5 @@ export const {
     useAddNewTimeEntryMutation, useGetTimeEntriesByJobQuery, useDeleteTimeEntryMutation,
     useUpdateTimeEntryMutation, useGetTimeEntryByIdQuery, useGetTimeEntriesByWeekQuery,
     useAddNewTaskMutation, useGetTasksByJobQuery, useDeleteTaskMutation, useUpdateTaskMutation,
+    useGetTokenMutation,
 } = apiSlice

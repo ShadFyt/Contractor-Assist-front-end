@@ -7,7 +7,7 @@ import { SingleJobPage } from "./jobs/singleJob/singleJobPage";
 import ListEmployees from "./employees/index";
 import ListClients from "./clients/listClients";
 import Home from "./homePage/home";
-
+import Login from "./login";
 function MainComponent() {
   return (
     <Box>
@@ -22,6 +22,7 @@ function MainComponent() {
         <Box flex="1">
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route exact path="/login" component={Login} />
             <Route exact path="/jobs" component={ListJobs} />
             <Route exact path="/employees" component={ListEmployees} />
             <Route exact path="/clients" component={ListClients} />
