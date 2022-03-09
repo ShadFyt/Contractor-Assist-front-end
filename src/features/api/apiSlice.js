@@ -1,29 +1,32 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
-
 export const apiSlice = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({
         baseUrl: "http://localhost:8000",
         // baseUrl: "https://contractor-assister.herokuapp.com",
-        // prepareHeaders: (headers, { getState }) => {
-        //     const token = getState().auth.token
+        prepareHeaders: (headers) => {
+            const token = localStorage.getItem("token")
 
-        //     // If we have a token set in state, let's assume that we should be passing it.
-        //     if (token) {
-        //         headers.set('authorization', `Bearer ${token}`)
-        //     }
+            // If we have a token set in state, let's assume that we should be passing it.
+            if (token) {
+                headers.set('authorization', `Bearer ${token}`)
+                console.log(token)
+            }
 
-        //     return headers
-        // },
+            return headers
+        },
     }),
     tagTypes: ["Employee", "Jobs", "Clients", "TimeEntries", "Tasks"],
     endpoints: builder => ({
         getToken: builder.mutation({
             query: (data) => ({
-                url: "/admin",
+                url: "/admin/token",
                 method: "POST",
-                body: data
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: `grant_type=&username=${data.username}&password=${data.password}&scope=&client_id=&client_secret=`
             })
         }),
         getJobs: builder.query({
