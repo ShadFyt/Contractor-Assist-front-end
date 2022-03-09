@@ -63,6 +63,7 @@ const Content = ({ onClose, items_top, items_bottom, ...rest }) => {
               key={link.name}
               icon={link.icon}
               navLink={link.name.toLowerCase()}
+              onClick={onClose}
             >
               {" "}
               {link.name}{" "}
