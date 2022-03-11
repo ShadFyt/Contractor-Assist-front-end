@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { HStack, Box, Center, FormControl, Input } from "@chakra-ui/react";
+import {
+  HStack,
+  Box,
+  Center,
+  FormControl,
+  Input,
+  SimpleGrid,
+} from "@chakra-ui/react";
 import { ExpenseChart } from "./charts/expenseChart";
 import { ProfitChart } from "./charts/profitChart";
 import { RevenueChart } from "./charts/revenueChart";
@@ -24,32 +31,19 @@ const Home = () => {
 
   const [dateRange, setDateRange] = useState(() => getDate());
 
-  const {
-    data: timeEntries = [],
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useGetTimeEntriesByWeekQuery(dateRange);
-
-  let data = "";
-  if (isLoading) {
-    data = "loading";
-  } else if (isSuccess) {
-    data = timeEntries;
-  }
+  const { data: timeEntries = [] } = useGetTimeEntriesByWeekQuery(dateRange);
 
   const handleDateChange = (e) => setDateRange(e.target.value);
 
   console.log(timeEntries);
   return (
     <>
-      <HStack>
+      <SimpleGrid columns={{ sm: 1, lg: 3 }}>
         {" "}
         <ExpenseChart />
         <RevenueChart />
         <ProfitChart />
-      </HStack>
+      </SimpleGrid>
       <Box border={"1px"} m={2} borderRadius="2xl">
         <TimeSheetTab timeEntries={timeEntries} dateRange={dateRange} />
         <Center>
