@@ -32,7 +32,7 @@ export const WeeklyTimeSheetTable = ({ timeEntries }) => {
   }
 
   return (
-    <Table>
+    <Table size="sm">
       <Thead>
         <Tr>
           <Th>Job ID</Th>

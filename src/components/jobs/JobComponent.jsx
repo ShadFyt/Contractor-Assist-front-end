@@ -63,11 +63,12 @@ export const Address = ({ address, ...rest }) => {
   );
 };
 
+export const formatPhoneNumber = (number) => {
+  let input = number.toString();
+  return input.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
+};
+
 export const ContactInfo = ({ address, jobId, client, isHeader }) => {
-  const formatPhoneNumber = (number) => {
-    let input = number.toString();
-    return input.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
-  };
   return (
     <Box>
       {isHeader ? (
