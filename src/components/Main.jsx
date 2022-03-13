@@ -9,6 +9,10 @@ import ListClients from "./clients/listClients";
 import Home from "./homePage/home";
 import Login from "./login";
 function MainComponent() {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return <Login />;
+  }
   return (
     <Box>
       <Stack direction={{ base: "column", md: "row" }} spacing={0}>

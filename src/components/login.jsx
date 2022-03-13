@@ -12,18 +12,15 @@ import {
 import { useGetTokenMutation } from "../features/api/apiSlice";
 
 const Login = () => {
-  const [getToken, { isLoading, data }] = useGetTokenMutation();
+  const [getToken, { data, isSuccess }] = useGetTokenMutation();
 
   const onSubmit = async () => {
-    getToken({
-      username: "johndoe",
-      password: "secret",
-    });
-    if (data) {
-      localStorage.setItem("token", data.access_token);
-    }
-    console.log(localStorage.getItem("token"));
+    getToken({ username: "admin", password: "string" });
   };
+  if (isSuccess) {
+    localStorage.setItem("token", data.access_token);
+    console.log("saving token", data);
+  }
   return <Button onClick={onSubmit}>GET TOKEN</Button>;
 };
 

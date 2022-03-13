@@ -10,8 +10,8 @@ export const apiSlice = createApi({
 
             // If we have a token set in state, let's assume that we should be passing it.
             if (token) {
-                headers.set('authorization', `Bearer ${token}`)
-                console.log(token)
+                headers.set('Authorization', `Bearer ${token}`)
+                console.log("Header token set to: ", token)
             }
 
             return headers
