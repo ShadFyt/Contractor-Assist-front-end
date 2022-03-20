@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
 import {
   Flex,
   Heading,
@@ -19,8 +18,9 @@ import { FaRegUser, FaLock } from "react-icons/fa";
 
 import { useGetTokenMutation } from "../features/api/apiSlice";
 
-const Login = () => {
-  const [getToken, { data, isSuccess }] = useGetTokenMutation();
+const Login = ({ setIsAuth }) => {
+  const [getToken, { data, isSuccess, isLoading, isError, error }] =
+    useGetTokenMutation();
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -28,15 +28,18 @@ const Login = () => {
   const onPasswordChanged = (e) => setPassword(e.target.value);
   const onUsernameChanged = (e) => setUsername(e.target.value);
   const onSubmit = async () => {
-    getToken({ username: username, password: password });
-    setPassword("");
-    setUsername("");
+    await getToken({ username: username, password: password })
+      .unwrap()
+      .then((payload) => {
+        console.log("fulfilled", payload);
+        localStorage.setItem("token", payload.access_token);
+        setIsAuth(true);
+        setPassword("");
+        setUsername("");
+      })
+      .catch((error) => console.log("rejected ", error));
   };
-  if (isSuccess) {
-    localStorage.setItem("token", data.access_token);
-    console.log("saving token", data);
-    <Redirect to="/home" />;
-  }
+
   return (
     <Flex
       flexDirection={"column"}

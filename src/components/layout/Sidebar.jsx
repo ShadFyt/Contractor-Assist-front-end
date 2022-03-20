@@ -1,5 +1,5 @@
 import React from "react";
-import { Link as ReactLink } from "react-router-dom";
+import { Link as ReactLink, Redirect, useHistory } from "react-router-dom";
 
 import {
   IconButton,
@@ -34,11 +34,17 @@ const LinkItemsTop = [
 ];
 
 const LinkItemsBottom = [
-  { name: "Settings", icon: AiFillSetting },
+  // { name: "Settings", icon: AiFillSetting },
   { name: "Logout", icon: AiOutlineLogout },
 ];
 
-const Content = ({ onClose, items_top, items_bottom, ...rest }) => {
+const Content = ({ onClose, items_top, items_bottom, setIsAuth, ...rest }) => {
+  let history = useHistory();
+  const onLogout = () => {
+    localStorage.removeItem("token");
+    setIsAuth(false);
+    history.push("/login");
+  };
   return (
     <Box
       bg={"gray.200"}
@@ -73,7 +79,12 @@ const Content = ({ onClose, items_top, items_bottom, ...rest }) => {
         <Box>
           {" "}
           {items_bottom.map((link) => (
-            <NavItem key={link.name} icon={link.icon} navLink="#">
+            <NavItem
+              key={link.name}
+              icon={link.icon}
+              navLink="#"
+              onClick={onLogout}
+            >
               {" "}
               {link.name}{" "}
             </NavItem>
@@ -107,7 +118,7 @@ const NavItem = ({ icon, children, navLink, ...rest }) => {
   );
 };
 
-function Sidebar({ children }) {
+function Sidebar({ children, setIsAuth }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box minH="100vh" bg={"gray.100"}>
@@ -116,6 +127,7 @@ function Sidebar({ children }) {
         items_bottom={LinkItemsBottom}
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
+        setIsAuth={setIsAuth}
       />
       <Drawer
         autoFocus={false}
@@ -131,6 +143,7 @@ function Sidebar({ children }) {
             items_top={LinkItemsTop}
             items_bottom={LinkItemsBottom}
             onClose={onClose}
+            setIsAuth={setIsAuth}
           />
         </DrawerContent>
       </Drawer>

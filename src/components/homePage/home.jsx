@@ -12,6 +12,7 @@ import { ProfitChart } from "./charts/profitChart";
 import { RevenueChart } from "./charts/revenueChart";
 import { TimeSheetTab } from "./weeklyTimeSheetTab";
 import { useGetTimeEntriesByWeekQuery } from "../../features/api/apiSlice";
+import { Redirect } from "react-router-dom";
 
 const Home = () => {
   const getDate = () => {
@@ -34,8 +35,12 @@ const Home = () => {
   const { data: timeEntries = [] } = useGetTimeEntriesByWeekQuery(dateRange);
 
   const handleDateChange = (e) => setDateRange(e.target.value);
+  const token = localStorage.getItem("token");
 
-  console.log(timeEntries);
+  if (!token) {
+    console.log("sending to login page");
+    return <Redirect to="/login" />;
+  }
   return (
     <>
       <SimpleGrid columns={{ sm: 1, lg: 3 }}>
