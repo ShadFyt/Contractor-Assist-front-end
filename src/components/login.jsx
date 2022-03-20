@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
   Flex,
   Heading,
@@ -13,12 +14,20 @@ import {
   FormControl,
   FormHelperText,
   InputRightElement,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverArrow,
+  Text,
 } from "@chakra-ui/react";
 import { FaRegUser, FaLock } from "react-icons/fa";
 
 import { useGetTokenMutation } from "../features/api/apiSlice";
 
 const Login = ({ setIsAuth }) => {
+  let history = useHistory();
   const [getToken, { data, isSuccess, isLoading, isError, error }] =
     useGetTokenMutation();
   const [showPassword, setShowPassword] = useState(false);
@@ -34,6 +43,7 @@ const Login = ({ setIsAuth }) => {
         console.log("fulfilled", payload);
         localStorage.setItem("token", payload.access_token);
         setIsAuth(true);
+        history.push("/");
         setPassword("");
         setUsername("");
       })
@@ -112,17 +122,29 @@ const Login = ({ setIsAuth }) => {
             </Stack>
           </form>
         </Box>
-        <Button
-          onClick={onSubmit}
-          variant={"solid"}
-          colorScheme={"cyan"}
-          backgroundColor={"cyan.800"}
-          color={"white"}
-          width={"full"}
-          _hover={{ background: "cyan.700" }}
-        >
-          Login
-        </Button>
+        <Popover defaultIsOpen={true} isOpen={true}>
+          <PopoverTrigger>
+            <Button
+              onClick={onSubmit}
+              variant={"solid"}
+              colorScheme={"cyan"}
+              backgroundColor={"cyan.800"}
+              color={"white"}
+              width={"full"}
+              _hover={{ background: "cyan.700" }}
+            >
+              Login
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <PopoverArrow />
+            <PopoverHeader>Login with demo credentials!</PopoverHeader>
+            <PopoverBody>
+              <Text>Username: demo</Text>
+              <Text>Password: password</Text>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
       </Stack>
     </Flex>
   );

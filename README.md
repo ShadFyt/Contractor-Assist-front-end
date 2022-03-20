@@ -3,6 +3,10 @@
 Built using ReactJs(hooks), Redux(Toolkit) for state management and styled using Chakra ui components.
 The server uses Python(FastAPI), SQLite and SQLModel.
 
+## Link to live demo:
+
+[https://contractors-overview.netlify.app/](https://contractors-overview.netlify.app/)
+
 ## Link to server repo:
 
 [https://github.com/ShadFyt/Contractor-Assist-back-end](https://github.com/ShadFyt/Contractor-Assist-back-end)
@@ -33,6 +37,7 @@ The server uses Python(FastAPI), SQLite and SQLModel.
 ## Road map/Todos
 
 - [x] Create a homepage component that is dashboard style and will show important details about the company, static first
+- [x] Add Login page
 - [ ] Make homepage dashboard data driven and dynamic
 - [x] List all clients on client page similar to the employee page
 - [ ] Create single page for employees listing information like hours worked...

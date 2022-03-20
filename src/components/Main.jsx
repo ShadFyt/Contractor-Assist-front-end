@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 import { Box, Stack } from "@chakra-ui/react";
 import Sidebar from "./layout/Sidebar";
 import ListJobs from "./jobs";
@@ -11,8 +11,9 @@ import Login from "./login";
 
 function MainComponent() {
   const [isAuth, setIsAuth] = useState(false);
-
+  let history = useHistory();
   if (!isAuth) {
+    history.push("/login");
     return <Login setIsAuth={setIsAuth} />;
   } else {
     return (
